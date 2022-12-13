@@ -1,6 +1,7 @@
 # Mac OS DS_Store files.
 .DS_Store
 .favorites.json
+.idea
 
 # Ignore node_modules
 node_modules

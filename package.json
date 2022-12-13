@@ -1,0 +1,25 @@
+{
+  "name": "qa_cypress_e2e_web_tables",
+  "version": "1.0.0",
+  "description": "## Workflow",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vsupruniuk/qa_cypress_e2e_web_tables.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vsupruniuk/qa_cypress_e2e_web_tables/issues"
+  },
+  "homepage": "https://github.com/vsupruniuk/qa_cypress_e2e_web_tables#readme",
+  "dependencies": {
+    "cypress": "^11.2.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
+  }
+}
