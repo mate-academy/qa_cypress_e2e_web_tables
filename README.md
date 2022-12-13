@@ -5,7 +5,7 @@
 1. Fork the repo.
 1. Clone **your** forked repository.
 1. Create a new branch `git checkout -b testing`.
-1. Resolve tasks in the `cypress`/`e2e`/`webTables.cy.js`.
+1. Resolve tasks in the `cypress`/`e2e`/`pagination.cy.js`.
 1. Create a pull request.
 1. Do not forget to click on `Re-request review` if you submit the homework after previous review.
 

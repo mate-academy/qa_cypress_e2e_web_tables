@@ -23,3 +23,38 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+const { generateWorker } = require('./generateWorker');
+
+Cypress.Commands.add('addRandomWorker', (worker) => {
+  const { firstName, lastName, email, age, salary, department } = worker;
+
+  cy.get('#addNewRecordButton').click();
+
+  cy.get('#firstName').type(firstName);
+
+  cy.get('#lastName').type(lastName);
+
+  cy.get('#userEmail').type(email);
+
+  cy.get('#age').type(`${age}`);
+
+  cy.get('#salary').type(`${salary}`);
+
+  cy.get('#department').type(department);
+
+  cy.get('#submit').click()
+});
+
+Cypress.Commands.add('addSeveralWorkers', (count) => {
+  for (let i = 1; i <= count; i += 1) {
+    const worker = generateWorker();
+    cy.addRandomWorker(worker);
+  }
+});
+
+Cypress.Commands.add('deleteAllWorkers', (numOfWorkers) => {
+  for (let i = 1; i <= numOfWorkers; i += 1) {
+    cy.get(`#delete-record-${i}`).click();
+  }
+});
