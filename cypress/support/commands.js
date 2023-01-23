@@ -1,25 +1,33 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('clickAddWorker', () => {
+  cy.get('#addNewRecordButton').click()
+});
+
+Cypress.Commands.add('submitWorker', () => {
+   cy.get('#submit').click();
+});
+Cypress.Commands.add('deleteNewWorker', (num) => {
+   cy.get(`#delete-record-${num}`).click();
+}); 
+
+Cypress.Commands.add('selectRowParPage', (number) => {
+  cy.get("select[aria-label='rows per page']").select(number)
+});
+
+Cypress.Commands.add('checkNumberOfPage', (number) => {
+  cy.get(".-pageJump>input[type='number']").should('have.value',number)
+});
+Cypress.Commands.add('getSearchBox', () => {
+  cy.get('#searchBox').clear()
+});
+Cypress.Commands.add('clickEdit', () => {
+  cy.get('span[title="Edit"]').click();
+});
+
+
+
+
+
+
+
+
