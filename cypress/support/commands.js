@@ -23,3 +23,31 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add("deleteAllWorkers", (numOfWorkers) => {
+  for (let i = 1; i <= numOfWorkers; i += 1) {
+    cy.get(`#delete-record-${i}`).click();
+  }
+});
+
+import Webtable from "../Webtable";
+const { generateUser } = require("../support/generate");
+
+Cypress.Commands.add("addNewWorker", () => {
+  const { firstName, lastName, email, randomAge, randomSalary, department } =
+    generateUser();
+  Webtable.addNewRecord();
+
+  Webtable.typeFirstName(firstName);
+
+  Webtable.typeLastName(lastName);
+
+  Webtable.typeEmail(email);
+
+  Webtable.typeAge(randomAge);
+
+  Webtable.typeSalary(randomSalary);
+
+  Webtable.typeDepartment(department);
+
+  Webtable.clickSubmit();
+});
