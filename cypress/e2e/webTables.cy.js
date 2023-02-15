@@ -29,10 +29,13 @@ describe('Web Tables page', () => {
 
     cy.get('select')
       .select(row);
+    
+    const numberOfRows = Number(row.substring(0, row.length - 5)) + 1;
+    cy.get('.rt-tr').should('have.length', numberOfRows);
   });
 
   it('should add a new worker', () => {
-      cy.get('#addNewRecordButton')
+    cy.get('#addNewRecordButton')
       .should('contain.text', 'Add')
       .click()
 
@@ -50,6 +53,14 @@ describe('Web Tables page', () => {
       .type(department);
     cy.get('#submit')
       .click();
+     
+    cy.get('.rt-tr')
+    .should('contain.text', firstName)
+    .and('contain.text', lastName)
+    .and('contain.text', email)
+    .and('contain.text', age)
+    .and('contain.text', salary)
+    .and('contain.text', department); 
   });
 
   it('should delete the worker', () => {
@@ -59,12 +70,9 @@ describe('Web Tables page', () => {
   });
 
   it('should delete all workers', () => {
-    cy.get('#delete-record-3')
-      .click();
-    cy.get('#delete-record-2')
-      .click();
-    cy.get('#delete-record-1')
-      .click();
+    for (let i = 1; i < 4; i++) {
+      cy.get(`#delete-record-${i}`)
+        .click()};
     cy.get('.ReactTable')
       .should('contain', 'No rows found');
   });
@@ -86,7 +94,7 @@ describe('Web Tables page', () => {
 
   it('should validate data in the worker row after creating a worker', () => {
     cy.createWorker (firstName, lastName, email, age, salary, department);
-    cy.get('.ReactTable')
+    cy.get('.rt-tr')
       .should('contain', firstName)
       .and('contain', lastName)
       .and('contain', email)
