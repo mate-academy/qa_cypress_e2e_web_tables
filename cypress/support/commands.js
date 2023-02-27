@@ -23,3 +23,29 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import './commands'
+   Cypress.on('uncaught:exception', (err, runnable) => {
+   // returning false here prevents Cypress from
+ // failing the test
+   return false
+   })
+
+Cypress.Commands.add('createWorker', (worker) => {
+  cy.get('#addNewRecordButton').click();
+
+  cy.get('#registration-form-modal').should('contain', 'Registration Form');
+  cy.get('#firstName').type(worker.firstName);
+  cy.get('#lastName').type(worker.lastName);
+  cy.get('#userEmail').type(worker.email);
+  cy.get('#age').type(worker.age);
+  cy.get('#salary').type(worker.salary);
+  cy.get('#department').type(worker.department);
+  
+  cy.get('#submit').click();
+});
+
+Cypress.Commands.add('searchWorker', (data) => {
+  cy.get('#searchBox').clear().type(`${data}`);
+
+  cy.get('.rt-td').should('contain.text', data);
+});
