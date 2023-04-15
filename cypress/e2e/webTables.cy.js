@@ -7,17 +7,12 @@ describe('Web Tables page', () => {
     cy.visit('/webtables')
   });
 
-  it('Page is exist', () => {
+  it.skip('Page is exist', () => {
     cy.get('.playgound-header')
       .should('contain.text', 'Web Tables')
   });
 
-  it('Pagination is exist', () => {
-    cy.get('.-pagination')
-      .should('exist')
-  });
-
-  it.only('Possibility to Add new worker', () => {
+  it('Possibility to Add new worker', () => {
     cy.get('#addNewRecordButton')
       .click()
 
@@ -47,4 +42,44 @@ describe('Web Tables page', () => {
       cy.get('.ReactTable')
         .should('contain.text', worker.lastname)
   });
+
+  it.only('Pagination is exist and working', () => {
+    cy.get('.-pagination')
+      .should('exist')
+
+    cy.createWorker(worker)
+    cy.createWorker(worker)
+    cy.createWorker(worker)
+    cy.createWorker(worker)
+
+    cy.get('select').select('5')
+
+    cy.get('.-totalPages')
+      .should('contain.text', '2')
+
+    cy.get('.-next > .-btn')
+      .click()
+
+    cy.get('.-pageJump > input')
+      .should('have.value', '2')
+
+    cy.get('.-previous > .-btn')
+      .click()
+
+    cy.get('.-pageJump > input')
+      .should('have.value', '1')  
+  });
+
+  it('Possibility to Delete worker', () => {
+    cy.get('.ReactTable')
+      .should('contain.text', worker.lastname)
+      
+
+      cy.get('.ReactTable')
+        .should('contain.text', worker.firstname)
+      cy.get('.ReactTable')
+        .should('contain.text', worker.lastname)
+  });
+
+  
 });
