@@ -7,7 +7,7 @@ describe('Web Tables page', () => {
     cy.visit('/webtables')
   });
 
-  it.skip('Page is exist', () => {
+  it('Page is exist', () => {
     cy.get('.playgound-header')
       .should('contain.text', 'Web Tables')
   });
@@ -43,7 +43,7 @@ describe('Web Tables page', () => {
         .should('contain.text', worker.lastname)
   });
 
-  it.only('Pagination is exist and working', () => {
+  it('Pagination is exist and working', () => {
     cy.get('.-pagination')
       .should('exist')
 
@@ -70,16 +70,46 @@ describe('Web Tables page', () => {
       .should('have.value', '1')  
   });
 
-  it('Possibility to Delete worker', () => {
-    cy.get('.ReactTable')
-      .should('contain.text', worker.lastname)
-      
+  it('Possibility to find and edit worker', () => {
+    cy.get('#searchBox')
+      .type('Kierra')
+     
+    cy.get('#edit-record-3')
+      .click()
 
-      cy.get('.ReactTable')
-        .should('contain.text', worker.firstname)
-      cy.get('.ReactTable')
-        .should('contain.text', worker.lastname)
+    cy.get('#firstName')
+      .type('{selectAll}John')
+
+    cy.get('#lastName')
+       .type('{selectAll}Doe')
+
+    cy.get('#submit')
+       .click()  
+
+    cy.get('#searchBox')
+       .type('{selectAll}{del}')
+
+    cy.get('.ReactTable')
+       .should('contain.text', 'John')
+    cy.get('.ReactTable')
+       .should('contain.text', 'Doe')
   });
 
-  
+  it('Possibility to Delete worker', () => {
+    cy.get(`#delete-record-3`)
+      .click();
+
+    cy.get('#delete-record-3')
+      .should('not.exist')
+  });
+
+  it('Possibility to Delete all workers', () => {
+    cy.createWorker(worker)
+    cy.createWorker(worker)
+
+    cy.deleteAllWorkers(5)
+
+    cy.get('#delete-record-1')
+      .should('not.exist')
+  });
 });

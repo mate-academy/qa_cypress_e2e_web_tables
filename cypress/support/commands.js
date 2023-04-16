@@ -48,3 +48,15 @@ Cypress.Commands.add('createWorker', (worker) => {
  cy.get('#submit')
    .click()
 })
+
+Cypress.Commands.add('deleteAllWorkers', (total) => {
+  for (let i = total; i > 0; i--) {
+    cy.get(`#delete-record-${i}`)
+      .click();
+    // repit because last added worker don't deleted from first attampt, don't know why...
+    if (i === total) {
+      cy.get(`#delete-record-${i}`)
+      .click();
+    }
+  }
+});

@@ -5,7 +5,7 @@ export function generateWorker() {
   const lastname = faker.name.lastName();
   const email = faker.internet.email();
   const age = Math.round(Math.random() * 100);
-  const department = 'Intern';
+  const department = faker.commerce.department();
   const salary = Math.round(Math.random() * 10) * 1000;
 
   return { firstname, lastname, email, age, department, salary };
