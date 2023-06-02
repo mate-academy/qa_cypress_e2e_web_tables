@@ -12,10 +12,6 @@ describe('Web Tables page', () => {
 
   beforeEach(() => {
     cy.visit('/')
-    cy.task('generateData')
-    .then(generateData => {
-      data = generateData;
-    })
   });
 
   it('table should contain a paganation', () => {
@@ -31,9 +27,9 @@ describe('Web Tables page', () => {
 
   it('rows count selection', () => {
     cy.get('select')
-      .select(data.rows);
+      .select('5 rows');
     cy.get('select')
-      .should('contain', data.rows);
+      .should('contain', '5 rows');
   });
 
   it('add new worker', () => {
