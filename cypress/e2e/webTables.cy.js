@@ -1,5 +1,4 @@
 describe('Web Tables page', () => {
-  let data;
 
   const testData = {
     firstname: 'Frank',
