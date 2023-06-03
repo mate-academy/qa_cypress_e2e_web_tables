@@ -1,5 +1,3 @@
-/// <reference types='cypress' />
-
 import faker from 'faker';
 import { generateUser } from '../support/commands';
 const firstnameChanged = faker.name.firstName();
