@@ -56,3 +56,4 @@ Cypress.Commands.add('searchTestWorker', (data) => {
 
   cy.get('.rt-td').should('contain.text', data);
 });
+
