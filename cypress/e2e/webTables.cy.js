@@ -3,6 +3,7 @@ import { generateUser } from '../support/commands';
 const firstnameChanged = faker.name.firstName();
 
 describe('Web Tables page', () => {
+
   const test = generateUser();
 
   beforeEach(() => {
