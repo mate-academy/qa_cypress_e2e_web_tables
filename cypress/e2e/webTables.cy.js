@@ -77,3 +77,4 @@ describe('Web Tables page', () => {
     cy.searchTestWorker(test.department);
   });
 });
+
