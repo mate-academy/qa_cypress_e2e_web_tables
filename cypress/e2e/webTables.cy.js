@@ -10,9 +10,11 @@ describe('Web Tables page', () => {
     salary: 1000,
     department: 'Insurance'
   };
+
   beforeEach(() => {
     cy.visit('/');
   });
+
   it('should contain pagination', () => {
     cy.contains('.pagination-bottom', 'Page')
       .should('exist');
@@ -23,6 +25,7 @@ describe('Web Tables page', () => {
     cy.get('.-pageSizeOptions')
       .should('exist');
   });
+
   it('should provide ad ability to add new worker', () => {
     cy.get('#addNewRecordButton')
       .click();
@@ -48,6 +51,7 @@ describe('Web Tables page', () => {
       .and('contain', newWorker.salary)
       .and('contain', newWorker.department);
   });
+
   it('should provide ad ability to delete worker', () => {
     cy.contains('[role="row"]', 'Cierra')
       .find('#delete-record-1')
@@ -55,6 +59,7 @@ describe('Web Tables page', () => {
     cy.contains('[role="row"]', 'Cierra')
       .should('not.exist');
   });
+
   it('should provide ad ability to delete all workers', () => {
     cy.get('#delete-record-1')
       .click();
@@ -65,6 +70,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-noData')
       .should('be.visible');
   });
+  
   it('should provide ad ability to find worker in search field and edit it', () => {
     cy.get('#searchBox')
       .type('Cierra');
