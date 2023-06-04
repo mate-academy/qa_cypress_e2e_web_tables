@@ -23,3 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('findId', (id) => {
+  cy.get(`#${id}`);
+});
+
+Cypress.Commands.add('haveEqData', (cssClass, data) => {
+  cy.get(cssClass).should('contain', data);
+});
+
+Cypress.Commands.add('searchByColumn', (data) => {
+  cy.findId('searchBox').type(data);
+  cy.get('.rt-td').should('contain', data);
+  cy.findId('searchBox').clear();
+});
