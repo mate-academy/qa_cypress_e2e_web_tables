@@ -3,6 +3,7 @@
 describe('Web Tables Page', () => {
   beforeEach(() => {
   cy.visit ('https://demoqa.com/webtables');
+
   });
   
   const user = {
