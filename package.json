@@ -19,5 +19,23 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.9.0",
     "typescript": "^4.9.5"
-  }
+  },
+  "name": "qa_cypress_e2e_web_tables",
+  "description": "1. Fork the repo.\r 1. Clone **your** forked repository.\r 1. Run the command `npm i`.\r 1. Create a new branch `git checkout -b testing`.\r 1. Resolve tasks in the `cypress`/`e2e`/`webTables.cy.js`.\r 1. Create a pull request.\r 1. Do not forget to click on `Re-request review` if you submit the homework after previous review.",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ann-yurkevych/qa_cypress_e2e_web_tables.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ann-yurkevych/qa_cypress_e2e_web_tables/issues"
+  },
+  "homepage": "https://github.com/ann-yurkevych/qa_cypress_e2e_web_tables#readme"
 }

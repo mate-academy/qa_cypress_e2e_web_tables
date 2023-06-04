@@ -1,25 +1,28 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('createUser', (user) => {
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(user.firstName);
+    cy.get('#lastName').type(user.lastName);
+    cy.get('#userEmail').type(user.email);
+    cy.get('#age').type(user.age);
+    cy.get('#salary').type(user.salary);
+    cy.get('#department').type(user.department);
+    cy.get('#submit').click();
+  });
+
+  Cypress.Commands.add('searchBy', (user) => {
+    cy.get('#searchBox').clear().type(user.firstName);
+    cy.get('#searchBox').clear().type(user.lastName);
+    cy.get('#searchBox').clear().type(user.email);
+    cy.get('#searchBox').clear().type(user.age);
+    cy.get('#searchBox').clear().type(user.salary);
+    cy.get('#searchBox').clear().type(user.department);
+
+  });
+
+  Cypress.Commands.add('searchAndValidateWorker', (data) => {
+    cy.get('#searchBox').clear().type(`${data}`);
+    cy.get('.rt-td').should('contain.text', data);
+  });
+
+
