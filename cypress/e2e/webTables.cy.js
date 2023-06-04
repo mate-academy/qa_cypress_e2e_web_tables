@@ -73,12 +73,17 @@ describe('Web Tables page', () => {
   });
 
   it('should provide an ability to delete worker', () => {
-    cy.get('#delete-record-3')
-      .should('exist');
-    cy.get('#delete-record-3')
-      .click();
-    cy.get('#delete-record-3')
-      .should('not.exist');
+    cy.get('[id^=delete-record-]').then($elements => {
+      $elements.each((index) => {
+        const deleteButtonSelector = `#delete-record-${index + 1}`;
+        cy.get(deleteButtonSelector)
+          .should('exist');
+        cy.get(deleteButtonSelector)
+          .click();
+        cy.get(deleteButtonSelector)
+          .should('not.exist');
+      });
+    });
   });
 
   it('should provide an ability to delete all workers', () => {
