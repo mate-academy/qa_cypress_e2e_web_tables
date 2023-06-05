@@ -74,7 +74,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-tbody').should('not.contain', '#delete-record-3');
   });
 
-  it.only('should find worker in search field and edit it', () => {
+  it('should find worker in search field and edit it', () => {
     cy.createWorker(worker);
     cy.get('#searchBox').type(worker.firstName)
     cy.get('#edit-record-4').click();
