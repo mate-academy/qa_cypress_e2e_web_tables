@@ -22,6 +22,7 @@ describe('Web Tables page', () => {
 
   it('table should have row count selection', () => {
     cy.get('select').select('20 rows');
+    cy.get(':nth-child(20)').should('exist');
   });
 
   it('should be able to add a new worker to the table and find him by searching all columns', () => {
@@ -40,24 +41,34 @@ describe('Web Tables page', () => {
     cy.get('.rt-tbody').should('contain', newUser.salary);
     cy.get('.rt-tbody').should('contain', newUser.department);
     cy.get('#searchBox').clear().type(newUser.firstName);
+    cy.get('.rt-tr-group').should('contain', newUser.firstName);
     cy.get('#searchBox').clear().type(newUser.lastName);
+    cy.get('.rt-tr-group').should('contain', newUser.lastName);
     cy.get('#searchBox').clear().type(newUser.email);
+    cy.get('.rt-tr-group').should('contain', newUser.email);
     cy.get('#searchBox').clear().type(newUser.age);
+    cy.get('.rt-tr-group').should('contain', newUser.age);
     cy.get('#searchBox').clear().type(newUser.salary);
+    cy.get('.rt-tr-group').should('contain', newUser.salary);
     cy.get('#searchBox').clear().type(newUser.department);
+    cy.get('.rt-tr-group').should('contain', newUser.department);
   });
 
   it('should be able to delete a worker from the table', () => {
     cy.get('#delete-record-2').click();
+    cy.get('.rt-tr-group').should('not.have.value', 'Aiden')
   });
 
   it('should be able to delete all workers from the table', () => {
     cy.get('#delete-record-1').click();
+    cy.get('#delete-record-1').should('not.exist');
     cy.get('#delete-record-2').click();
+    cy.get('#delete-record-2').should('not.exist');
     cy.get('#delete-record-3').click();
+    cy.get('#delete-record-3').should('not.exist');
   });
 
-  it('should be able to find worker in search field and edit it', () => {
+  it.only('should be able to find worker in search field and edit it', () => {
     cy.get('#searchBox').type('Cierra');
     cy.get('#edit-record-1').click();
     cy.get('#lastName').clear().type(newUser.lastName);
@@ -66,5 +77,10 @@ describe('Web Tables page', () => {
     cy.get('#salary').clear().type('2000');
     cy.get('#department').clear().type(newUser.department);
     cy.get('#submit').click();
+    cy.get('.rt-tr-group').should('contain', newUser.lastName)
+      .and('contain', newUser.email)
+      .and('contain', newUser.age)
+      .and('contain', '2000')
+      .and('contain', newUser.department);
   });
 });
