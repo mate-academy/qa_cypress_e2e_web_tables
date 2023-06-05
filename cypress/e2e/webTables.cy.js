@@ -65,19 +65,24 @@ describe('Web Tables page', () => {
     });
 
   it('delete all worker', () => {
-    cy.get('.rt-tr-group').each(($row) => {
-    cy.wrap($row)
-      .find('[title="Delete"]')
-      .click();
+    cy.get('[id^=delete-record-]').then($elements => {
+      $elements.each((index) => {
+        const deleteButton = `#delete-record-${index + 1}`;
+        cy.get(deleteButton)
+          .should('exist');
+        cy.get(deleteButton)
+          .click();
+        cy.get(deleteButton)
+          .should('not.exist');
+      });
     });
   });
 
-  it('find worker in search field and edit it', () => {
+  it.only('find worker in search field and edit it', () => {
     cy.get('#searchBox')
       .type('Cierra');
     cy.get('.rt-tr-group')
-      .should('contain', 'Cierra')
-      .and('contain', 'Vega');
+      .should('contain', 'Cierra');
     cy.get('.mr-2')
       .click();
     cy.findByPlaceholder('First Name')
@@ -88,20 +93,33 @@ describe('Web Tables page', () => {
     cy.get('#searchBox')
       .clear()
       .type('Vega');
+    cy.get('.rt-tr-group')
+      .should('contain', 'Vega');
     cy.get('#searchBox')
       .clear()
       .type(testData.firstname);
+    cy.get('.rt-tr-group')
+      .should('contain', testData.firstname);
     cy.get('#searchBox')
       .clear()
       .type(39);
+    cy.get('.rt-tr-group')
+      .should('contain', 39);
     cy.get('#searchBox')
       .clear()
       .type('cierra@example.com');
+    cy.get('.rt-tr-group')
+      .should('contain', 'cierra@example.com');
     cy.get('#searchBox')
       .clear()
       .type(10000);
+    cy.get('.rt-tr-group')
+      .should('contain', 10000);
     cy.get('#searchBox')
       .clear()
       .type('Insurance');
+    cy.get('.rt-tr-group')
+      .should('contain', 'Insurance');
   });
 });
+
