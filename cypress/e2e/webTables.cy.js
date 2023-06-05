@@ -2,7 +2,7 @@ describe('Web Tables page', () => {
   const user = {
     firstName: 'Test',
     lastName: 'User',
-    Email: 'testUser@qa.team',
+    email: 'testUser@qa.team',
     age: '21',
     salary: '100000',
     department: 'QA'
