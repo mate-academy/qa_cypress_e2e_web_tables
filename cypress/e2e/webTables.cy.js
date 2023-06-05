@@ -87,7 +87,7 @@ describe('Web Tables', () => {
       .and('contain', user.salary)
       .and('contain', user.department);
   });
-  it.only('should search by all column values', () => {  
+  it('should search by all column values', () => {  
     cy.get('#searchBox').type(existingUser.firstName);
     cy.contains('[class="rt-tbody"]', existingUser.firstName)
       .should('be.visible');
