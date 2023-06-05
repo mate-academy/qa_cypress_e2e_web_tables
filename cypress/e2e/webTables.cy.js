@@ -42,26 +42,43 @@ describe('Web Tables page', () => {
 
     cy.findById('submit')
       .click();
+
+    cy.get('.rt-td')
+      .should('contain', worker.firstName)
+      .and('contain', worker.lastName)
+      .and('contain', worker.email)
+      .and('contain', worker.age)
+      .and('contain', worker.salary)
+      .and('contain', worker.department);
   });
 
   it('should allow to delete workers', () => {
     cy.findById('delete-record-1')
       .click();
 
-    cy.get('span[data-toggle="tooltip"][title="Delete"]')
-      .click({ multiple: true });
+    cy.get('[id^=delete-record-]').then($elements => {
+      $elements.each((index) => {
+        const deleteButtonSelector = `#delete-record-${index + 2}`;
+        cy.get(deleteButtonSelector)
+          .should('exist');
+        cy.get(deleteButtonSelector)
+          .click();
+        cy.get(deleteButtonSelector)
+          .should('not.exist');
+      });
+    });
   });
 
   it('should allow to find and edit worker', () => {
     const search = {
       fName: 'Cierra',
-      lName: 'Vegaa',
+      lName: 'Vega',
       aAge: 39,
       eEmail: 'cierra@example.com',
       sSalary: 10000,
       dDepartment: 'Insurance'
     };
-    const edit = 'a';
+    const edit = 'edit';
 
     cy.findById('searchBox')
       .clear()
@@ -76,8 +93,8 @@ describe('Web Tables page', () => {
     cy.findById('submit')
       .click();
 
-    cy.contains('[role="row"]', `Vega${edit}`)
-      .should('exist');
+    cy.get('[role="row"]')
+      .should('contain', `Vega${edit}`);
 
     cy.findById('searchBox')
       .clear()
