@@ -47,7 +47,7 @@ describe('Web Tables page', () => {
     cy.get('#delete-record-1').should('exist').click();
   });
 
-  it.only('It is possible to delete all records from the table', () => {
+  it('It is possible to delete all records from the table', () => {
     cy.get('[id^=delete-record-]').then($elements => {
       $elements.each((index) => {
         const deleteButtonSelector = `#delete-record-${index + 1}`;
