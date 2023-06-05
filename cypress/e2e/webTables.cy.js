@@ -95,5 +95,16 @@ describe('Web Tables page', () => {
       .type('Insurance');
     cy.contains('[role="row"]', 'Cierra')
       .should('contain', 'Insurance');
+    cy.get('#edit-record-1')
+      .click();
+    cy.get('#department')
+      .clear()
+      .type('Legal');
+    cy.get('#submit')
+      .click();
+    cy.get('#searchBox')
+      .clear();
+    cy.contains('[role="row"]', 'Cierra')
+      .should('contain', 'Legal');
   });
 });
