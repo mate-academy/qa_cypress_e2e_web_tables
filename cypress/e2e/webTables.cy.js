@@ -3,7 +3,7 @@ describe('Web Tables page', () => {
   const user = {
     firstName: 'John',
     lastName: 'Doe',
-    Email: 'JohnDoe@qa.team',
+    email: 'JohnDoe@qa.team',
     age: '36',
     salary: '1000',
     department: 'Test'
@@ -24,6 +24,9 @@ describe('Web Tables page', () => {
   it('should have row count selection', () => {
     cy.get('select')
       .select('5 rows');
+
+    cy.get('select')
+      .should('contain', '5 rows');
   });
 
   it('should add a new worker and check it value using Search', () => {
@@ -37,7 +40,7 @@ describe('Web Tables page', () => {
       .type(user.lastName);
 
     cy.get('#userEmail')
-      .type(user.Email);
+      .type(user.email);
     
     cy.get('#age')
       .type(user.age);
@@ -54,7 +57,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-tbody')
       .should('contain', user.firstName)
       .and('contain', user.lastName)
-      .and('contain', user.Email);
+      .and('contain', user.email);
 
     cy.get('#searchBox')
       .type(user.firstName);
@@ -78,10 +81,10 @@ describe('Web Tables page', () => {
 
     cy.get('#searchBox')
       .clear()
-      .type(user.Email);
+      .type(user.email);
 
     cy.get('.rt-tbody')
-      .should('contain', user.Email);
+      .should('contain', user.email);
 
     cy.get('#searchBox')
       .clear()
@@ -104,14 +107,13 @@ describe('Web Tables page', () => {
   });
 
   it('should delete all workers', () => {
-    cy.get('.rt-tr-group').each(($row) => {
-    cy.wrap($row)
-      .find('[title="Delete"]')
-      .click();
-    });
+   for (let i = 1; i <= 3; i++) {
+    cy.get(`#delete-record-${i}`).click();
+   }
   });
 
   it('should find a worker and edit it', () => {
+    const name = 'Morgan';
     cy.get('#searchBox')
       .type('Cierra');
 
@@ -119,9 +121,13 @@ describe('Web Tables page', () => {
       .click();
 
     cy.get('#firstName')
-      .type('1');
+      .clear()
+      .type(name);
 
     cy.get('#submit')
       .click();
+
+    cy.get('.rt-tbody')
+      .should('contain', name);
   });
 });
