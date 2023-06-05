@@ -79,19 +79,11 @@ describe('Web Tables page', () => {
     cy.get('#delete-record-1')
       .click();
   });
-  
-  // it('should delete all workers', () => {
-  //   cy.get('.rt-tr-group').each(($row) => {
-  //   cy.wrap($row)
-  //     .find('[title="Delete"]')
-  //     .click();
-  //   });
-  // });
 
   it('should delete all workers', () => {
     cy.get('#delete-record-1')
       .click();
-      
+
     cy.get('#delete-record-2')
       .click();
 
@@ -100,19 +92,60 @@ describe('Web Tables page', () => {
   });
 
   it('should provide an ability to search and edit worker', () => {
-    cy.findByPlaceholder('Type to search')
-        .type('Alden');
-
     cy.get('#edit-record-2')
-        .click();
-
+    .click();
+    
     cy.findByPlaceholder('First Name')
-        .type('{selectall}Federico');  
-
+    .type('{selectall}Federico');  
+    
     cy.get('#submit')
-        .click();
-
+    .click();
+    
     cy.get('.rt-tbody')
-        .should('contain', 'Federico');     
-    });  
+    .should('contain', 'Federico');     
+  }); 
+  
+  it('should search by all column values', () => {
+    cy.createWorker(worker);
+    cy.get('#searchBox')
+      .type(worker.firstName);
+      
+    cy.get('.rt-tbody')
+      .should('contain', worker.firstName);
+  
+    cy.get('#searchBox')
+      .clear()
+      .type(worker.lastName);
+  
+    cy.get('.rt-tbody')
+      .should('contain', worker.lastName);
+  
+    cy.get('#searchBox')
+      .clear()
+      .type(worker.email);
+  
+    cy.get('.rt-tbody')
+      .should('contain', worker.email);
+  
+    cy.get('#searchBox')
+      .clear()
+      .type(worker.age);
+  
+    cy.get('.rt-tbody')
+      .should('contain', worker.age);
+  
+    cy.get('#searchBox')
+      .clear()
+      .type(worker.salary);
+  
+    cy.get('.rt-tbody')
+      .should('contain', worker.salary);
+  
+    cy.get('#searchBox')
+      .clear()
+      .type(worker.department);
+  
+    cy.get('.rt-tbody')
+      .should('contain', worker.department);
+  });
 });
