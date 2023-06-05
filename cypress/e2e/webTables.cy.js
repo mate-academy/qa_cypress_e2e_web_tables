@@ -3,7 +3,7 @@
 describe('Web Tables page', () => {
   let user;
 
-  before(() => {
+  beforeEach(() => {
     cy.visit('/');
     cy.task('generateUser')
       .then(generateUser =>{
@@ -11,10 +11,100 @@ describe('Web Tables page', () => {
       });
     });
 
-  it('check workflow on the page', () => {
+    it('Check pagination', () => {
+
+      cy.get('select[aria-label="rows per page"]')
+    .select('5 rows');
+
+    cy.get('#addNewRecordButton')
+    .click();
+
+    cy.get('#firstName')
+    .type(user.firstName);
+
+    cy.get('#lastName')
+    .type(user.lastName);
+
+    cy.get('#userEmail')
+    .type(user.email);
+
+    cy.get('#age')
+    .type('21');
+
+    cy.get('#salary')
+    .type('2500');
+
+    cy.get('#department')
+    .type(user.department);
+
+    cy.get('#submit')
+    .click();
+
+    cy.get('#addNewRecordButton')
+    .click();
+
+    cy.get('#firstName')
+    .type(user.firstName);
+
+    cy.get('#lastName')
+    .type(user.lastName);
+
+    cy.get('#userEmail')
+    .type(user.email);
+
+    cy.get('#age')
+    .type('21');
+
+    cy.get('#salary')
+    .type('2500');
+
+    cy.get('#department')
+    .type(user.department);
+
+    cy.get('#submit')
+    .click();
+
+    cy.get('#addNewRecordButton')
+    .click();
+
+    cy.get('#firstName')
+    .type(user.firstName);
+
+    cy.get('#lastName')
+    .type(user.lastName);
+
+    cy.get('#userEmail')
+    .type(user.email);
+
+    cy.get('#age')
+    .type('21');
+
+    cy.get('#salary')
+    .type('2500');
+
+    cy.get('#department')
+    .type(user.department);
+
+    cy.get('#submit')
+    .click();
+
+    cy.get('.-next')
+    .should('contain', 'Next')
+    .click();
+
+    cy.get('.-totalPages')
+    .should('contain', '2');
+
+    });
+
+  it('Check the rows count', () => {
     
-    cy.get('.select-wrap')
-    .type('{downArrow}{enter}');
+    cy.get('select[aria-label="rows per page"]')
+    .select('20 rows');
+
+  });
+
+  it('Add new worker and validate data in worker row after creating worker.', () => {
 
     cy.get('#addNewRecordButton')
     .click();
@@ -57,10 +147,41 @@ describe('Web Tables page', () => {
 
     cy.contains('.web-tables-wrapper', 'Department')
     .should('contain', user.department);
+
+  });
+
+  it ('Delete a created worker', () => {
     
-    cy.get('#delete-record-1')
+    cy.get('#addNewRecordButton')
     .click();
 
+    cy.get('#firstName')
+    .type(user.firstName);
+
+    cy.get('#lastName')
+    .type(user.lastName);
+
+    cy.get('#userEmail')
+    .type(user.email);
+
+    cy.get('#age')
+    .type('21');
+
+    cy.get('#salary')
+    .type('2500');
+
+    cy.get('#department')
+    .type(user.department);
+
+    cy.get('#submit')
+    .click();
+
+    cy.get('#delete-record-4')
+    .click();
+
+  });
+
+  it('Find worker in search field and edit it.', () => {
     cy.get('#searchBox')
     .type('Cierra');
 
@@ -73,13 +194,33 @@ describe('Web Tables page', () => {
     cy.get('#submit')
     .click();
 
+  });
+
+  it('Check search by all column values.', () => {
+
     cy.get('#searchBox')
+    .type('12000')
+    .should('have.value', '12000')
     .clear();
 
     cy.get('#searchBox')
-    .type(user.searchField)
-    .should('have.value', user.searchField)
+    .type('Vega')
+    .should('have.value', 'Vega')
     .clear();
+
+    cy.get('#searchBox')
+    .type('45')
+    .should('have.value', '45')
+    .clear();
+
+    cy.get('#searchBox')
+    .type('alden@example.com')
+    .should('have.value', 'alden@example.com')
+    .clear();
+
+  });
+
+  it('Delete all workers', () => {
 
     cy.get('#delete-record-1')
     .click();
@@ -90,7 +231,5 @@ describe('Web Tables page', () => {
     cy.get('#delete-record-3')
     .click();
 
-    cy.get('#delete-record-4')
-    .click();
   });
 });
