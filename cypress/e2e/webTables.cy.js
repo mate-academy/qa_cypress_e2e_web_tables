@@ -1,11 +1,11 @@
 describe('Web Tables page', () => {
   const user = {
-    firstName: 'John',
-    lastName: 'Doe',
-    Email: 'JohnDoe@qa.team',
-    age: '36',
-    salary: '1000',
-    department: 'Test'
+    firstName: 'Test',
+    lastName: 'User',
+    Email: 'testUser@qa.team',
+    age: '21',
+    salary: '100000',
+    department: 'QA'
   }
 
     beforeEach(() => {
@@ -45,9 +45,9 @@ describe('Web Tables page', () => {
       cy.get('.rt-tbody').should('contain', user.department);
     });
   
-    it('should delete a worker', () => {
-      cy.get('#delete-record-1').click();
-    });
+    // it('should delete a worker', () => {
+    //   cy.get('#delete-record-1').click();
+    // });
   
     it('should delete worker', () => {
       cy.get(`#delete-record-1`).click();
@@ -57,7 +57,7 @@ describe('Web Tables page', () => {
     it('should find a worker and edit it', () => {
       cy.get('#searchBox').type('Cierra');
       cy.get('[title="Edit"]').click();
-      cy.get('#firstName').type('1');
+      cy.get('#firstName').type('_test_new');
       cy.get('#submit').click();
     });
   })
