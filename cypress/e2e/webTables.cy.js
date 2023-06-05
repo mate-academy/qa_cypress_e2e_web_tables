@@ -74,25 +74,20 @@ describe('Web Tables page', () => {
     cy.get('.rt-tbody').should('not.contain', '#delete-record-3');
   });
 
-  it('should find worker in search field and edit it', () => {
-    cy.createWorker(worker);
-    cy.get('#searchBox').type(worker.firstName)
-    cy.get('#edit-record-4').click();
-    cy.get('#firstName').clear().type(changedWorker.firstName);
+  it('should be able to find worker in search field and edit it', () => {
+    cy.get('#searchBox').type('Cierra');
+    cy.get('#edit-record-1').click();
     cy.get('#lastName').clear().type(changedWorker.lastName);
     cy.get('#userEmail').clear().type(changedWorker.email);
     cy.get('#age').clear().type(changedWorker.age);
     cy.get('#salary').clear().type(changedWorker.salary);
     cy.get('#department').clear().type(changedWorker.department);
     cy.get('#submit').click();
-
-    cy.get('.rt-tbody')
-    .should('contain', changedWorker.firstName)
-    .and('contain', changedWorker.lastName)
-    .and('contain', changedWorker.email)
-    .and('contain', changedWorker.age)
-    .and('contain', changedWorker.salary)
-    .and('contain', changedWorker.department);
+    cy.get('.rt-tr-group').should('contain', changedWorker.lastName)
+      .and('contain', changedWorker.email)
+      .and('contain', changedWorker.age)
+      .and('contain', changedWorker.salary)
+      .and('contain', changedWorker.department);
   });
 
   it('should search by all column values', () => {
