@@ -2,7 +2,7 @@
 
 describe('Web Tables page', () => {
 
-  it('should check pagination', () => {
+  it('working with table', () => {
     cy.visit('https://demoqa.com/webtables');
     cy.get('.pagination-bottom')
       .should('exist')
@@ -11,9 +11,9 @@ describe('Web Tables page', () => {
           .should('exist')
         cy.get('.-next')
           .should('exist');
-      });
-        cy.contains('.select-wrap','10 rows')
-            .click();
+    });
+    cy.contains('.select-wrap','10 rows')
+      .click();
     cy.contains('Add').click();
     cy.contains('.modal-content', 'Registration Form')
       .should('exist');
@@ -58,9 +58,5 @@ describe('Web Tables page', () => {
     cy.get('#submit').click();
     cy.get('.rt-td').contains('Teryn').should('be.visible');
     cy.get('.rt-td').contains('32000').should('be.visible');
-    //cy.contains('#item-3','Web Tables')
-      //.click();
-
-      })
   });
-
+});
