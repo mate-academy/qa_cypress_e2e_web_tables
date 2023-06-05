@@ -16,44 +16,16 @@ describe('Web Tables page', () => {
     cy.visit('/');
   });
 
-  it('should contain pagination', () => {
-    cy.get('.-pagination')
-      .should('contain.text', 'Previous')
-      .and('contain.text', 'Next');
-    cy.get('.-pageInfo')
-      .should('exist');
-  });
+  it('should provide the ability to add a new worker', () => {
+    cy.createUser(
+      firstName, 
+      lastName, 
+      email, 
+      age, 
+      salary, 
+      department
+    );
 
-  it('should contain row count selection', () => {
-    cy.get('select')
-      .select('5 rows');
-  });
-
-  it('should add a new worker', () => {
-    cy.get('#addNewRecordButton')
-      .click();
-
-    cy.get('#firstName')
-      .type(firstName);
-
-    cy.get('#lastName')
-      .type(lastName);
-
-    cy.get('#userEmail')
-      .type(email);
-
-    cy.get('#age')
-      .type(age);
-
-    cy.get('#salary')
-      .type(salary);
-
-    cy.get('#department')
-      .type(department);
-
-    cy.get('#submit')
-      .click();
-    
     cy.get('.rt-tbody')
       .should('contain', firstName)
       .and('contain', lastName)
@@ -67,33 +39,62 @@ describe('Web Tables page', () => {
 
     cy.get('.rt-tbody')
       .should('contain', department);
+  
+    });
+
+  it('should provide the ability to search by all columns', () => {
+    cy.createUser(
+      firstName, 
+      lastName, 
+      email, 
+      age, 
+      salary, 
+      department
+    );
 
     cy.get('#searchBox')
-      .clear()
       .type(firstName);
+    cy.get('.rt-tr-group')
+      .should('contain', firstName)
+    cy.get('#searchBox')
+      .clear();
 
     cy.get('#searchBox')
-      .clear()
       .type(lastName);
+    cy.get('.rt-tr-group')
+      .should('contain', lastName)
+    cy.get('#searchBox')
+      .clear();
 
     cy.get('#searchBox')
-      .clear()
       .type(email);
+    cy.get('.rt-tr-group')
+      .should('contain', email)
+    cy.get('#searchBox')
+      .clear();
 
     cy.get('#searchBox')
-      .clear()
       .type(age);
+    cy.get('.rt-tr-group')
+      .should('contain', age)
+    cy.get('#searchBox')
+      .clear();
 
     cy.get('#searchBox')
-      .clear()
       .type(salary);
+    cy.get('.rt-tr-group')
+      .should('contain', salary)
+    cy.get('#searchBox')
+      .clear();
 
     cy.get('#searchBox')
-      .clear()
       .type(department);
+    cy.get('.rt-tr-group')
+      .should('contain', department)
+    cy.get('#searchBox')
   });
 
-  it('should delete a worker', () => {
+  it('should provide the ability to delete a worker', () => {
     cy.get('#delete-record-2')
       .should('exist')
 
@@ -104,7 +105,7 @@ describe('Web Tables page', () => {
       .should('not.include.html', '#delete-record-2');
   });
 
-  it('should delete all workers', () => {
+  it('should provide the ability to delete all workers', () => {
     cy.get('#delete-record-1')
       .should('exist')
 
@@ -133,38 +134,68 @@ describe('Web Tables page', () => {
       .should('not.include.html', '#delete-record-3');
   });
 
-    it('should find a worker in search field and edit it', () => {
-        cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)').then(($name) => {
-        const txt = $name.text();
+  it('should provide the ability to find a worker in search field and edit it', () => {
+    cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)').then(($name) => {
+      const txt = $name.text();
 
-          cy.get('#searchBox')
-          .type(txt);
-        })
+    cy.get('#searchBox')
+      .type(txt);
+    })
 
-        cy.get('#edit-record-1')
-          .click();
+    cy.get('#edit-record-1')
+      .click();
 
-        cy.get('#lastName')
-          .clear()
-          .type(lastName);
+    cy.get('#userEmail')
+      .clear()
+      .type(email);
 
-        cy.get('#userEmail')
-          .clear()
-          .type(email);
+    cy.get('#submit')
+        .click();
 
-        cy.get('#age')
-          .clear()
-          .type(age);
+    cy.get('#searchBox')
+      .clear();
 
-        cy.get('#salary')
-          .clear()
-          .type('3000');
+    cy.get('.rt-tr-group')
+      .should('contain', email);
+  });
 
-        cy.get('#department')
-          .clear()
-          .type(department);
+  it('should contain pagination', () => {
+    for(let i = 1; i <= 5; i++) {
+      cy.createUser(
+        firstName, 
+        lastName, 
+        email, 
+        age, 
+        salary, 
+        department
+      ); 
+      i++;
+    };
 
-        cy.get('#submit')
-          .click();
-    });
+    cy.get('select')
+      .select(0);
+    cy.get('.-pageJump > input')
+      .should('have.attr', 'value', '1');
+    cy.contains('button', 'Next')
+      .click();
+    cy.get('.-pageJump > input')
+      .should('have.attr', 'value', '2');
+  });
+
+  it('should contain row count selection', () => {
+    cy.get('div.rt-tr-group')
+      .should('have.length', 10);
+
+    cy.get('select')
+      .select(0);
+
+    cy.get('div.rt-tr-group')
+      .should('have.length', 5);
+
+    cy.get('select')
+      .select(2);
+
+    cy.get('div.rt-tr-group')
+      .should('have.length', 20);
+  });
 });
