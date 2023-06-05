@@ -45,9 +45,17 @@ describe('Web Tables page', () => {
     cy.get('.rt-tr-group').should('exist');
 
     cy.get('#delete-record-1').should('exist').click();
+  });
 
-//As I understand, there is no "delete all records" button. So this test will fail as expected
-    cy.get('#delete-all-records').should('exist');
+  it.only('It is possible to delete all records from the table', () => {
+    cy.get('[id^=delete-record-]').then($elements => {
+      $elements.each((index) => {
+        const deleteButtonSelector = `#delete-record-${index + 1}`;
+        cy.get(deleteButtonSelector).should('exist');
+        cy.get(deleteButtonSelector).click();
+        cy.get(deleteButtonSelector).should('not.exist');
+      });
+    });
   });
 
   it('It is possible to find a user through the Search field and edit his record', () => {
@@ -63,7 +71,7 @@ describe('Web Tables page', () => {
     cy.get('[role="row"]').should('contain', 'Alden_edited');
   });
 
-  it.only('Search by all column values', () => {
+  it('Search by all column values', () => {
     cy.get('#searchBox').clear().click().type('Cierra');
     cy.get('#basic-addon2').click();
     cy.get('[role="row"]').should('contain', 'Cierra');
