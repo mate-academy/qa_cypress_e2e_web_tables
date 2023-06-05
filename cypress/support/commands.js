@@ -33,7 +33,7 @@ export const generateUser = () => {
     email: faker.internet.email(),
     age: faker.random.number({ min: 18, max: 60 }),
     salary: faker.random.number({ min: 2000, max: 10000 }),
-    department: faker.random.arrayElement(['IT', 'Sales', 'Marketing']),
+    department: faker.random.arrayElement(['Sales', 'IT', 'Marketing']),
   };
 };
 

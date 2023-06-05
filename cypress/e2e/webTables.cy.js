@@ -64,7 +64,7 @@ describe('Web Tables page', () => {
       .should('not.contain.text', 'cierra@example.com');
   });
 
-  it('Ability of editing the user"s info', () => {
+  it('Ability of editing the user""s info', () => {
     cy.createTestWorker(test);
 
     cy.get('#searchBox').type(test.firstName);
