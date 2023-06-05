@@ -77,6 +77,9 @@ describe('Web Tables page', () => {
 
     cy.get('#delete-record-3')
       .click();
+
+    cy.get('#delete-record-3')
+      .should('not.exist');
   });
 
   it('sholud allow to delete all employyes', () => {

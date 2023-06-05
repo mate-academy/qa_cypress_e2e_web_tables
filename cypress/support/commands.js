@@ -15,6 +15,7 @@
 Cypress.Commands.add('findByPlaceholder', (placeholder) => {
   cy.get(`[placeholder = "${placeholder}"]`);
 });
+
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
 //
