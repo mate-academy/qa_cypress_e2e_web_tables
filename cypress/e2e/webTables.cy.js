@@ -14,9 +14,10 @@ describe('Web Tables page', () => {
   it('should have Rows count selection', () => {
     cy.get('[aria-label="rows per page"]')
       .select('5 rows');
+    cy.get(':nth-child(6) > .rt-tr').should('not.exist');
   });
 
-  it.only('should should allow to add new worker', () => {
+  it('should should allow to add new worker', () => {
     cy.findById('addNewRecordButton')
       .click();
     cy.findById('firstName')
@@ -45,6 +46,8 @@ describe('Web Tables page', () => {
   it('should delete worker', () => {
     cy.findById('delete-record-3')
       .click();
+    cy.get('[id^="delete-record-3"]')
+      .should('not.exist');
   });
 
   it('should delete all workers', () => {
@@ -84,50 +87,49 @@ describe('Web Tables page', () => {
       .should('contain', 'Alden_new');
   });
 
-  it('Search by all column values', () => {
+  it.only('Search by all column values', () => {
     cy.findById('searchBox')
-      .type('Kierra')
-      .clear();
+      .type('Kierra');
     cy.get('#basic-addon2')
       .click();
     cy.get('[role="row"]')
       .should('contain', 'Kierra');
 
     cy.findById('searchBox')
-      .type('Gentry')
-      .clear();
+      .clear()
+      .type('Gentry');
     cy.get('#basic-addon2')
       .click();
     cy.get('[role="row"]')
       .should('contain', 'Gentry');
 
     cy.findById('searchBox')
-      .type('29')
-      .clear();
+      .clear()
+      .type('29');
     cy.get('#basic-addon2')
       .click();
     cy.get('[role="row"]')
       .should('contain', '29');
 
     cy.findById('searchBox')
-      .type('kierra@example.com')
-      .clear();
+      .clear()
+      .type('kierra@example.com');
     cy.get('#basic-addon2')
       .click();
     cy.get('[role="row"]')
       .should('contain', 'kierra@example.com');
 
     cy.findById('searchBox')
-      .type('2000')
-      .clear();
+      .clear()
+      .type('2000');
     cy.get('#basic-addon2')
       .click();
     cy.get('[role="row"]')
       .should('contain', '2000');
 
     cy.findById('searchBox')
-      .type('Legal')
-      .clear();
+       .clear()
+      .type('Legal');
     cy.get('#basic-addon2')
       .click();
     cy.get('[role="row"]')
