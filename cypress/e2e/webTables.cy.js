@@ -70,8 +70,12 @@ describe('Web Tables page', () => {
 
 
 
-  it('should find and edit a worker', () => {
+  it.only('should find and edit a worker', () => {
     cy.get('#searchBox').type('Cierra');
+
+   //Assert that Cierra was found
+    cy.get('.rt-tbody').contains('Cierra').should('be.visible');
+       
     cy.get('#edit-record-1').click();
     cy.get('#firstName').clear().type(testData.newWorker.firstName);
     cy.get('#lastName').clear().type(testData.newWorker.lastName);
