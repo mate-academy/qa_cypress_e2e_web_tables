@@ -20,7 +20,7 @@ describe('Web Tables page', () => {
     cy.visit('https://demoqa.com/webtables');
   });
 
-  it('', () => {
+  it('pagination should be present', () => {
     cy.get('.-pagination')
       .should('contain', 'Previous')
       .should('contain', 'Next');
