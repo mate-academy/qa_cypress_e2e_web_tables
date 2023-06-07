@@ -75,6 +75,8 @@ describe('Web Tables page', () => {
   it('should provide an ability to find worker in search field and edit it', () => {
     cy.get('#searchBox')
       .type('Alden');
+    cy.get('.rt-td')
+      .should('contain.text','Alden' + 'Cantrell');
     cy.get('#edit-record-2')
       .click();
     cy.get('#lastName')
@@ -94,6 +96,8 @@ describe('Web Tables page', () => {
       .type(userData.department);
     cy.get('#submit')
       .click();
+    cy.get('.rt-td')
+      .should('contain.text', 'Alden' + userData.lastName);
   });
 
   it('should provide an ability to delete worker', () => {
@@ -102,11 +106,9 @@ describe('Web Tables page', () => {
   });
 
   it('should provide an ability to delete all workers', () => {
-    cy.get('#delete-record-3')
-      .click();
-    cy.get('#delete-record-2')
-      .click();
-    cy.get('#delete-record-1')
-      .click();
+  for (let i = 1; i < 4; i++) {
+    cy.get('#delete-record-' + i).click();
+  }
+  cy.get('.rt-td').should('not.have.text', '');
   });
 });
