@@ -185,6 +185,9 @@ describe('Web Tables page', () => {
     cy.get('#searchBox')
     .type('Cierra');
 
+    cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)')
+    .should('contain', 'Cierra');
+
     cy.get('#edit-record-1')
     .click();
 
@@ -199,24 +202,34 @@ describe('Web Tables page', () => {
   it('Check search by all column values.', () => {
 
     cy.get('#searchBox')
-    .type('12000')
-    .should('have.value', '12000')
-    .clear();
-
-    cy.get('#searchBox')
-    .type('Vega')
-    .should('have.value', 'Vega')
-    .clear();
-
-    cy.get('#searchBox')
-    .type('45')
-    .should('have.value', '45')
-    .clear();
-
-    cy.get('#searchBox')
-    .type('alden@example.com')
-    .should('have.value', 'alden@example.com')
-    .clear();
+    .type('Cierra');
+  cy.contains('[role="row"]', 'Cierra')
+    .should('contain', 'Cierra');
+  cy.get('#searchBox')
+    .clear()
+    .type('Vega');
+  cy.contains('[role="row"]', 'Cierra')
+    .should('contain', 'Vega');
+  cy.get('#searchBox')
+    .clear()
+    .type('cierra@example.com');
+  cy.contains('[role="row"]', 'Cierra')
+    .should('contain', 'cierra@example.com');
+  cy.get('#searchBox')
+    .clear()
+    .type(39);
+  cy.contains('[role="row"]', 'Cierra')
+    .should('contain', 39);
+  cy.get('#searchBox')
+    .clear()
+    .type(10000);
+  cy.contains('[role="row"]', 'Cierra')
+    .should('contain', 10000);
+  cy.get('#searchBox')
+    .clear()
+    .type('Insurance');
+  cy.contains('[role="row"]', 'Cierra')
+    .should('contain', 'Insurance');
 
   });
 
