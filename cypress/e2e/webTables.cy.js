@@ -83,23 +83,13 @@ describe('Web Tables page', () => {
   });
 
   it('should delete all workers', () => {
-    cy.get('#delete-record-1')
-      .click();
+    for(let i = 1; i <= 3; i++){
+      cy.get(`#delete-record-${i}`)
+        .click();
 
-    cy.get('.rt-tbody')
-      .should('not.contain', '#delete-record-1');
-
-    cy.get('#delete-record-2')
-      .click();
-
-    cy.get('.rt-tbody')
-      .should('not.contain', '#delete-record-2');
-
-    cy.get('#delete-record-3')
-      .click();
-
-    cy.get('.rt-tbody')
-      .should('not.contain', '#delete-record-3');
+      cy.get('.rt-tbody')
+        .should('not.contain', `#delete-record-${i}`);
+    };
   });
 
   it('should find worker in search field and edit it', () => {
