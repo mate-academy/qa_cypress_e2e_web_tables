@@ -8,10 +8,11 @@ Cypress.Commands.add('fillInRegistrationForm', () => {
     
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min)
-    }
+    };
+
     function selectRandom(array) {
         return array[Math.floor(Math.random() * array.length)];
-    }
+    };
 
     cy.get('#firstName')
     .type(selectRandom(names));
@@ -40,5 +41,5 @@ Cypress.Commands.add('addWorker', () => {
     cy.get('#addNewRecordButton')
     .click();
 
-    cy.fillInRegistrationForm;
+    cy.fillInRegistrationForm();
 });
