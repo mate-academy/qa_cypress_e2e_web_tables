@@ -11,7 +11,6 @@ const firstnameChanged = faker.person.firstName();
 describe('Web Tables page', () => {
   
   const worker = generateWorker();
-  const multipleWorker = worker * 3;
 
   beforeEach (() => {
     cy.visit('/');
@@ -19,7 +18,9 @@ describe('Web Tables page', () => {
 
   it.only('should provide the pagination working correctly', () => {
     cy.get('[aria-label="rows per page"]').select('5');
+
     cy.createWorkers(worker, 3);
+    
     cy.contains('Next')
       .click();
     cy.get('[aria-label="jump to page"]')
