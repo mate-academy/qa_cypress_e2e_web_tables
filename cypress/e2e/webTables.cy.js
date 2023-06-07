@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import { faker } from '@faker-js/faker';
-import { generateWorker } from '../support/generate'; 
+import { generateMultipleWorker, generateWorker } from '../support/generate'; 
 
 const randomRowNumber = Math.floor(Math.random() * 6);
 const rowsCount = ['5', '10', '20', '25', '50', '100'];
@@ -10,16 +10,15 @@ const firstnameChanged = faker.person.firstName();
 
 describe('Web Tables page', () => {
   const worker = generateWorker();
+  const multipleWorker = worker * 3;
 
   beforeEach (() => {
     cy.visit('/');
   });
 
-  it('should provide the pagination working correctly', () => {
+  it.only('should provide the pagination working correctly', () => {
     cy.get('[aria-label="rows per page"]').select('5');
-    cy.createWorker(worker);
-    cy.createWorker(worker);
-    cy.createWorker(worker);
+    cy.createWorkers(worker, 3);
     cy.contains('Next')
       .click();
     cy.get('[aria-label="jump to page"]')

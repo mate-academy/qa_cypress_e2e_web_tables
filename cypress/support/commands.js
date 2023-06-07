@@ -51,3 +51,9 @@ Cypress.Commands.add('searchAndValidateWorker', (data) => {
   cy.get('.rt-td')
     .should('contain.text', data);
 });
+
+Cypress.Commands.add('createWorkers', (worker, count) => {
+  for (let i = 0; i < count; i++) {
+    cy.createWorker(worker);
+  }
+});
