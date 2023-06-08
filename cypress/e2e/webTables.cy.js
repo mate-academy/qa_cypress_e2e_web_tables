@@ -71,34 +71,23 @@ describe('Web Tables page', () => {
   });
 
   it('should provide an ability to delete worker', () => {
-    cy.get('#delete-record-1')
-      .should('exist');
-
-    cy.get('#delete-record-1')
-      .click();
-
-    cy.get('.rt-tbody')
-      .should('not.contain.html', '#delete-record-1');
+    cy.get('#delete-record-2')
+      .click()
+      .should('not.exist');
   });
 
   it('should provide an ability to delete all workers', () => {
-    cy.get('#delete-record-1')
-      .click();
-
-    cy.get('.rt-tbody')
-      .should('not.contain.html', '#delete-record-1');
+    cy.get('#delete-record-3')
+      .click()
+      .should('not.exist');
 
     cy.get('#delete-record-2')
-      .click();
+      .click()
+      .should('not.exist');
 
-    cy.get('.rt-tbody')
-      .should('not.contain.html', '#delete-record-2');
-
-    cy.get('#delete-record-3')
-      .click();
-
-    cy.get('.rt-tbody')
-      .should('not.contain.html', '#delete-record-3');
+    cy.get('#delete-record-1')
+      .click()
+      .should('not.exist');
   });
 
   it('should provide an ability to search worker and edit it', () => {
