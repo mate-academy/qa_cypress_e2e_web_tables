@@ -233,16 +233,12 @@ describe('Web Tables page', () => {
 
   });
 
-  it('Delete all workers', () => {
+  it.only('Delete all workers', () => {
 
-    cy.get('#delete-record-1')
+    for (let i = 1; i < 4; i++) {
+      cy.get('#delete-record-' + `${i}`)
     .click();
-
-    cy.get('#delete-record-2')
-    .click();
-
-    cy.get('#delete-record-3')
-    .click();
+    }
 
   });
 });
