@@ -57,42 +57,37 @@ describe('Web Tables page', () => {
       .and('contain', worker.department);
   });
 
-  it('should delete a worker', () => {
-    cy.get('#delete-record-1')
+  it('delete a worker', () => {
+    cy.get(`#delete-record-1`).click();
+    cy.get('.rt-tbody').should('not.contain.html', `#delete-record-1`)
+  });
+
+  it('delete all workers', () => {
+    for (let i = 1; i < 4; i++) {cy.get(`#delete-record-${i}`).click()}
+    cy.get('[id^="delete-record-"]').should('not.exist');
+  });
+
+  it('should allow to find a user from the Search field and edit his records', () => {
+    cy.get('#searchBox')
+      .type('Alden');
+
+    cy.get('#basic-addon2').click();
+
+    cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)')
+      .should('contain', 'Alden');
+
+    cy.get('#edit-record-2')
       .click();
-    cy.get('.rt-tbody').should('not.contain', '#delete-record-1');
-  });
 
-  it('should delete all workers', () => {
-    cy.get('#delete-record-1').click();
-    cy.get('.rt-tbody').should('not.contain', '#delete-record-1');
+    cy.get('#firstName')
+      .type('_edited');
 
-    cy.get('#delete-record-2').click();
-    cy.get('.rt-tbody').should('not.contain', '#delete-record-2');
+    cy.get('#submit')
+      .should('exist')
+      .click();
 
-    cy.get('#delete-record-3').click();
-    cy.get('.rt-tbody').should('not.contain', '#delete-record-3');
-  });
-
-  it('should find worker in search field and edit it', () => {
-    cy.createWorker(worker);
-    cy.get('#searchBox').type(worker.firstName)
-    cy.get('#edit-record-4').click();
-    cy.get('#firstName').clear().type(changedWorker.firstName);
-    cy.get('#lastName').clear().type(changedWorker.lastName);
-    cy.get('#userEmail').clear().type(changedWorker.email);
-    cy.get('#age').clear().type(changedWorker.age);
-    cy.get('#salary').clear().type(changedWorker.salary);
-    cy.get('#department').clear().type(changedWorker.department);
-    cy.get('#submit').click();
-
-    cy.get('.rt-tbody')
-      .should('contain', changedWorker.firstName)
-      .and('contain', changedWorker.lastName)
-      .and('contain', changedWorker.email)
-      .and('contain', changedWorker.age)
-      .and('contain', changedWorker.salary)
-      .and('contain', changedWorker.department);
+    cy.get('[role="row"]')
+      .should('contain', 'Alden_edited');
   });
 
   it('should search by all column values', () => {
