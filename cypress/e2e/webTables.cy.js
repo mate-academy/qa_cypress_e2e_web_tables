@@ -69,7 +69,7 @@ describe('Web Tables page', () => {
     });
   });
 
-  it('should allow to find and edit worker', () => {
+  it('should allow to find and edit workers', () => {
     const search = {
       fName: 'Cierra',
       lName: 'Vega',
