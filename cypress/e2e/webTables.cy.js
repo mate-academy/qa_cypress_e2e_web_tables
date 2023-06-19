@@ -122,22 +122,6 @@ describe('Web Tables page', () => {
     .should('contain', 'No rows found');
   });
 
-  it('Check deleting all workers', () => {
-
-    cy.visit('');
-
-    for(let i = 1; i < defaultWorkersNum + 1; i++) {
-      deleteRecord(i);
-    }
-
-    cy.get('[class = "rt-tr -odd"], [class = "rt-tr -even"]').should(($lis) => {
-      expect($lis).to.have.length(0)
-    });
-
-    cy.get('.ReactTable')
-    .should('contain', 'No rows found');
-  });
-
   it('Search by value', () => {
 
     cy.visit('');
