@@ -1,10 +1,9 @@
 import { faker } from '@faker-js/faker';
-import age from '@fakerjs/age';
 
 export function generateUser() {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
-  const userAge = age();
+  const age = new Date().getFullYear() - faker.date.birthdate({ max: 100, min: 18, mode: 'age' }).getFullYear();
   const email = faker.internet.email();
   const salary = Math.round(faker.finance.amount());
   const department = faker.commerce.department();
@@ -12,7 +11,7 @@ export function generateUser() {
   return {
     firstName,
     lastName,
-    userAge,
+    age,
     email,
     salary,
     department

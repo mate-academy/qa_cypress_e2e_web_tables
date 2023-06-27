@@ -12,30 +12,33 @@ describe('Web Tables page', () => {
       firstName,
       lastName,
       email,
-      userAge,
+      age,
       salary,
       department
     } = generateUser();
 
+    cy.get('[title="Delete"]').should('have.length', '3');
     cy.get('#addNewRecordButton').click();
     cy.get('#firstName').type(firstName);
     cy.get('#lastName').type(lastName);
     cy.get('#userEmail').type(email);
-    cy.get('#age').type(userAge);
+    cy.get('#age').type(age);
     cy.get('#salary').type(salary);
     cy.get('#department').type(`${department}{Enter}`);
     cy.get('[title="Delete"]').should('have.length', '4');
   });
 
   it('should delete all workers', () => {
-    cy.get('[title=Delete]')
-      .then(rows => {
-        for (let i = 0; i < rows.length; i++) {
-          cy.get('[title=Delete]').first().click();
-        }
-      });
+    if (cy.get('[title=Delete]').should('have.length.at.least', 1)) {
+      cy.get('[title=Delete]')
+        .then(rows => {
+          for (let i = 0; i < rows.length; i++) {
+            cy.get('[title=Delete]').first().click();
+          }
+        });
 
-    cy.get('.web-tables-wrapper').should('contain.text', 'No rows found');
+      cy.get('.web-tables-wrapper').should('contain.text', 'No rows found');
+    }
   });
 
   it('should delete worker', () => {
@@ -55,7 +58,7 @@ describe('Web Tables page', () => {
         firstName,
         lastName,
         email,
-        userAge,
+        age,
         salary,
         department
       } = generateUser();
@@ -64,7 +67,7 @@ describe('Web Tables page', () => {
       cy.get('#firstName').type(firstName);
       cy.get('#lastName').type(lastName);
       cy.get('#userEmail').type(email);
-      cy.get('#age').type(userAge);
+      cy.get('#age').type(age);
       cy.get('#salary').type(salary);
       cy.get('#department').type(`${department}{Enter}`);
     }
@@ -85,7 +88,7 @@ describe('Web Tables page', () => {
       firstName,
       lastName,
       email,
-      userAge,
+      age,
       salary,
       department
     } = generateUser();
@@ -94,7 +97,7 @@ describe('Web Tables page', () => {
     cy.get('#firstName').type(firstName);
     cy.get('#lastName').type(lastName);
     cy.get('#userEmail').type(email);
-    cy.get('#age').type(userAge);
+    cy.get('#age').type(age);
     cy.get('#salary').type(salary);
     cy.get('#department').type(`${department}{Enter}`);
 
@@ -103,7 +106,7 @@ describe('Web Tables page', () => {
       .should('contain.text', firstName)
       .should('contain.text', lastName)
       .should('contain.text', email)
-      .should('contain.text', userAge)
+      .should('contain.text', age)
       .should('contain.text', salary)
       .should('contain.text', department);
     cy.get('#searchBox').clear();
@@ -112,7 +115,7 @@ describe('Web Tables page', () => {
       .should('contain.text', firstName)
       .should('contain.text', lastName)
       .should('contain.text', email)
-      .should('contain.text', userAge)
+      .should('contain.text', age)
       .should('contain.text', salary)
       .should('contain.text', department);
     cy.get('#searchBox').clear();
@@ -121,16 +124,16 @@ describe('Web Tables page', () => {
       .should('contain.text', firstName)
       .should('contain.text', lastName)
       .should('contain.text', email)
-      .should('contain.text', userAge)
+      .should('contain.text', age)
       .should('contain.text', salary)
       .should('contain.text', department);
     cy.get('#searchBox').clear();
-    cy.get('#searchBox').type(userAge);
+    cy.get('#searchBox').type(age);
     cy.get('.rt-table')
       .should('contain.text', firstName)
       .should('contain.text', lastName)
       .should('contain.text', email)
-      .should('contain.text', userAge)
+      .should('contain.text', age)
       .should('contain.text', salary)
       .should('contain.text', department);
     cy.get('#searchBox').clear();
@@ -139,7 +142,7 @@ describe('Web Tables page', () => {
       .should('contain.text', firstName)
       .should('contain.text', lastName)
       .should('contain.text', email)
-      .should('contain.text', userAge)
+      .should('contain.text', age)
       .should('contain.text', salary)
       .should('contain.text', department);
     cy.get('#searchBox').clear();
@@ -148,7 +151,7 @@ describe('Web Tables page', () => {
       .should('contain.text', firstName)
       .should('contain.text', lastName)
       .should('contain.text', email)
-      .should('contain.text', userAge)
+      .should('contain.text', age)
       .should('contain.text', salary)
       .should('contain.text', department);
     cy.get('#searchBox').clear();
@@ -159,7 +162,7 @@ describe('Web Tables page', () => {
       firstName,
       lastName,
       email,
-      userAge,
+      age,
       salary,
       department
     } = generateUser();
@@ -168,14 +171,14 @@ describe('Web Tables page', () => {
     cy.get('#firstName').type(firstName);
     cy.get('#lastName').type(lastName);
     cy.get('#userEmail').type(email);
-    cy.get('#age').type(userAge);
+    cy.get('#age').type(age);
     cy.get('#salary').type(salary);
     cy.get('#department').type(`${department}{Enter}`);
     cy.get('.rt-table')
       .should('contain.text', firstName)
       .should('contain.text', lastName)
       .should('contain.text', email)
-      .should('contain.text', userAge)
+      .should('contain.text', age)
       .should('contain.text', salary)
       .should('contain.text', department);
   });
