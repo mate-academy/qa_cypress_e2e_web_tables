@@ -25,7 +25,7 @@ describe('Web Tables page', () => {
     cy.contains('.-pageInfo', 'Page').should('exist');
   });
 
-  it.only('should have rows', () => {
+  it('should have rows', () => {
     cy.get('select').select('5 rows');
     cy.get('select').should('contain', '5 rows');
     cy.get('select').select('10 rows');
