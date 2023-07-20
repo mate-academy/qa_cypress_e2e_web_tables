@@ -34,14 +34,14 @@ describe('Web Tables page', () => {
     cy.get('select').select('20 rows');
     cy.get('select').should('have.value', 20);
 
-    // cy.get('select').select('25 rows');
-    // cy.get('select').should('have.value', 25);
+    cy.get('select').select('25 rows');
+    cy.get('select').should('have.value', 25);
 
-    // cy.get('select').select('50 rows');
-    // cy.get('select').should('have.value', 50);
+    cy.get('select').select('50 rows');
+    cy.get('select').should('have.value', 50);
 
-    // cy.get('select').select('100 rows');
-    // cy.get('select').should('have.value', 100);
+    cy.get('select').select('100 rows');
+    cy.get('select').should('have.value', 100);
   });
 
   it('Should add a new worker', () => {
