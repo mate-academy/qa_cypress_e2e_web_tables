@@ -25,9 +25,17 @@ describe('Web Tables page', () => {
     cy.contains('.-pageInfo', 'Page').should('exist');
   });
 
-  it('should have rows', () => {
+  it.only('should have rows', () => {
     cy.get('select').select('5 rows');
     cy.get('select').should('contain', '5 rows');
+    cy.get('select').select('10 rows');
+    cy.get('select').should('contain', '10 rows');
+    cy.get('select').select('20 rows');
+    cy.get('select').should('contain', '20 rows');
+    cy.get('select').select('50 rows');
+    cy.get('select').should('contain', '50 rows');
+    cy.get('select').select('100 rows');
+    cy.get('select').should('contain', '100 rows');
   });
 
   it('should allow to add a new worker', () => {
