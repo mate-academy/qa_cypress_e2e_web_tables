@@ -42,6 +42,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-table')
       .scrollTo('right');
     cy.get('#delete-record-1').click();
+    cy.findById('delete-record-1').should('not.exist');
   });
 
   it('should allow to delete all workers', () => {
@@ -117,10 +118,4 @@ describe('Web Tables page', () => {
 
     cy.get('.rt-td').should('contain', 'Compliance');
   });
-
-  // it('should allow to find values by using searching bar', () => {
-  //   cy.findByPlaceholder('Type to search')
-  //     .type('Cierra');
-  //   cy.contains('.rt-td', 'Cierra').should('be.visible');
-  // });
 });
