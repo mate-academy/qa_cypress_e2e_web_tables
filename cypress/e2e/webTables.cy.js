@@ -27,7 +27,13 @@ describe('Web Tables page', () => {
       cy.get('#salary').type(salary);
       cy.get('#department').type(department);
       cy.get('#submit').click();
+
       cy.contains('.rt-td', firstName).should('be.visible');
+      cy.contains('.rt-td', lastName).should('be.visible');
+      cy.contains('.rt-td', email).should('be.visible');
+      cy.contains('.rt-td', age).should('be.visible');
+      cy.contains('.rt-td', salary).should('be.visible');
+      cy.contains('.rt-td', department).should('be.visible');
     });
   });
 
