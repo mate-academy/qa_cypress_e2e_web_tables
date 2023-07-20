@@ -17,7 +17,7 @@ describe('Web Tables page', () => {
     cy.get('select').select('20');
   });
 
-  it('should allow adding a new worker', () => {
+  it('should allow adding a new worker; validation of worker data', () => {
     cy.get('#addNewRecordButton').click();
 
     cy.findByPlaceholder('First Name').type('Stefan');
