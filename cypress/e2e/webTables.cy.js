@@ -82,19 +82,40 @@ describe('Web Tables page', () => {
     });
   });
 
-  // eslint-disable-next-line max-len
-  it.only('should allow to find values by using searching bar in all columns', () => {
-    const searchValue = 'Cierra';
-    cy.findByPlaceholder('Type to search').type(searchValue);
-    cy.get('.rt-tbody')
-      .find('.rt-tr-group')
-      .each(($row) => {
-        cy.wrap($row)
-          .find('.rt-td')
-          .contains(searchValue, { matchCase: false }) // Перевіряємо наявність шуканого значення у комірках
-          .parent() // Знаходимо батьківський елемент, тобто весь рядок
-          .should('be.visible'); // Перевіряємо, що рядок видимий
-      });
+  it('should allow check search by all column values.', () => {
+    cy.findById('searchBox').type('Ald' + '{enter}');
+
+    cy.get('.rt-td').should('contain', 'Alden');
+
+    cy.findById('searchBox').clear();
+
+    cy.findById('searchBox').type('cant' + '{enter}');
+
+    cy.get('.rt-td').should('contain', 'Cantrell');
+
+    cy.findById('searchBox').clear();
+
+    cy.findById('searchBox').type('4' + '{enter}');
+
+    cy.get('.rt-td').should('contain', '45');
+
+    cy.findById('searchBox').clear();
+
+    cy.findById('searchBox').type('alden@' + '{enter}');
+
+    cy.get('.rt-td').should('contain', 'alden@example.com');
+
+    cy.findById('searchBox').clear();
+
+    cy.findById('searchBox').type('120' + '{enter}');
+
+    cy.get('.rt-td').should('contain', '12000');
+
+    cy.findById('searchBox').clear();
+
+    cy.findById('searchBox').type('comp' + '{enter}');
+
+    cy.get('.rt-td').should('contain', 'Compliance');
   });
 
   // it('should allow to find values by using searching bar', () => {
