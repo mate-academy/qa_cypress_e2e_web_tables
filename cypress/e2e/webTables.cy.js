@@ -68,22 +68,15 @@ describe('Web Tables page', () => {
   });
 
   it('should be able to validate data after creating worker', () => {
-    cy.findByPlaceholder('Type to search').type('Alden');
-    cy.findById('edit-record-2').click();
-    cy.findByPlaceholder('First Name').clear();
+    cy.findById('addNewRecordButton').click();
+    cy.findById('registration-form-modal').should('contain.text', 'Registration Form');
     cy.findByPlaceholder('First Name').type(worker.firstName);
-    cy.findByPlaceholder('Last Name').clear();
     cy.findByPlaceholder('Last Name').type(worker.lastName);
-    cy.findById('userEmail').clear();
     cy.findById('userEmail').type(worker.email);
-    cy.findByPlaceholder('Age').clear();
     cy.findByPlaceholder('Age').type(worker.age);
-    cy.findByPlaceholder('Salary').clear();
     cy.findByPlaceholder('Salary').type(worker.salary);
-    cy.findByPlaceholder('Department').clear();
     cy.findByPlaceholder('Department').type(worker.department);
-    cy.findById('submit').click({force:true});
-    cy.findByPlaceholder('Type to search').clear();
+    cy.findById('submit').click();
     cy.get('.rt-td').should('contain', worker.firstName);
     cy.get('.rt-td').should('contain', worker.lastName);
     cy.get('.rt-td').should('contain', worker.email);
