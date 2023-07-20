@@ -23,7 +23,6 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-const faker = require('faker');
 
 Cypress.Commands.add('findById', (id) => {
   cy.get(`#${id}`);
@@ -33,24 +32,22 @@ Cypress.Commands.add('findByPlaceholder', (placeholder) => {
   cy.get(`[placeholder="${placeholder}"]`);
 });
 
-Cypress.Commands.add('addWorker', () => {
+Cypress.Commands.add('addWorker', (worker) => {
   cy.findById('addNewRecordButton', 'Add').click();
   // eslint-disable-next-line max-len
   cy.findById('registration-form-modal', 'Registration Form').should('be.visible');
 
-  cy.findByPlaceholder('First Name').type(faker.name.firstName());
+  cy.findByPlaceholder('First Name').type(worker.firstName);
 
-  cy.findByPlaceholder('Last Name').type(faker.name.lastName());
+  cy.findByPlaceholder('Last Name').type(worker.lastName);
 
-  cy.findById('userEmail').type(faker.internet.email());
+  cy.findById('userEmail').type(worker.email);
 
-  cy.findByPlaceholder('Age').type(faker.datatype.number({ min: 18, max: 65 }));
+  cy.findByPlaceholder('Age').type(worker.age);
 
-  // eslint-disable-next-line max-len
-  cy.findByPlaceholder('Salary').type(faker.random.number({ min: 1, max: 10000 }));
+  cy.findByPlaceholder('Salary').type(worker.salary);
 
-  // eslint-disable-next-line max-len
-  cy.findByPlaceholder('Department').type(faker.random.arrayElement(['Insurance', 'Compliance', 'Legal']));
+  cy.findByPlaceholder('Department').type(worker.department);
 
   cy.findById('submit').click();
 });
