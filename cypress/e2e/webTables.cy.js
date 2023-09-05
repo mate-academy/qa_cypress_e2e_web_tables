@@ -6,11 +6,40 @@ describe('Web Tables page', () => {
   });
 
   it('should test pagination', () => {
-    cy.get('.left-pannel').click();
+    cy.get(':nth-child(1) > .group-header > .header-wrapper > .header-text')
+      .click();
+    cy.get('.group-header .header-wrapper')
+      .should('be.visible')
+      .contains('Elements');
+    cy.get('.group-header .header-wrapper')
+      .should('be.visible')
+      .contains('Form');
+    cy.get('.group-header .header-wrapper')
+      .should('be.visible')
+      .contains('Alerts');
+    cy.get('.group-header .header-wrapper')
+      .should('be.visible')
+      .contains('Frame & Windows');
+    cy.get('.group-header .header-wrapper')
+      .should('be.visible')
+      .contains('Widgets');
+    cy.get('.group-header .header-wrapper')
+      .should('be.visible')
+      .contains('Interactions');
+    cy.get('.group-header .header-wrapper')
+      .should('be.visible')
+      .contains('Book Store Application');
+    cy.get('#addNewRecordButton').click();
+    cy.get('#userForm');
   });
 
   it('should test rows count selection', () => {
-    cy.get('.col-md-6').should('be.visible').click();
+    cy.get('.left-pannel')
+      .find('.group-header .header-wrapper')
+      .contains('Elements')
+      .click();
+
+    cy.get('.col-md-6').should('be.visible');
   });
 
   it('should add a new worker', () => {
@@ -31,6 +60,7 @@ describe('Web Tables page', () => {
   });
 
   it('should find and edit a worker', () => {
+    cy.contains('Kierra').should('exist');
     cy.contains('Kierra')
       .parent()
       .find('#edit-record-3 > svg > path')
@@ -73,6 +103,8 @@ describe('Web Tables page', () => {
 
   it('should delete a worker', () => {
     cy.contains(':nth-child(3) > .rt-tr > :nth-child(2)', 'Gentry')
+      .should('exist');
+    cy.contains(':nth-child(3) > .rt-tr > :nth-child(2)', 'Gentry')
       .parent()
       .find('#delete-record-3 > svg > path')
       .click();
@@ -86,8 +118,9 @@ describe('Web Tables page', () => {
     };
 
     for (const lastName of Object.keys(lastNameDeleteButtonMapping)) {
-      const deleteButtonId =
-        `#delete-record-${lastNameDeleteButtonMapping[lastName]} > svg > path`;
+      const workerLastName = lastName;
+      cy.contains('.rt-tr', workerLastName).should('exist');
+      const deleteButtonId = `#delete-record-${lastNameDeleteButtonMapping[workerLastName]} > svg > path`;
       cy.get(deleteButtonId).click();
     }
   });
