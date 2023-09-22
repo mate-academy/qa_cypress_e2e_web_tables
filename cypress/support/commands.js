@@ -27,12 +27,12 @@ Cypress.Commands.add('findByPlaceholder', (placeholder) => {
   cy.get(`[placeholder="${placeholder}"]`);
 });
 
-Cypress.Commands.add('validateWorkerData', (value) => {
-  cy.get('.rt-table').should('contain', `${value}`);
-});
-
 Cypress.Commands.add('findByID', (ID) => {
   cy.get(`#${ID}`);
+});
+
+Cypress.Commands.add('validateWorkerData', (value) => {
+  cy.get('.rt-table').should('contain', `${value}`);
 });
 
 Cypress.Commands.add('editByPlaceholder', (placeholder, value) => {
@@ -50,3 +50,27 @@ Cypress.Commands.add('selectRowsCountOnPage', (count) => {
   cy.get('select[aria-label="rows per page"]').select(count);
   cy.get('.rt-tr-group').should('have.length', count);
 });
+
+Cypress.Commands.add('deleteByID', (ID) => {
+  cy.get(`#delete-record-${ID}`).click();
+});
+
+Cypress.Commands.add('deleteAllWorkers', (numOfWorkers) => {
+  for (let i = 1; i <= numOfWorkers; i += 1) {
+    cy.get(`#delete-record-${i}`).click();
+  }
+});
+
+// Cypress.Commands.add('addManyWorkers', (count) => {
+//   for (let i = 1; i <= count; i += 1) {
+//     cy.get('#addNewRecordButton').click();
+//     cy.get('.modal-content').should('exist');
+//     cy.findByPlaceholder('First Name').type(newWorker.firstName);
+//     cy.findByPlaceholder('Last Name').type(newWorker.lastName);
+//     cy.findByPlaceholder('name@example.com').type(newWorker.email);
+//     cy.findByPlaceholder('Age').type(newWorker.age);
+//     cy.findByPlaceholder('Salary').type(newWorker.salary);
+//     cy.findByPlaceholder('Department').type(newWorker.department);
+//     cy.contains('Submit').click();
+//   }
+// })
