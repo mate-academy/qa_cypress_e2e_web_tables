@@ -23,3 +23,30 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('findByPlaceholder', (placeholder) => {
+  cy.get(`[placeholder="${placeholder}"]`);
+});
+
+Cypress.Commands.add('validateWorkerData', (value) => {
+  cy.get('.rt-table').should('contain', `${value}`);
+});
+
+Cypress.Commands.add('findByID', (ID) => {
+  cy.get(`#${ID}`);
+});
+
+Cypress.Commands.add('editByPlaceholder', (placeholder, value) => {
+  cy.get(`[placeholder="${placeholder}"]`).clear();
+  cy.get(`[placeholder="${placeholder}"]`).type(value);
+});
+
+Cypress.Commands.add('searchByValue', (value) => {
+  cy.findByID('searchBox').type(value);
+  cy.get('.rt-table').should('contain', value);
+  cy.findByID('searchBox').clear();
+});
+
+Cypress.Commands.add('selectRowsCountOnPage', (count) => {
+  cy.get('select[aria-label="rows per page"]').select(count);
+  cy.get('.rt-tr-group').should('have.length', count);
+});
