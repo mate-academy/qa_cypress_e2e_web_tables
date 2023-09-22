@@ -22,14 +22,16 @@ describe('Web Tables page', () => {
   });
 
   it('should have row count selection', () => {
-    cy.get('[aria-label="rows per page"]').should('contain', '5 rows').select('5 rows')
-    cy.get('[aria-label="rows per page"]').select('10 rows')
-    cy.get('[aria-label="rows per page"]').select('100 rows')
+    cy.get('[aria-label="rows per page"]')
+    .should('contain', '5 rows').select('5 rows');
+    cy.get('[aria-label="rows per page"]').select('10 rows');
+    cy.get('[aria-label="rows per page"]').select('100 rows');
   });
 
   it('should add worker', () => {
     cy.findById('addNewRecordButton').click();
-    cy.findById('registration-form-modal').should('contain.text', 'Registration Form');
+    cy.findById('registration-form-modal')
+    .should('contain.text', 'Registration Form');
     cy.findByPlaceholder('First Name').type(worker.firstName);
     cy.findByPlaceholder('Last Name').type(worker.lastName);
     cy.findById('userEmail').type(worker.email);
