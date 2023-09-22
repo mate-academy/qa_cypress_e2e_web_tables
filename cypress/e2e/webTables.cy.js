@@ -11,8 +11,8 @@ describe('Web Tables page', () => {
   });
 
   it('should check pagination', () => {
-    cy.get('.-next').should('contain', 'Next');
-    cy.get('.-previous').should('contain', 'Previous');
+    cy.get('.-next').contains('Next').should('be.visible');
+    cy.get('.-previous').contains('Previous').should('be.visible');
   });
 
   it('should proide an ability to select rows at page', () => {
@@ -41,16 +41,12 @@ describe('Web Tables page', () => {
   });
 
   it('should provide an ability to delete a worker', () => {
-    cy.findByID('delete-record-1').click();
-
-    cy.findByID('delete-record-1').should('not.exist');
+    cy.deleteByID(2)
+      .should('not.exist');
   });
 
   it('should provide an ability to delete all workers', () => {
-    cy.findByID('delete-record-1').click();
-    cy.findByID('delete-record-2').click();
-    cy.findByID('delete-record-3').click();
-
+    cy.deleteAllWorkers(3);
     cy.contains('.rt-noData', 'No rows found').should('be.visible');
   });
 
