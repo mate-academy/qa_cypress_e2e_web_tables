@@ -66,7 +66,7 @@ describe('Web Tables page', () => {
     cy.containWorkerData(worker.firstName, worker.lastName, worker.email, worker.age, worker.salary, worker.department);
   });
 
-  it.only('should check search by all column values', () => {
+  it('should check search by all column values', () => {
     cy.searchByAllValues();
   });
 });
