@@ -22,10 +22,8 @@ describe('Web Tables page', () => {
   });
 
   it('should have row count selection', () => {
-    cy.get('[aria-label="rows per page"]')
-    .should('contain', '5 rows').select('5 rows');
-    cy.get('[aria-label="rows per page"]').select('10 rows');
-    cy.get('[aria-label="rows per page"]').select('100 rows');
+    cy.get('[aria-label="rows per page"]').select('10')
+    .should('contain', '10 rows');
   });
 
   it('should add worker', () => {
@@ -39,6 +37,12 @@ describe('Web Tables page', () => {
     cy.findByPlaceholder('Salary').type(worker.salary);
     cy.findByPlaceholder('Department').type(worker.department);
     cy.findById('submit').click();
+    cy.get('.rt-td').should('contain', worker.firstName);
+    cy.get('.rt-td').should('contain', worker.lastName);
+    cy.get('.rt-td').should('contain', worker.email);
+    cy.get('.rt-td').should('contain', worker.age);
+    cy.get('.rt-td').should('contain', worker.salary);
+    cy.get('.rt-td').should('contain', worker.department);
   });
 
   it('should delete worker', () => {
@@ -47,12 +51,8 @@ describe('Web Tables page', () => {
   });
 
   it('should delete all workers', () => {
-    cy.findById('delete-record-1').click();
-    cy.findById('delete-record-1').should('not.exist');
-    cy.findById('delete-record-2').click();
-    cy.findById('delete-record-2').should('not.exist');
-    cy.findById('delete-record-3').click();
-    cy.findById('delete-record-3').should('not.exist');
+    cy.deleteWorker(3);
+    cy.get('.rt-noData').should('contain', 'No rows found');
   });
 
   it('should find and edit worker', () => {
@@ -70,6 +70,11 @@ describe('Web Tables page', () => {
     cy.findByPlaceholder('Department').clear();
     cy.findByPlaceholder('Department').type(worker.department);
     cy.findById('submit').click();
+    cy.get('.rt-td').should('contain', worker.lastName);
+    cy.get('.rt-td').should('contain', worker.email);
+    cy.get('.rt-td').should('contain', worker.age);
+    cy.get('.rt-td').should('contain', worker.salary);
+    cy.get('.rt-td').should('contain', worker.department);
   });
 
   it('should validate data after creating worker', () => {
