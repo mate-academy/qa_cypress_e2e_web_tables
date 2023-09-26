@@ -20,10 +20,10 @@ describe('Web Tables page', () => {
     cy.get('.-pagination').should('exist');
   });
 
-  it('should provide the ability to select rows count', () => {
-    cy.get('[aria-label="rows per page"]').select('5');
-    cy.get('[aria-label="rows per page"]').select('10');
-    cy.get('[aria-label="rows per page"]').select('20');
+  it('should proide an ability to select rows at page', () => {
+    cy.selectRowsOnPage('5');
+    cy.selectRowsOnPage('10');
+    cy.selectRowsOnPage('20');
   });
 
   it('should provide the ability to add new worker', () => {
@@ -44,13 +44,9 @@ describe('Web Tables page', () => {
     cy.get('.rt-table').should('not.contain', 'Cierra, Vega');
   });
 
-  it('should provide the ability to delete all workers', () => {
-    cy.get('#delete-record-1 > svg > path').click();
-    cy.get('#delete-record-2 > svg > path').click();
-    cy.get('#delete-record-3 > svg > path').click();
-    cy.on('window:alert', (str) => {
-      expect(str).to.equal('No rows found');
-    });
+  it('should provide an ability to delete all workers', () => {
+    cy.deleteAllWorkers(3);
+    cy.contains('.rt-noData', 'No rows found').should('be.visible');
   });
 
   it('should provide the ability to find worker in search field and edit it',

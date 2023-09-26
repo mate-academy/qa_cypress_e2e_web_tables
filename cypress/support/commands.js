@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('selectRowsOnPage', (count) => {
+    cy.get('select[aria-label="rows per page"]').select(count);
+    cy.get('.rt-tr-group').should('have.length', count);
+  });
+
+  Cypress.Commands.add('deleteAllWorkers', (numOfWorkers) => {
+    for (let i = 1; i <= numOfWorkers; i += 1) {
+      cy.get(`#delete-record-${i}`).click();
+    }
+  });
