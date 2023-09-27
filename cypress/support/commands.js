@@ -26,3 +26,9 @@
 Cypress.Commands.add('findByPlaceholder', (placeholder) => {
   cy.get(`[placeholder="${placeholder}"]`);
 });
+
+Cypress.Commands.add('deleteAllWorkers', (numOfWorkers) => {
+  for (let i = 1; i <= numOfWorkers; i += 1) {
+    cy.get(`#delete-record-${i}`).click();
+  }
+});
