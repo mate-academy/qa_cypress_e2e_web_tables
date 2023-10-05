@@ -1,25 +1,46 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('getElementById', (id) => {
+  cy.get(`#${id}`);
+});
+
+Cypress.Commands.add('getElementByAttribute', (name, value) => {
+  cy.get(`[${name}="${value}"]`);
+});
+
+Cypress.Commands.add('selectRowsNumber', (rowsNumber) => {
+  cy.getElementByAttribute('aria-label', 'rows per page').select(
+    rowsNumber.toString()
+  );
+});
+
+Cypress.Commands.add('findAndFillInput', (id, value) => {
+  cy.getElementById(id).clear();
+  cy.getElementById(id).type(value);
+});
+
+Cypress.Commands.add('addRandomUser', (user) => {
+  cy.getElementById('addNewRecordButton').click();
+  cy.getElementById('userForm').should('exist');
+  cy.findAndFillInput('firstName', user.firstName);
+  cy.findAndFillInput('lastName', user.lastName);
+  cy.findAndFillInput('userEmail', user.email);
+  cy.findAndFillInput('age', user.age);
+  cy.findAndFillInput('salary', user.salary);
+  cy.findAndFillInput('department', user.department);
+  cy.getElementById('submit').click();
+});
+
+Cypress.Commands.add('findOneUser', (query) => {
+  cy.getElementById('searchBox').type(query);
+  cy.getElementById('delete-record-1').should('exist');
+  cy.getElementById('delete-record-2').should('not.exist');
+});
+
+Cypress.Commands.add('editUser', (user) => {
+  cy.findAndFillInput('firstName', user.firstName);
+  cy.findAndFillInput('lastName', user.lastName);
+  cy.findAndFillInput('userEmail', user.email);
+  cy.findAndFillInput('age', user.age);
+  cy.findAndFillInput('salary', user.salary);
+  cy.findAndFillInput('department', user.department);
+  cy.getElementById('submit').click();
+});
