@@ -23,3 +23,33 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('findByPlaceholder', (placeholder) => {
+  cy.get(`[placeholder="${placeholder}"]`);
+});
+
+const faker = require('faker');
+
+Cypress.Commands.add('generateUser', () => {
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
+  const email = faker.internet.email();
+  const age = faker.random.number({ min: 20, max: 60 });
+  const salary = faker.random.number({ min: 30000, max: 90000 });
+  const department = 'IT Department';
+
+  return {
+    firstName,
+    lastName,
+    email,
+    age,
+    salary,
+    department
+  };
+});
+
+Cypress.Commands.add('clearInputFields', () => {
+  cy.get('input[type="text"]').each(($input) => {
+    cy.wrap($input).clear({ force: true });
+  });
+});
