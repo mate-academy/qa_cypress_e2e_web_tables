@@ -149,7 +149,7 @@ describe('Web Tables page', () => {
     cy.get('div').should('contain', worker.department);
   });
 
-  it.only('should provide an ability to check search by all column val', () => {
+  it('should provide an ability to check search by all column val', () => {
     cy.get('#searchBox')
       .type('Cierra');
     cy.get('.web-tables-wrapper')
