@@ -73,11 +73,17 @@ describe('Web Tables page', () => {
 
   it('should have an ability to delete all workers', () => {
     cy.get('#delete-record-1')
-      .click();
+     .click();
     cy.get('#delete-record-2')
-      .click();
+     .click();
     cy.get('#delete-record-3')
-      .click();
+     .click();
+    cy.get('#delete-record-1')
+     .should('not.exist')
+    cy.get('#delete-record-2')
+     .should('not.exist')
+    cy.get('#delete-record-3')
+     .should('not.exist')
 });
   
   it('should have an ability to find a worker in search field, edit it and validate edited data', () => {
