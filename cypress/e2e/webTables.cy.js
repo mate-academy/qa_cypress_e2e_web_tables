@@ -33,19 +33,27 @@ describe('Web Tables page', () => {
     cy.get('#submit').click();
     cy.get('.rt-td').should('contain', firstName);
     cy.get('.rt-td').should('contain', lastName);
+    cy.get('.rt-td').should('contain', age);
     cy.get('.rt-td').should('contain', email);
+    cy.get('.rt-td').should('contain', salary);
+    cy.get('.rt-td').should('contain', department);
   });
 
   it('should delete employee', () => {
     cy.get('#delete-record-1').click();
+    cy.get('.rt-td').should('not.contain', firstName);
+    cy.get('.rt-td').should('not.contain', lastName);
+    cy.get('.rt-td').should('not.contain', age);
     cy.get('.rt-td').should('not.contain', email);
+    cy.get('.rt-td').should('not.contain', salary);
+    cy.get('.rt-td').should('not.contain', department);
   });
 
   it('should delete all employees', () => {
     cy.get('#delete-record-1').click();
     cy.get('#delete-record-2').click();
     cy.get('#delete-record-3').click();
-    cy.get('.rt-td').should('contain', '');
+    cy.get('.rt-noData').should('contain', 'No rows found');
   });
 
   it('should find and edit information about employees', () => {
@@ -71,6 +79,13 @@ describe('Web Tables page', () => {
     cy.get('#salary').type(salary);
     cy.get('#department').type(department);
     cy.get('#submit').click();
+    cy.get('#delete-record-1').click();
+    cy.get('.rt-td').should('contain', firstName);
+    cy.get('.rt-td').should('contain', lastName);
+    cy.get('.rt-td').should('contain', age);
+    cy.get('.rt-td').should('contain', email);
+    cy.get('.rt-td').should('contain', salary);
+    cy.get('.rt-td').should('contain', department);
   });
 
   it('should check the search by all column values', () => {
