@@ -47,6 +47,16 @@ describe('Web Tables page', () => {
       .click();
     cy.get('.rt-td')
       .should('contain', firstName);
+    cy.get('.rt-td')
+      .should('contain', lastName);
+    cy.get('.rt-td')
+      .should('contain', age);
+    cy.get('.rt-td')
+      .should('contain', email);
+    cy.get('.rt-td')
+      .should('contain', salary);
+    cy.get('.rt-td')
+      .should('contain', department);
   });
 
   it('should delete a worker', () => {
@@ -106,18 +116,6 @@ describe('Web Tables page', () => {
       .clear();
     cy.get('#searchBox')
       .type(firstName);
-    cy.get('.rt-td')
-      .should('contain', firstName);
-    cy.get('.rt-td')
-      .should('contain', lastName);
-    cy.get('.rt-td')
-      .should('contain', age);
-    cy.get('.rt-td')
-      .should('contain', email);
-    cy.get('.rt-td')
-      .should('contain', salary);
-    cy.get('.rt-td')
-      .should('contain', department);
   });
 
   it('should check the search by all column values', () => {
