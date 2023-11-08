@@ -2,8 +2,6 @@
 let worker;
 describe('Web Tables page', () => {
   beforeEach(() => {
-    cy.visit('/');
-
     cy.task('newWorker').then((newWorker) => {
       worker = newWorker;
     });
@@ -27,6 +25,7 @@ it('should contain rows count selection', () => {
 });
 
 it('should add a new worker', () => {
+  cy.visit('/');
   cy.get('#addNewRecordButton')
     .click();
   cy.get('#firstName')
