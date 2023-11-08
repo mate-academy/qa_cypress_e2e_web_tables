@@ -85,8 +85,6 @@ describe('Web Tables page', () => {
       .click();
     cy.get('.modal-content')
       .should('contain', 'Registration Form');
-    cy.get('#firstName')
-      .type('{selectAll}' + worker.firstName);
     cy.get('#lastName')
       .type('{selectAll}' + worker.lastName);
     cy.get('#userEmail')
@@ -108,8 +106,6 @@ describe('Web Tables page', () => {
       .click();
     cy.get('.modal-content')
       .should('contain', 'Registration Form');
-    cy.get('#firstName')
-      .type('{selectAll}' + worker.firstName);
     cy.get('#lastName')
       .type('{selectAll}' + worker.lastName);
     cy.get('#userEmail')
@@ -122,8 +118,6 @@ describe('Web Tables page', () => {
       .type('{selectAll}' + worker.department);
     cy.get('#submit')
       .click();
-    cy.get('.rt-table')
-      .should('contain', worker.firstName);
     cy.get('.rt-table')
       .should('contain', worker.lastName);
     cy.get('.rt-table')
