@@ -23,3 +23,60 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('addWorker1', (firstName, lastName, email, age, salary, department) => { 
+  cy.get('#addNewRecordButton')
+    .click();
+  cy.get('#firstName')
+    .type(firstName)
+  cy.get('#lastName')
+    .type(lastName);
+   cy.get('#userEmail')
+    .type(email);
+  cy.get('#age')
+    .type(age);
+  cy.get('#salary')
+    .type(salary);
+  cy.get('#department')
+    .type(department);
+  cy.get('#submit')
+    .click();
+})
+
+Cypress.Commands.add('addWorker2', (firstName, lastName, email, age, salary, department) => { 
+  cy.get('#addNewRecordButton')
+    .click();
+  cy.get('#firstName')
+    .type(`${firstName}lan`)
+  cy.get('#lastName')
+    .type(`${lastName}bus`);
+    cy.get('#userEmail')
+    .type(`fgh${email}`);
+  cy.get('#age')
+    .type(age);
+  cy.get('#salary')
+    .type(salary);
+  cy.get('#department')
+    .type(department);
+  cy.get('#submit')
+    .click();
+})
+
+Cypress.Commands.add('addWorker3', (firstName, lastName, email, age, salary, department) => { 
+  cy.get('#addNewRecordButton')
+    .click();
+  cy.get('#firstName')
+    .type(`${firstName}bor`)
+  cy.get('#lastName')
+    .type(`${lastName}col`);
+    cy.get('#userEmail')
+    .type(`dusgf${email}`);
+  cy.get('#age')
+    .type(age);
+  cy.get('#salary')
+    .type(salary);
+  cy.get('#department')
+    .type(department);
+  cy.get('#submit')
+    .click();
+})
