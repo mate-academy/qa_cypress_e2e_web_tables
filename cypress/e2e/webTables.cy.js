@@ -63,6 +63,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-table')
       .should('not.contain', '#delete-record-1');
   });
+
   it('should delete all workers', () => {
     cy.get('#delete-record-1')
       .click();
@@ -76,27 +77,6 @@ describe('Web Tables page', () => {
       .click();
     cy.get('.rt-table')
       .should('not.contain', '#delete-record-3');
-  });
-
-  it('should find a worker in the search field and edit it', () => {
-    cy.get('#searchBox')
-      .type('Cierra');
-    cy.get('[title="Edit"]')
-      .click();
-    cy.get('.modal-content')
-      .should('contain', 'Registration Form');
-    cy.get('#lastName')
-      .type('{selectAll}' + worker.lastName);
-    cy.get('#userEmail')
-      .type('{selectAll}' + worker.userEmail);
-    cy.get('#age')
-      .type('{selectAll}' + worker.age);
-    cy.get('#salary')
-      .type('{selectAll}' + worker.salary);
-    cy.get('#department')
-      .type('{selectAll}' + worker.department);
-    cy.get('#submit')
-      .click();
   });
 
   it('should find a worker in the search field and edit it', () => {
