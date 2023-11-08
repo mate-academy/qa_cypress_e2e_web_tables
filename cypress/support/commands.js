@@ -23,3 +23,36 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('createWorker', () => {
+  cy.get('#addNewRecordButton')
+    .click();
+  cy.get('#firstName')
+    .type('John');
+  cy.get('#lastName')
+    .type('Rambo');
+  cy.get('#userEmail')
+    .type('john@mail.com');
+  cy.get('#age')
+    .type('71');
+  cy.get('#salary')
+    .type('12000');
+  cy.get('#department')
+    .type('Insurance');
+  cy.get('#submit')
+    .click();
+});
+Cypress.Commands.add('modifyWorker', () => {
+  cy.get('#searchBox')
+    .type('Rambo');
+  cy.get('#edit-record-4')
+    .click();
+  cy.get('#firstName')
+    .type('{selectAll}' + 'Jason');
+  cy.get('#lastName')
+    .type('{selectAll}' + 'Konas');
+  cy.get('#userEmail')
+    .type('{selectAll}' + 'jason@mail.com');
+  cy.get('#submit')
+      .click();
+});
