@@ -44,6 +44,9 @@ it('Should have the ability to change rows count selection', () => {
 it('Should have the ability to delete worker', () => {
   cy.get('#delete-record-3')
     .click();
+
+  cy.get('#delete-record-3')
+    .should('not.exist');
   });
 
 it('Should have the ability to delete all workers', () => {
@@ -68,10 +71,25 @@ it('Should have the ability to search a worker, edit it and validate data in the
   cy.get('#firstName')
     .clear()
     .type('Zozulya');
+  cy.get('#lastName')
+    .clear()
+    .type('Gorobchyk');
+  cy.get('#userEmail')
+    .clear()
+    .type('gorobchyk@example.com');
+  cy.get('#age')
+    .clear()
+    .type('40');
+  cy.get('#salary')
+    .clear()
+    .type('11000');
+  cy.get('#department')
+    .clear()
+    .type('Engineer');
   cy.get('#submit')
     .click();
 
-  cy.contains('.rt-td', 'Zozulya')
+  cy.contains('.rt-tr -odd', 'Zozulya', 'Gorobchyk', 'gorobchyk@example.com', '40', '11000', 'Engineer')
     .should('exist')
 });
 
@@ -112,5 +130,8 @@ it('Should have the ability to search by all column values', () => {
     .click();
   cy.get('#searchBox')
     .clear();
+
+  cy.get('.web-tables-wrapper')
+    .should('contain', 'Compliance');
   });
 });
