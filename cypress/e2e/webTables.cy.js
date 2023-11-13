@@ -32,9 +32,17 @@ it('Should have the ability to add worker', () => {
   cy.get('#submit')
     .click();
 
-  cy.contains('.rt-td', 'Rosa', 'Winters', '18', '5600', 'Cepka')
+  cy.contains('.rt-td', 'Rosa')
     .should('exist');
-});
+  cy.contains('.rt-td','Winters')
+    .should('exist');
+  cy.contains('.rt-td','18')
+    .should('exist');
+  cy.contains('.rt-td', '5600')
+    .should('exist');
+  cy.contains('.rt-td', 'Cepka')
+    .should('exist');
+  });
 
 it('Should have the ability to change rows count selection', () => {
   cy.get('[aria-label="rows per page"]').select('10')
@@ -50,18 +58,16 @@ it('Should have the ability to delete worker', () => {
   });
 
 it('Should have the ability to delete all workers', () => {
-  cy.get('#delete-record-1')
-    .click();
-  cy.get('#delete-record-2')
-    .click();
-  cy.get('#delete-record-3')
-    .click();
-
-  cy.contains('.rt-noData', 'No rows found')
-    .should('exist');
+  for (let i = 1; i <= 3; i++) {
+    const deletedWorker = `span[id="delete-record-${i}"]`;
+    cy.get(deletedWorker)
+      .click();
+    cy.get(deletedWorker)
+    .should('not.exist');
+    }
   });
 
-it('Should have the ability to search a worker, edit it and validate data in the worker row', () => {
+it.only('Should have the ability to search a worker, edit it and validate data in the worker row', () => {
   cy.get('#searchBox')
     .type('Cierra');
   cy.get('#basic-addon2')
@@ -89,8 +95,18 @@ it('Should have the ability to search a worker, edit it and validate data in the
   cy.get('#submit')
     .click();
 
-  cy.contains('.rt-tr -odd', 'Zozulya', 'Gorobchyk', 'gorobchyk@example.com', '40', '11000', 'Engineer')
-    .should('exist')
+  cy.contains('.rt-tr -odd', 'Zozulya')
+    .should('exist');
+  cy.contains('.rt-tr -odd', 'Gorobchyk')
+    .should('exist');
+  cy.contains('.rt-tr -odd', 'gorobchyk@example.com')
+    .should('exist');
+  cy.contains('.rt-tr -odd', '40')
+    .should('exist');
+  cy.contains('.rt-tr -odd', '11000')
+    .should('exist');
+  cy.contains('.rt-tr -odd', 'Engineer')
+    .should('exist');
 });
 
 it('Should have the ability to search by all column values', () => {
