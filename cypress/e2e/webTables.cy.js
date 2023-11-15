@@ -86,6 +86,7 @@ describe('Web Tables page', () => {
     cy.get('#submit')
       .click();
   });
+
   it('Validate data in the worker row after editing the worker', () => {
     cy.get('#searchBox')
       .type('Alden{enter}');
@@ -104,6 +105,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-table')
       .should('contain', 12090);
   });
+
   it('Check the search by all column values', () => {
     cy.get('#searchBox')
       .clear();
