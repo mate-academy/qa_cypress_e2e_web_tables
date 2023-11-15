@@ -8,16 +8,16 @@ module.exports = defineConfig({
     viewportWidth: 1920,
     setupNodeEvents(on, config) {
       on('task', {
-        generateUser() {
-          const randomIndex = Math.floor(Math.random() * 2);
-          const departments = ['Insurance', 'Compliance', 'Legal'];
+        newWorker() {
           return {
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
-            age: faker.datatype.number({ min: 18, max: 99 }),
             email: faker.internet.email(),
-            salary: faker.datatype.number(),
-            department: departments[randomIndex]
+            age: faker.datatype.number({ max: 60 }),
+            salary: faker.random.number(),
+            department: faker.random.arrayElement(
+              ['Insurance', 'Compliance', 'Legal']
+            )
           };
         }
       });

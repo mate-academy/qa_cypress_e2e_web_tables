@@ -1,149 +1,122 @@
 /// <reference types='cypress' />
 
 describe('Web Tables page', () => {
-  let user;
+  let worker;
 
   beforeEach(() => {
-    cy.task('generateUser').then((generateUse) => {
-      user = generateUser;
+    cy.task('newWorker').then((newWorker) => {
+      worker = newWorker;
     });
 
     cy.visit('/webtables');
   });
 
   it('Pagination', () => {
-    cy.get('.-previous')
-      .should('contain', 'Previous');
-    cy.get('.-pageInfo')
-      .should('exist');
-    cy.get('.-next')
-      .should('contain', 'Next');
+    cy.get('.-pagination').should('contain.text', 'Page');
+    cy.get('.-pagination').should('contain.text', 'Previous');
+    cy.get('.-pagination').should('contain.text', 'Next');
   });
 
   it('Rows count selection', () => {
-    cy.get('select')
-      .should('exist')
-      .should('be.visible');
+    cy.get('[aria-label="rows per page"]')
+      .then(($el) => {
+        cy.wrap($el).select('10');
+      })
+      .then(($el) => {
+        cy.wrap($el).should('contain', '10 rows');
+      });
   });
 
   it('Add a new worker', () => {
-    cy.get('#addNewRecordButton')
-      .click();
-    cy.get('#firstName')
-      .type(user.firstName);
-    cy.get('#lastName')
-      .type(user.lastName);
-    cy.get('#userEmail')
-      .type(user.email);
-    cy.get('#age')
-      .type(user.age);
-    cy.get('#salary')
-      .type(user.salary);
-    cy.get('#department')
-      .type(user.department);
-    cy.get('#submit')
-      .click();
-    cy.get('.rt-td')
-      .should('contain', user.firstName)
-      .should('contain', user.lastName)
-      .should('contain', user.email)
-      .should('contain', user.salary)
-      .should('contain', user.department)
-      .should('contain', user.age);
+    cy.findById('addNewRecordButton').click();
+    cy.findById('registration-form-modal')
+      .should('contain.text', 'Registration Form');
+    cy.findByPlaceholder('First Name').type(worker.firstName);
+    cy.findByPlaceholder('Last Name').type(worker.lastName);
+    cy.findById('userEmail').type(worker.email);
+    cy.findByPlaceholder('Age').type(worker.age);
+    cy.findByPlaceholder('Salary').type(worker.salary);
+    cy.findByPlaceholder('Department').type(worker.department);
+    cy.findById('submit').click();
+
+    cy.get('.rt-td').should('contain', worker.firstName);
+    cy.get('.rt-td').should('contain', worker.lastName);
+    cy.get('.rt-td').should('contain', worker.email);
+    cy.get('.rt-td').should('contain', worker.age);
+    cy.get('.rt-td').should('contain', worker.salary);
+    cy.get('.rt-td').should('contain', worker.department);
   });
 
   it('Delete a worker', () => {
-    cy.get('#delete-record-1')
-      .click();
-    cy.get('.rt-table')
-      .should('not.contain', '#delete-record-1');
+    cy.findById('delete-record-1').click();
+    cy.findById('delete-record-1').should('not.exist');
   });
 
   it('Delete all workers', () => {
-    cy.get('#delete-record-1')
-      .click();
-    cy.get('#delete-record-2')
-      .click();
-    cy.get('#delete-record-3')
-      .click();
-    cy.get('.rt-table')
-      .should('not.contain', '#delete-record-1')
-      .should('not.contain', '#delete-record-2')
-      .should('not.contain', '#delete-record-3');
+    cy.deleteWorker(3);
+    cy.get('.rt-noData').should('contain', 'No rows found');
   });
 
   it('Find a worker in the search field and edit it', () => {
-    cy.get('#searchBox')
-      .type('Alden{enter}');
-    cy.get('#edit-record-2')
-      .click();
-    cy.get('#lastName')
-      .clear()
-      .type('Changelastname');
-    cy.get('#salary')
-      .clear()
-      .type(12090);
-    cy.get('#submit')
-      .click();
+    cy.findById('searchBox').type('Alden');
+    cy.findById('edit-record-2').click();
+    cy.findById('registration-form-modal')
+      .should('contain.text', 'Registration Form');
+    cy.findByPlaceholder('Last Name').clear();
+    cy.findByPlaceholder('Last Name').type(worker.lastName);
+    cy.findById('userEmail').clear();
+    cy.findById('userEmail').type(worker.email);
+    cy.findByPlaceholder('Age').clear();
+    cy.findByPlaceholder('Age').type(worker.age);
+    cy.findByPlaceholder('Salary').clear();
+    cy.findByPlaceholder('Salary').type(worker.salary);
+    cy.findByPlaceholder('Department').clear();
+    cy.findByPlaceholder('Department').type(worker.department);
+    cy.findById('submit').click();
+
+    cy.get('.rt-td').should('contain', worker.lastName);
+    cy.get('.rt-td').should('contain', worker.email);
+    cy.get('.rt-td').should('contain', worker.age);
+    cy.get('.rt-td').should('contain', worker.salary);
+    cy.get('.rt-td').should('contain', worker.department);
   });
 
   it('Validate data in the worker row after editing the worker', () => {
-    cy.get('#searchBox')
-      .type('Alden{enter}');
-    cy.get('#edit-record-2')
-      .click();
-    cy.get('#lastName')
-      .clear()
-      .type('Changelastname');
-    cy.get('#salary')
-      .clear()
-      .type(12090);
-    cy.get('#submit')
-      .click();
-    cy.get('.rt-table')
-      .should('contain', 'Changelastname');
-    cy.get('.rt-table')
-      .should('contain', 12090);
+    cy.findById('addNewRecordButton').click();
+    cy.findById('registration-form-modal')
+      .should('contain.text', 'Registration Form');
+    cy.findByPlaceholder('First Name').type(worker.firstName);
+    cy.findByPlaceholder('Last Name').type(worker.lastName);
+    cy.findById('userEmail').type(worker.email);
+    cy.findByPlaceholder('Age').type(worker.age);
+    cy.findByPlaceholder('Salary').type(worker.salary);
+    cy.findByPlaceholder('Department').type(worker.department);
+    cy.findById('submit').click();
+    cy.get('.rt-td').should('contain', worker.firstName);
+    cy.get('.rt-td').should('contain', worker.lastName);
+    cy.get('.rt-td').should('contain', worker.email);
+    cy.get('.rt-td').should('contain', worker.age);
+    cy.get('.rt-td').should('contain', worker.salary);
+    cy.get('.rt-td').should('contain', worker.department);
   });
 
   it('Check the search by all column values', () => {
-    cy.get('#searchBox')
-      .clear();
-    cy.get('#searchBox')
-      .type('Alden{enter}');
-    cy.get('.rt-table')
-      .should('contain', 'Alden');
-    cy.get('#searchBox')
-      .clear();
-    cy.get('#searchBox')
-      .type('Cantrell{enter}');
-    cy.get('#searchBox')
-      .clear();
-    cy.get('.rt-table')
-      .should('contain', 'Cantrell');
-    cy.get('#searchBox')
-      .clear();
-    cy.get('#searchBox')
-      .type('45{enter}');
-    cy.get('.rt-table')
-      .should('contain', 45);
-    cy.get('#searchBox')
-      .clear();
-    cy.get('#searchBox')
-      .type('alden@example.com{enter}');
-    cy.get('.rt-table')
-      .should('contain', 'alden@example.com');
-    cy.get('#searchBox')
-      .clear();
-    cy.get('#searchBox')
-      .type('12000{enter}');
-    cy.get('.rt-table')
-      .should('contain', 12000);
-    cy.get('#searchBox')
-      .clear();
-    cy.get('#searchBox')
-      .type('Compliance{enter}');
-    cy.get('.rt-table')
-      .should('contain', 'Compliance');
+    cy.findById('searchBox').type('Alden');
+    cy.get('.web-tables-wrapper').should('contain', 'Alden');
+    cy.findById('searchBox').clear();
+    cy.findById('searchBox').type('Cantrell');
+    cy.get('.web-tables-wrapper').should('contain', 'Cantrell');
+    cy.findById('searchBox').clear();
+    cy.findById('searchBox').type('45');
+    cy.get('.web-tables-wrapper').should('contain', '45');
+    cy.findById('searchBox').clear();
+    cy.findById('searchBox').type('alden@example.com');
+    cy.get('.web-tables-wrapper').should('contain', 'alden@example.com');
+    cy.findById('searchBox').clear();
+    cy.findById('searchBox').type('12000');
+    cy.get('.web-tables-wrapper').should('contain', '12000');
+    cy.findById('searchBox').clear();
+    cy.findById('searchBox').type('Compliance');
+    cy.get('.web-tables-wrapper').should('contain', 'Compliance');
   });
 });
