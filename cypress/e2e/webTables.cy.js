@@ -107,6 +107,18 @@ describe('Web Tables page', () => {
       .type(departmentFaker);
     cy.contains('.btn', 'Submit')
       .click();
+    cy.get('[id="firstName"]')
+      .should('contain', userName);
+    cy.get('[id="lastName"]')
+      .should('contain', lastNameFaker);
+    cy.get('[id="userEmail"]')
+      .should('contain', emailFaker);
+    cy.get('[id="age"]')
+      .should('contain', ageFaker);
+    cy.get('[id="salary"]')
+      .should('contain', salaryFaker);
+    cy.get('[id="department"]')
+      .should('contain', departmentFaker);
   });
 
   it('should provide an ability to delete worker', () => {
@@ -188,5 +200,17 @@ describe('Web Tables page', () => {
       .type(Department);
     cy.get('#searchBox')
       .clear();
+    cy.get('.rt-table')
+      .should('contain', name);
+    cy.get('.rt-table')
+      .should('contain', LastName);
+    cy.get('.rt-table')
+      .should('contain', Email);
+    cy.get('.rt-table')
+      .should('contain', Age);
+    cy.get('.rt-table')
+      .should('contain', Salary);
+    cy.get('.rt-table')
+      .should('contain', Department);
   });
 });
