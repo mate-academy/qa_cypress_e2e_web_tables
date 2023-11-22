@@ -107,17 +107,17 @@ describe('Web Tables page', () => {
       .type(departmentFaker);
     cy.contains('.btn', 'Submit')
       .click();
-    cy.get('[id="firstName"]')
+    cy.get('.rt-td')
       .should('contain', userName);
-    cy.get('[id="lastName"]')
+    cy.get('.rt-td')
       .should('contain', lastNameFaker);
-    cy.get('[id="userEmail"]')
+    cy.get('.rt-td')
       .should('contain', emailFaker);
-    cy.get('[id="age"]')
+    cy.get('.rt-td')
       .should('contain', ageFaker);
-    cy.get('[id="salary"]')
+    cy.get('.rt-td')
       .should('contain', salaryFaker);
-    cy.get('[id="department"]')
+    cy.get('.rt-td')
       .should('contain', departmentFaker);
   });
 
@@ -144,7 +144,6 @@ describe('Web Tables page', () => {
       .click();
     cy.get('#searchBox')
       .type(name);
-
     cy.get('#edit-record-1 > svg > path')
       .click();
     cy.get('[id="firstName"]')
@@ -168,49 +167,49 @@ describe('Web Tables page', () => {
       .click();
     cy.get('#searchBox')
       .type(name);
+    cy.get('.rt-table')
+      .should('contain', name);
     cy.get('#searchBox')
       .clear();
     cy.get('#searchBox')
       .click();
     cy.get('#searchBox')
       .type(Email);
+    cy.get('.rt-table')
+      .should('contain', Email);
     cy.get('#searchBox')
       .clear();
     cy.get('#searchBox')
       .click();
     cy.get('#searchBox')
       .type(LastName);
+    cy.get('.rt-table')
+      .should('contain', LastName);
     cy.get('#searchBox')
       .clear();
     cy.get('#searchBox')
       .click();
     cy.get('#searchBox')
       .type(Age);
+    cy.get('.rt-table')
+      .should('contain', Age);
     cy.get('#searchBox')
       .clear();
     cy.get('#searchBox')
       .click();
     cy.get('#searchBox')
       .type(Salary);
+    cy.get('.rt-table')
+      .should('contain', Salary);
     cy.get('#searchBox')
       .clear();
     cy.get('#searchBox')
       .click();
     cy.get('#searchBox')
       .type(Department);
-    cy.get('#searchBox')
-      .clear();
-    cy.get('.rt-table')
-      .should('contain', name);
-    cy.get('.rt-table')
-      .should('contain', LastName);
-    cy.get('.rt-table')
-      .should('contain', Email);
-    cy.get('.rt-table')
-      .should('contain', Age);
-    cy.get('.rt-table')
-      .should('contain', Salary);
     cy.get('.rt-table')
       .should('contain', Department);
+    cy.get('#searchBox')
+      .clear();
   });
 });
