@@ -6,7 +6,6 @@ describe('Web Tables page', () => {
   beforeEach(() => {
     cy.visit('https://demoqa.com/webtables');
   });
-
   it('should handle pagination', () => {
     cy.get('.-pageInfo').should('exist');
     cy.get('.-previous > .-btn').should('exist');
@@ -14,11 +13,9 @@ describe('Web Tables page', () => {
     cy.get('.-totalPages').should('exist');
     cy.get('.-next > .-btn').should('exist');
   });
-
   it('should handle rows count selection', () => {
     cy.get('select').should('exist');
   });
-
   it('should provide an ability to add a new worker.', () => {
     const username = faker.internet.userName();
     const email = faker.internet.email();
