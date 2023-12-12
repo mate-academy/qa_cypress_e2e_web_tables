@@ -47,11 +47,6 @@ describe('Web Tables page', () => {
   it('should provide an ability to delete a worker', () => {
     cy.get('#delete-record-1').click().should('not.exist');
   });
-  it('should provide an ability to delete all workers', () => {
-    cy.get('#delete-record-1').click().should('not.exist');
-    cy.get('#delete-record-2').click().should('not.exist');
-    cy.get('#delete-record-3').click().should('not.exist');
-  });
   it('should provide an ability to find a worker in the search field and edit it', () => {
     cy.get('#searchBox').click().type('Alden');
     cy.get('#basic-addon2').click();
@@ -59,6 +54,11 @@ describe('Web Tables page', () => {
     cy.get('#firstName').click().type('s');
     cy.get('#submit').click();
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)').should('contain.text', 'Aldens');
+  });
+  it('should provide an ability to delete all workers', () => {
+    cy.get('#delete-record-1').click().should('not.exist');
+    cy.get('#delete-record-2').click().should('not.exist');
+    cy.get('#delete-record-3').click().should('not.exist');
   });
   it('should provide an ability to search by all column values', () => {
     cy.get('#searchBox').click().type('Alden').should('exist');
