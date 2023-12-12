@@ -17,11 +17,11 @@ App for testing: `https://demoqa.com/webtables`
 
 **Your task** is to check the following points:
 
-1. Pagination.
-1. Rows count selection.
-1. Add a new worker.
-1. Delete a worker.
-1. Delete all workers.
-1. Find a worker in the search field and edit it.
-1. Validate data in the worker row after editing the worker.
-1. Check the search by all column values.
+1. Pagination.+
+2. Rows count selection.+
+3. Add a new worker.+
+4. Delete a worker.+
+5. Delete all workers.
+6. Find a worker in the search field and edit it.+
+7. Validate data in the worker row after editing the worker.+
+8. Check the search by all column values.
