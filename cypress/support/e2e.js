@@ -14,7 +14,11 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands';
+
+beforeEach(() => {
+  cy.visit('https://demoqa.com/webtables');
+});
 
 Cypress.on('uncaught:exception', () => {
   return false;
