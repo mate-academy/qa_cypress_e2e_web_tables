@@ -9,7 +9,6 @@ describe('Web Tables page', () => {
     cy.get('.rt-tr-group').should('have.length', 5);
   });
   it('the pagination should work', () => {
-    cy.visit('https://demoqa.com/webtables');
     cy.addNewUser(5);
     cy.get('[aria-label="rows per page"]')
       .select('5 rows');
@@ -22,7 +21,6 @@ describe('Web Tables page', () => {
   it('should add a new worker', () => {
     const user = generateUser();
 
-    cy.visit('https://demoqa.com/webtables');
     cy.contains('#addNewRecordButton', 'Add')
       .click();
     cy.get('#firstName')

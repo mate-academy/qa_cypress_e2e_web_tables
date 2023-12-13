@@ -6,8 +6,7 @@ module.exports = defineConfig({
   viewportWidth: 1320,
   e2e: {
     setupNodeEvents(on, config) {
-    },
-    baseUrl: 'https://demoqa.com'
+    }
   },
   responseTimeout: 6000,
   watchForFileChanges: false

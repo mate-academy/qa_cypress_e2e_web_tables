@@ -2,7 +2,7 @@
 
 const { generateUser } = require('./generate');
 
-// creates brad new user
+// creates a number of new users
 Cypress.Commands.add('addNewUser', (times = 1) => {
   for (let i = 0; i <= times; i++) {
     const user = generateUser();
@@ -25,7 +25,7 @@ Cypress.Commands.add('addNewUser', (times = 1) => {
       .click();
   }
 });
-// creates new user and gives acces to his data
+// creates new user and gives acces to their data
 Cypress.Commands.add('addNewUserFrom', (input = {}) => {
   cy.contains('#addNewRecordButton', 'Add')
     .click();
