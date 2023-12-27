@@ -38,6 +38,7 @@ describe('Web Tables page', () => {
     cy.addNewWorker(user);
     cy.contains(user.email).parent('div.rt-tr')
       .find('.action-buttons [title="Delete"]').click();
+    cy.get('#delete-record-4').should('not.exist');
   });
   it('delete all workers', () => {
     cy.get('#delete-record-1').click();
@@ -47,7 +48,7 @@ describe('Web Tables page', () => {
     cy.get('#delete-record-2').should('not.exist');
     cy.get('#delete-record-3').should('not.exist');
   });
-  it('find and edit worker', () => {
+  it.only('find and edit worker', () => {
     cy.addNewWorker(user);
     cy.get('input[id="searchBox"]').type(user.userName);
     cy.get('#edit-record-4').click();
@@ -58,5 +59,8 @@ describe('Web Tables page', () => {
     cy.contains(user.userName).should('exist');
     cy.contains(user.userSurname).should('exist');
     cy.contains(user.email).should('exist');
+    cy.contains(user.sallary).should('exist');
+    cy.contains(user.number).should('exist');
+    cy.contains(user.department).should('exist');
   });
 });

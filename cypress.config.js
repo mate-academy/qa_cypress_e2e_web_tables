@@ -15,6 +15,7 @@ module.exports = defineConfig({
             userSurname: faker.person.lastName(gender),
             genderr: gender,
             email: faker.person.firstName() + randomNumber + '@test.com',
+            sallary: randomNumber,
             password: 'password',
             address: faker.location.streetAddress(),
             number: randomNumber,
