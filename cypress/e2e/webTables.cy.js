@@ -36,10 +36,11 @@ describe('Web Tables page', () => {
     cy.contains(user.email).should('exist');
   });
 
-  it('should delete worker', () => {
+  it.only('should delete worker', () => {
     cy.addNewWorker(user);
     cy.contains(user.email).parent('div.rt-tr')
       .find('.action-buttons [title="Delete"]').click();
+    cy.contains(user.email).should('not.exist');
   });
 
   it('deletes all workers', () => {
@@ -61,7 +62,7 @@ describe('Web Tables page', () => {
     cy.contains(70000).should('exist');
   });
 
-  it.only('should check the search by all colun values', () => {
+  it('should check the search by all colun values', () => {
     cy.addNewWorker(user);
     cy.get('input[id="searchBox"]').type(user.userName);
     cy.contains('.rt-td', user.userName);
