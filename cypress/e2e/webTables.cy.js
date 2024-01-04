@@ -39,6 +39,9 @@ describe('Web Tables page', () => {
       .type(user.department);
     cy.get('#submit')
       .click();
+    cy.get('.rt-tbody')
+      .should('contain', user.firstName)
+      .and('contain', user.lastName);
   });
   it('should be able to delete a worker', () => {
     cy.get('.rt-table')
@@ -47,9 +50,11 @@ describe('Web Tables page', () => {
     cy.contains('.rt-resizable-header-content', 'Action');
     cy.get('#delete-record-1')
       .click();
+    cy.contains('.rt-tb', 'Cierra')
+      .should('not.exist');
     cy.contains('.rt-td', 'Alden');
   });
-  it('should be able to delete all workers', () => {
+  it.only('should be able to delete all workers', () => {
     cy.get('.rt-table')
       .should('exist');
     cy.contains('.rt-resizable-header-content', 'Action');
@@ -59,8 +64,7 @@ describe('Web Tables page', () => {
       .click();
     cy.get('#delete-record-3')
       .click();
-    cy.get('.rt-td')
-      .should('exist');
+    cy.contains('.rt-noData', 'No rows found');
   });
   it('should able to search user and edit', () => {
     cy.get('#searchBox')
