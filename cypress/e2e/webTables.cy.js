@@ -93,7 +93,7 @@ describe('Web Tables page', () => {
       cy.contains(user.number).should('exist');
       cy.contains(user.department).should('exist');
       });
-      it.only('should be able to сheck the search by all column values.', () => {
+  it('should be able to сheck the search by all column values.', () => {
         cy.addNewWorker(user);
         cy.get('#searchBox').type(user.userName);
         cy.get('div.rt-td').should('contain', user.userName);
