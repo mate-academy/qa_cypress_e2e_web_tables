@@ -93,5 +93,19 @@ describe('Web Tables page', () => {
       cy.contains(user.number).should('exist');
       cy.contains(user.department).should('exist');
       });
-    
+      it.only('should be able to сheck the search by all column values.', () => {
+        cy.addNewWorker(user);
+        cy.get('#searchBox').type(user.userName);
+        cy.get('div.rt-td').should('contain', user.userName);
+        cy.get('#searchBox').clear().type(user.userSurname);
+        cy.get('div.rt-td').should('contain', user.userSurname);
+        cy.get('#searchBox').clear().type(user.email);
+        cy.get('div.rt-td').should('contain', user.email);
+        cy.get('#searchBox').clear().type(user.age);
+        cy.get('div.rt-td').should('contain', user.age);
+        cy.get('#searchBox').clear().type(user.number);
+        cy.get('div.rt-td').should('contain', user.number);
+        cy.get('#searchBox').clear().type(user.department);
+        cy.get('div.rt-td').should('contain', user.department);
+          });
     })
