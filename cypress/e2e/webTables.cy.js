@@ -41,18 +41,10 @@ describe('Web Tables page', () => {
   })
   
   it('should be able to add a new worker.', () => {
-    let userQuantityStart;
-    let userQuantityEnd;
-
-    cy.getMaxRecordValue().then((maxValue) => {
-      userQuantityStart = maxValue;
-      cy.addNewWorker(user);
-      cy.getMaxRecordValue().then((maxValue) => {
-        userQuantityEnd = maxValue;
-        expect(userQuantityEnd).to.be.greaterThan(userQuantityStart);
-      });
-    });
-  })
+    cy.addNewWorker(user);
+    cy.contains(user.userName).should('exist');
+    
+  
 
   it('should be able to delete a worker.', () => {
     let userQuantityStart;
@@ -80,15 +72,12 @@ describe('Web Tables page', () => {
         clickLastElementNTimes(n - 1);
       }
     }
-    cy.visit('https://demoqa.com/webtables').then(() => {
-      cy.getMaxRecordValue().then((maxValue) => {clickLastElementNTimes(maxValue);
-        });
-    })
+    cy.getMaxRecordValue().then((maxValue) => {clickLastElementNTimes(maxValue);
+      });
     cy.get('span[id^="delete-record-"]').should('not.exist');
   })
 
   it('should be able to find a worker in the search field and edit it.', () => {
-    cy.visit('https://demoqa.com/webtables')
     cy.addNewWorker(user);
     cy.get('#searchBox').type(user.userName);
     cy.get('[title="Edit"]').invoke('attr', 'id').then(() => {
@@ -105,3 +94,4 @@ describe('Web Tables page', () => {
       cy.contains(user.department).should('exist');
       });
     
+    })
