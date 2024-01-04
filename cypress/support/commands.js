@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('addNewWorker', (user) => {
+  cy.get('#addNewRecordButton').click();
+  cy.get('#firstName').type(user.userName);
+  cy.get('#lastName').type(user.userLastName);
+  cy.get('#userEmail').type(user.email);
+  cy.get('#age').type(user.age);
+  cy.get('#salary').type(user.salary);
+  cy.get('#department').type(user.department);
+  cy.get('#submit').click();
+});
