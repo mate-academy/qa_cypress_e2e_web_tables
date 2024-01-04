@@ -37,13 +37,13 @@ describe('Web Tables page', () => {
   it('should be able to add a new worker.', () => {
     let userQuantityStart;
     let userQuantityEnd;
-
     cy.getMaxRecordValue().then((maxValue) => {
       userQuantityStart = maxValue;
       cy.addNewWorker(user);
       cy.getMaxRecordValue().then((maxValue) => {
         userQuantityEnd = maxValue;
         expect(userQuantityEnd).to.be.greaterThan(userQuantityStart);
+        cy.get('.rt-tr-group').should('contain', user.userName).should('exist');
       });
     });
   });
@@ -64,38 +64,37 @@ describe('Web Tables page', () => {
       });
     });
   });
-});
 
-it('should be able to delete all workers.', () => {
-  function clickLastElementNTimes(n) {
-    if (n > 0) {
-      cy.get('span[id^="delete-record-"]').last().click();
-      clickLastElementNTimes(n - 1);
+  it('should be able to delete all workers.', () => {
+    function clickLastElementNTimes(n) {
+      if (n > 0) {
+        cy.get('span[id^="delete-record-"]').last().click();
+        clickLastElementNTimes(n - 1);
+      }
     }
-  }
-  cy.visit('https://demoqa.com/webtables').then(() => {
-    cy.getMaxRecordValue().then((maxValue) => {
-      clickLastElementNTimes(maxValue);
+    cy.visit('https://demoqa.com/webtables').then(() => {
+      cy.getMaxRecordValue().then((maxValue) => {
+        clickLastElementNTimes(maxValue);
+      });
     });
+    cy.get('span[id^="delete-record-"]').should('not.exist');
   });
-  cy.get('span[id^="delete-record-"]').should('not.exist');
-});
 
-it('should be able to find a worker in the search field and edit it.', () => {
-  cy.visit('https://demoqa.com/webtables');
-  cy.addNewWorker(user);
-  cy.get('#searchBox').type(user.userName);
-  cy.get('[title="Edit"]').invoke('attr', 'id').then(() => {
-    cy.get('[title="Edit"]').click();
+  it('should be able to find a worker in the search field and edit it.', () => {
+    cy.addNewWorker(user);
+    cy.get('#searchBox').type(user.userName);
+    cy.get('[title="Edit"]').invoke('attr', 'id').then(() => {
+      cy.get('[title="Edit"]').click();
+    });
+    cy.get('#age').clear();
+    cy.get('#age').type('2');
+    cy.get('#submit').click();
+    cy.get('div.rt-td').should('contain', '2');
+    cy.contains(user.userName).should('exist');
+    cy.contains(user.userSurname).should('exist');
+    cy.contains(user.email).should('exist');
+    cy.contains(user.number).should('exist');
+    cy.contains(user.number).should('exist');
+    cy.contains(user.department).should('exist');
   });
-  cy.get('#age').clear();
-  cy.get('#age').type('2');
-  cy.get('#submit').click();
-  cy.get('div.rt-td').should('contain', '2');
-  cy.contains(user.userName).should('exist');
-  cy.contains(user.userSurname).should('exist');
-  cy.contains(user.email).should('exist');
-  cy.contains(user.number).should('exist');
-  cy.contains(user.number).should('exist');
-  cy.contains(user.department).should('exist');
 });
