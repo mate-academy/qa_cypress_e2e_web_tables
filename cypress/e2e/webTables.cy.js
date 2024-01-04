@@ -99,45 +99,20 @@ describe('Web Tables page', () => {
     cy.contains(user.department).should('exist');
   });
 
+  function executeSearchAndCheck(value) {
+    cy.get('#searchBox').type(value);
+    cy.get('div.rt-td').should('contain', value);
+
+    cy.get('#searchBox').clear();
+  }
   it('should be able to check the search by all column values.', () => {
     cy.addNewWorker(user);
 
-    cy.get('#searchBox').type(user.userName);
-    cy.get('div.rt-td').should('contain', user.userName);
-
-    cy.should(() => {
-      cy.get('#searchBox').clear();
-    });
-
-    cy.get('#searchBox').type(user.userSurname);
-    cy.get('div.rt-td').should('contain', user.userSurname);
-
-    cy.should(() => {
-      cy.get('#searchBox').clear();
-    });
-
-    cy.get('#searchBox').type(user.email);
-    cy.get('div.rt-td').should('contain', user.email);
-
-    cy.should(() => {
-      cy.get('#searchBox').clear();
-    });
-
-    cy.get('#searchBox').type(user.age.toString());
-    cy.get('div.rt-td').should('contain', user.age.toString());
-
-    cy.should(() => {
-      cy.get('#searchBox').clear();
-    });
-
-    cy.get('#searchBox').type(user.number.toString());
-    cy.get('div.rt-td').should('contain', user.number.toString());
-
-    cy.should(() => {
-      cy.get('#searchBox').clear();
-    });
-
-    cy.get('#searchBox').type(user.department);
-    cy.get('div.rt-td').should('contain', user.department);
+    executeSearchAndCheck(user.userName);
+    executeSearchAndCheck(user.userSurname);
+    executeSearchAndCheck(user.email);
+    executeSearchAndCheck(user.age.toString());
+    executeSearchAndCheck(user.number.toString());
+    executeSearchAndCheck(user.department);
   });
 });
