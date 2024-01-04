@@ -16,12 +16,17 @@ describe('Web Tables page', () => {
   } = generateWorker();
 
   it('should contains pagination', () => {
-    cy.get('.pagination-bottom').should('exist');
-    cy.get('.pagination-bottom').should('contain', 'Previous');
-    cy.get('.pagination-bottom').should('contain', 'Page');
-    cy.get('.pagination-bottom').should('contain', 'of');
-    cy.get('.pagination-bottom').should('contain', 'rows');
-    cy.get('.pagination-bottom').should('contain', 'Next');
+    cy.addNewWorker(generateWorker());
+    cy.addNewWorker(generateWorker());
+    cy.addNewWorker(generateWorker());
+
+    cy.get('[aria-label="rows per page"]').select('5');
+
+    cy.contains('[type="button"]', 'Next').click();
+    cy.get('[type="number"]').should('have.value', '2');
+
+    cy.contains('[type="button"]', 'Previous').click();
+    cy.get('[type="number"]').should('have.value', '1');
   });
 
   it('should provide the ability to select count of rows', () => {
