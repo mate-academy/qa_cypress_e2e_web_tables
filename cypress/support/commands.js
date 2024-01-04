@@ -1,4 +1,4 @@
-Cypress.Commands.add('newworker', (user) => {
+Cypress.Commands.add('newWorker', (user) => {
   cy.get('#addNewRecordButton').click();
   cy.get('#firstName').type(user.userFirstName);
   cy.get('#lastName').type(user.userLastName);

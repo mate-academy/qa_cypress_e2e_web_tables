@@ -23,9 +23,9 @@ describe('Web Tables page', () => {
   });
 
   it('should be able to select the row count', () => {
-    cy.newworker(user);
-    cy.newworker(user);
-    cy.newworker(user);
+    cy.newWorker(user);
+    cy.newWorker(user);
+    cy.newWorker(user);
     cy.get('[aria-label="rows per page"]').select('5 rows');
     cy.get('[aria-label="rows per page"]').should('contain', '5 rows');
     cy.contains('[type="button"]', 'Next').click();
@@ -39,7 +39,7 @@ describe('Web Tables page', () => {
   });
 
   it('should be able to add a new worker', () => {
-    cy.newworker(user);
+    cy.newWorker(user);
     cy.get('.rt-tbody')
       .should('contain', user.userFirstName)
       .and('contain', user.userLastName)
@@ -50,7 +50,7 @@ describe('Web Tables page', () => {
   });
 
   it('should be able to delete a worker', () => {
-    cy.newworker(user);
+    cy.newWorker(user);
     cy.get('#delete-record-4').click();
     cy.get('.rt-tr-group')
       .should('not.contain', user.userFirstName)
@@ -83,37 +83,37 @@ describe('Web Tables page', () => {
   });
 
   it('should be able to search worker by First Name', () => {
-    cy.newworker(user);
+    cy.newWorker(user);
     cy.get('#searchBox').type(user.userFirstName);
     cy.get('.rt-tr-group').should('contain', user.userFirstName);
   });
 
   it('should be able to search worker by Last Name', () => {
-    cy.newworker(user);
+    cy.newWorker(user);
     cy.get('#searchBox').type(user.userLastName);
     cy.get('.rt-tr-group').should('contain', user.userLastName);
   });
 
   it('should be able to search worker by Age', () => {
-    cy.newworker(user);
+    cy.newWorker(user);
     cy.get('#searchBox').type(user.userAge);
     cy.get('.rt-tr-group').should('contain', user.userAge);
   });
 
   it('should be able to search worker by Email', () => {
-    cy.newworker(user);
+    cy.newWorker(user);
     cy.get('#searchBox').type(user.userEmail);
     cy.get('.rt-tr-group').should('contain', user.userEmail);
   });
 
   it('should be able to search worker by Salary', () => {
-    cy.newworker(user);
+    cy.newWorker(user);
     cy.get('#searchBox').type(user.userSalary);
     cy.get('.rt-tr-group').should('contain', user.userSalary);
   });
 
   it('should be able to search worker by Department', () => {
-    cy.newworker(user);
+    cy.newWorker(user);
     cy.get('#searchBox').type(user.userDepartment);
     cy.get('.rt-tr-group').should('contain', user.userDepartment);
   });
