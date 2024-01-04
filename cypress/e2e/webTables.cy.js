@@ -105,35 +105,35 @@ describe('Web Tables page', () => {
     cy.get('#searchBox').type(user.userName);
     cy.get('div.rt-td').should('contain', user.userName);
 
-    cy.wrap().should(() => {
+    cy.should(() => {
       cy.get('#searchBox').clear();
     });
 
     cy.get('#searchBox').type(user.userSurname);
     cy.get('div.rt-td').should('contain', user.userSurname);
 
-    cy.wrap().should(() => {
+    cy.should(() => {
       cy.get('#searchBox').clear();
     });
 
     cy.get('#searchBox').type(user.email);
     cy.get('div.rt-td').should('contain', user.email);
 
-    cy.wrap().should(() => {
+    cy.should(() => {
       cy.get('#searchBox').clear();
     });
 
     cy.get('#searchBox').type(user.age.toString());
     cy.get('div.rt-td').should('contain', user.age.toString());
 
-    cy.wrap().should(() => {
+    cy.should(() => {
       cy.get('#searchBox').clear();
     });
 
     cy.get('#searchBox').type(user.number.toString());
     cy.get('div.rt-td').should('contain', user.number.toString());
 
-    cy.wrap().should(() => {
+    cy.should(() => {
       cy.get('#searchBox').clear();
     });
 
