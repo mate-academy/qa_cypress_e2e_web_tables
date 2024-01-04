@@ -51,7 +51,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-tr-group').should('have.length', 100);
   });
 
-  it.only('should have ability to add new worker', () => {
+  it('should have ability to add new worker', () => {
     cy.task('generateWorker').then((worker) => {
       cy.get('#addNewRecordButton').click();
 
@@ -69,13 +69,112 @@ describe('Web Tables page', () => {
       cy.get(':nth-child(4) > .rt-tr > :nth-child(2)')
         .should('contain', worker.lastName);
       // eslint-disable-next-line max-len
-      cy.get(':nth-child(4) > .rt-tr > [style="flex: 40 0 auto; width: 40px; max-width: 40px;"]')
+      cy.get(':nth-child(4) > .rt-tr > :nth-child(3)', { force: true })
         .should('contain', worker.age);
       cy.get(':nth-child(4) > .rt-tr > :nth-child(4)')
         .should('contain', worker.email);
       cy.get(':nth-child(4) > .rt-tr > :nth-child(5)')
         .should('contain', worker.salary);
       cy.get(':nth-child(4) > .rt-tr > :nth-child(6)')
+        .should('contain', worker.department);
+    });
+  });
+
+  it('should delete one worker and all workers in a table', () => {
+    cy.get('#delete-record-1').click();
+    cy.get('#delete-record-1').should('not.exist');
+
+    cy.get('#delete-record-2').click();
+    cy.get('#delete-record-2').should('not.exist');
+
+    cy.get('#delete-record-3').click();
+    cy.get('#delete-record-3').should('not.exist');
+
+    // action-buttons is missed when worker doesn't exist
+    cy.get('.action-buttons').should('not.exist');
+  });
+
+  it('should find worker in the search field and edit it', () => {
+    cy.task('generateWorker').then((worker) => {
+      cy.get('#addNewRecordButton').click();
+
+      cy.findByPlaceholder('First Name').type(worker.firstName);
+      cy.findByPlaceholder('Last Name').type(worker.lastName);
+      cy.findByPlaceholder('name@example.com').type(worker.email);
+      cy.findByPlaceholder('Age').type(worker.age);
+      cy.findByPlaceholder('Salary').type(worker.salary);
+      cy.findByPlaceholder('Department').type(worker.department);
+
+      cy.get('#submit').click();
+
+      cy.findByPlaceholder('Type to search')
+        .type(worker.firstName);
+      cy.get('.input-group-append').click();
+
+      cy.get('[title="Edit"]').click();
+      cy.findByPlaceholder('First Name')
+        .clear()
+        .type('Edited');
+      cy.get('#submit').click();
+
+      cy.findByPlaceholder('Type to search').clear();
+
+      cy.get('.rt-table')
+        .should('contain', 'Edited');
+      cy.get(':nth-child(4) > .rt-tr > :nth-child(2)')
+        .should('contain', worker.lastName);
+      // eslint-disable-next-line max-len
+      cy.get(':nth-child(4) > .rt-tr > :nth-child(3)', { force: true })
+        .should('contain', worker.age);
+      cy.get(':nth-child(4) > .rt-tr > :nth-child(4)')
+        .should('contain', worker.email);
+      cy.get(':nth-child(4) > .rt-tr > :nth-child(5)')
+        .should('contain', worker.salary);
+      cy.get(':nth-child(4) > .rt-tr > :nth-child(6)')
+        .should('contain', worker.department);
+    });
+  });
+
+  it('should check the search by all column values', () => {
+    cy.task('generateWorker').then((worker) => {
+      cy.get('#addNewRecordButton').click();
+
+      cy.findByPlaceholder('First Name').type(worker.firstName);
+      cy.findByPlaceholder('Last Name').type(worker.lastName);
+      cy.findByPlaceholder('name@example.com').type(worker.email);
+      cy.findByPlaceholder('Age').type(worker.age);
+      cy.findByPlaceholder('Salary').type(worker.salary);
+      cy.findByPlaceholder('Department').type(worker.department);
+
+      cy.get('#submit').click();
+
+      cy.findByPlaceholder('Type to search')
+        .type(worker.firstName);
+      cy.get('.rt-table')
+        .should('contain', worker.firstName);
+
+      cy.findByPlaceholder('Type to search')
+        .clear()
+        .type(worker.lastName);
+      cy.get('.rt-table')
+        .should('contain', worker.lastName);
+
+      cy.findByPlaceholder('Type to search')
+        .clear()
+        .type(worker.age);
+      cy.get('.rt-table')
+        .should('contain', worker.age);
+
+      cy.findByPlaceholder('Type to search')
+        .clear()
+        .type(worker.salary);
+      cy.get('.rt-table')
+        .should('contain', worker.salary);
+
+      cy.findByPlaceholder('Type to search')
+        .clear()
+        .type(worker.department);
+      cy.get('.rt-table')
         .should('contain', worker.department);
     });
   });
