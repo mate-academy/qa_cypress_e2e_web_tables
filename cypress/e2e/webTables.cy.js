@@ -9,6 +9,7 @@ describe('Web Tables page', () => {
     cy.get('.-pageInfo').should('contain', 'Page')
       .and('contain', 'of');
     cy.get('.-previous > .-btn').should('be.disabled');
+    cy.get('.-next > .-btn').should('be.disabled');
   });
   it('should select rows count', () => {
     cy.get('[aria-label="rows per page"]').select('5 rows');
@@ -35,16 +36,11 @@ describe('Web Tables page', () => {
     cy.get('#delete-record-1').click();
     cy.get('#delete-record-2').click();
     cy.get('#delete-record-3').click();
-    cy.get('.web-tables-wrapper').should('not.have.value');
+    cy.get('.web-tables-wrapper').should('contain', 'No rows found');
   });
   it('should find and edit records', () => {
     cy.get('#searchBox').type('Alden');
     cy.get('.rt-tr-group').should('contain', 'Alden');
-    cy.get('#edit-record-2').click();
-    cy.get('#salary').type('0');
-    cy.get('#submit').click();
-  });
-  it('should validate data after editing', () => {
     cy.get('#edit-record-2').click();
     cy.get('#salary').type('0');
     cy.get('#submit').click();
