@@ -2,6 +2,7 @@
 
 const { generateUser } = require('../support/genUser');
 const user = generateUser();
+let userQuantityStart; // Declare the variable in a higher scope
 
 describe('Web Tables page', () => {
   beforeEach(() => {
@@ -35,33 +36,31 @@ describe('Web Tables page', () => {
   });
 
   it('should be able to add a new worker.', () => {
-    let userQuantityStart;
-    let userQuantityEnd;
-    cy.getMaxRecordValue().then((maxValue) => {
-      userQuantityStart = maxValue;
-      cy.addNewWorker(user);
-      cy.getMaxRecordValue().then((maxValue) => {
-        userQuantityEnd = maxValue;
-        expect(userQuantityEnd).to.be.greaterThan(userQuantityStart);
-        cy.get('.rt-tr-group').should('contain', user.userName).should('exist');
-      });
+    cy.getMaxRecordValue().then((startValue) => {
+      userQuantityStart = startValue; // Set the value of userQuantityStart
+    });
+
+    cy.addNewWorker(user);
+
+    cy.getMaxRecordValue().then((userQuantityEnd) => {
+      expect(userQuantityEnd).to.be.greaterThan(userQuantityStart);
+      cy.get('.rt-tr-group').should('contain', user.userName).should('exist');
     });
   });
 
   it('should be able to delete a worker.', () => {
-    let userQuantityStart;
-    let userQuantityEnd;
+    cy.getMaxRecordValue().then((startValue) => {
+      userQuantityStart = startValue; // Set the value of userQuantityStart
 
-    cy.getMaxRecordValue().then((maxValue) => {
-      userQuantityStart = maxValue;
-      if (maxValue === 0) {
+      if (userQuantityStart === 0) {
         cy.addNewWorker(user);
       }
-      cy.get('span[id^="delete-record-"]').last().click();
-      cy.getMaxRecordValue().then((maxValue) => {
-        userQuantityEnd = maxValue;
-        expect(userQuantityEnd).to.be.lessThan(userQuantityStart);
-      });
+    });
+
+    cy.get('span[id^="delete-record-"]').last().click();
+
+    cy.getMaxRecordValue().then((userQuantityEnd) => {
+      expect(userQuantityEnd).to.be.lessThan(userQuantityStart);
     });
   });
 
@@ -72,11 +71,13 @@ describe('Web Tables page', () => {
         clickLastElementNTimes(n - 1);
       }
     }
+
     cy.visit('https://demoqa.com/webtables').then(() => {
       cy.getMaxRecordValue().then((maxValue) => {
         clickLastElementNTimes(maxValue);
       });
     });
+
     cy.get('span[id^="delete-record-"]').should('not.exist');
   });
 
@@ -96,5 +97,47 @@ describe('Web Tables page', () => {
     cy.contains(user.number).should('exist');
     cy.contains(user.number).should('exist');
     cy.contains(user.department).should('exist');
+  });
+
+  it('should be able to check the search by all column values.', () => {
+    cy.addNewWorker(user);
+
+    cy.get('#searchBox').type(user.userName);
+    cy.get('div.rt-td').should('contain', user.userName);
+
+    cy.wrap(null).should(() => {
+      cy.get('#searchBox').clear();
+    });
+
+    cy.get('#searchBox').type(user.userSurname);
+    cy.get('div.rt-td').should('contain', user.userSurname);
+
+    cy.wrap(null).should(() => {
+      cy.get('#searchBox').clear();
+    });
+
+    cy.get('#searchBox').type(user.email);
+    cy.get('div.rt-td').should('contain', user.email);
+
+    cy.wrap(null).should(() => {
+      cy.get('#searchBox').clear();
+    });
+
+    cy.get('#searchBox').type(user.age.toString());
+    cy.get('div.rt-td').should('contain', user.age.toString());
+
+    cy.wrap(null).should(() => {
+      cy.get('#searchBox').clear();
+    });
+
+    cy.get('#searchBox').type(user.number.toString());
+    cy.get('div.rt-td').should('contain', user.number.toString());
+
+    cy.wrap(null).should(() => {
+      cy.get('#searchBox').clear();
+    });
+
+    cy.get('#searchBox').type(user.department);
+    cy.get('div.rt-td').should('contain', user.department);
   });
 });
