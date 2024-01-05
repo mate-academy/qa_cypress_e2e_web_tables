@@ -1,5 +1,5 @@
-import { faker } from '@faker-js/faker';
 const { defineConfig } = require('cypress');
+const faker = require('faker');
 
 module.exports = defineConfig({
   viewportWidth: 1280,
@@ -11,13 +11,12 @@ module.exports = defineConfig({
         generateUser() {
           const randomNumber = Math.floor(Math.random(10000) * 100000);
           const randomAge = Math.floor(Math.random(100) * 100);
-          const gender = faker.person.sex();
           return {
-            userName: faker.person.firstName(gender),
-            userLastName: faker.person.lastName(gender),
-            email: faker.person.firstName() + randomNumber + '@qatest.com',
+            userName: faker.name.firstName(),
+            userLastName: faker.name.lastName(),
+            email: faker.name.firstName() + randomNumber + '@qatest.com',
             password: '12345Qwert!',
-            address: faker.location.streetAddress(),
+            address: faker.address.streetAddress(),
             salary: randomNumber,
             age: randomAge,
             department: faker.commerce.department()

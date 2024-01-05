@@ -4,10 +4,10 @@ describe('Web Tables page', () => {
   let user;
 
   beforeEach(() => {
+    cy.visit('/');
     cy.task('generateUser').then((generatedUser) => {
       user = generatedUser;
     });
-    cy.visit('/');
   });
   it('should check the pagination', () => {
     cy.addNewWorker(user);
