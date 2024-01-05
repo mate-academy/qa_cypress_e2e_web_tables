@@ -1,5 +1,5 @@
+import { faker } from '@faker-js/faker';
 const { defineConfig } = require('cypress');
-const { faker } = require('@faker-js/faker');
 
 module.exports = defineConfig({
   viewportWidth: 1280,
