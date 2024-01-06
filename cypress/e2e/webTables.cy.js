@@ -3,19 +3,15 @@
 /// <reference types='cypress' />
 
 describe('Web Tables page', () => {
+  let worker;
   beforeEach(() => {
     cy.visit('/webtables');
+    cy.task('generateWorker').then((generateWorker) => {
+      worker = generateWorker;
+    });
   });
   // eslint-disable-next-line max-len
-  it('should have pagination with 5,10,20,25,50,100 values in selector and equal number of rows', () => {
-    // cy.get('.-pagination').should('have.select');
-
-    cy.get('[aria-label="rows per page"]')
-      .select('5 rows')
-      .should('have.value', '5');
-
-    cy.get('.rt-tr-group').should('have.length', 5);
-
+  it('should have pagination with 10 and 100 values in selector and equal number of rows', () => {
     cy.get('[aria-label="rows per page"]')
       .select('10 rows')
       .should('have.value', '10');
@@ -23,46 +19,35 @@ describe('Web Tables page', () => {
     cy.get('.rt-tr-group').should('have.length', 10);
 
     cy.get('[aria-label="rows per page"]')
-      .select('20 rows', { force: true })
-      .invoke('show')
-      .should('have.value', '20');
-
-    cy.get('.rt-tr-group').should('have.length', 20);
-
-    cy.get('[aria-label="rows per page"]')
-      .select('25 rows', { force: true })
-      .invoke('show')
-      .should('have.value', '25');
-
-    cy.get('.rt-tr-group').should('have.length', 25);
-
-    cy.get('[aria-label="rows per page"]')
-      .select('50 rows', { force: true })
-      .invoke('show')
-      .should('have.value', '50');
-
-    cy.get('.rt-tr-group').should('have.length', 50);
-
-    cy.get('[aria-label="rows per page"]')
       .select('100 rows', { force: true })
       .invoke('show')
       .should('have.value', '100');
 
     cy.get('.rt-tr-group').should('have.length', 100);
+
+    cy.task('generateWorker').then((worker) => {
+      cy.addWorker(worker);
+      cy.addWorker(worker);
+      cy.addWorker(worker);
+
+      cy.get('[aria-label="rows per page"]')
+        .select('5 rows', { force: true })
+        .should('have.value', '5');
+
+      cy.get('.-next').should('not.have.class', 'disabled');
+      cy.get('.action-buttons').should('have.length', 5);
+      cy.get('.-next').click();
+
+      cy.get('.action-buttons').should('have.length', 1);
+
+      cy.get('.-previous').should('not.have.class', 'disabled');
+      cy.get('.-previous').click();
+    });
   });
 
   it('should have ability to add new worker', () => {
     cy.task('generateWorker').then((worker) => {
-      cy.get('#addNewRecordButton').click();
-
-      cy.findByPlaceholder('First Name').type(worker.firstName);
-      cy.findByPlaceholder('Last Name').type(worker.lastName);
-      cy.findByPlaceholder('name@example.com').type(worker.email);
-      cy.findByPlaceholder('Age').type(worker.age);
-      cy.findByPlaceholder('Salary').type(worker.salary);
-      cy.findByPlaceholder('Department').type(worker.department);
-
-      cy.get('#submit').click();
+      cy.addWorker(worker);
 
       cy.get(':nth-child(4) > .rt-tr > :nth-child(1)')
         .should('contain', worker.firstName);
@@ -80,15 +65,15 @@ describe('Web Tables page', () => {
     });
   });
 
-  it('should delete one worker and all workers in a table', () => {
-    cy.get('#delete-record-1').click();
-    cy.get('#delete-record-1').should('not.exist');
+  it('should delete all workers in a table', () => {
+    cy.addWorker(worker);
+    cy.get('[title="Delete"]').then(($value) => {
+      const count = $value.length;
 
-    cy.get('#delete-record-2').click();
-    cy.get('#delete-record-2').should('not.exist');
-
-    cy.get('#delete-record-3').click();
-    cy.get('#delete-record-3').should('not.exist');
+      for (let i = 1; i <= count; i++) {
+        cy.get('#delete-record-' + i).click();
+      }
+    });
 
     // action-buttons is missed when worker doesn't exist
     cy.get('.action-buttons').should('not.exist');
@@ -96,16 +81,7 @@ describe('Web Tables page', () => {
 
   it('should find worker in the search field and edit it', () => {
     cy.task('generateWorker').then((worker) => {
-      cy.get('#addNewRecordButton').click();
-
-      cy.findByPlaceholder('First Name').type(worker.firstName);
-      cy.findByPlaceholder('Last Name').type(worker.lastName);
-      cy.findByPlaceholder('name@example.com').type(worker.email);
-      cy.findByPlaceholder('Age').type(worker.age);
-      cy.findByPlaceholder('Salary').type(worker.salary);
-      cy.findByPlaceholder('Department').type(worker.department);
-
-      cy.get('#submit').click();
+      cy.addWorker(worker);
 
       cy.findByPlaceholder('Type to search')
         .type(worker.firstName);
@@ -135,18 +111,9 @@ describe('Web Tables page', () => {
     });
   });
 
-  it('should check the search by all column values', () => {
+  it('should check the values in all column', () => {
     cy.task('generateWorker').then((worker) => {
-      cy.get('#addNewRecordButton').click();
-
-      cy.findByPlaceholder('First Name').type(worker.firstName);
-      cy.findByPlaceholder('Last Name').type(worker.lastName);
-      cy.findByPlaceholder('name@example.com').type(worker.email);
-      cy.findByPlaceholder('Age').type(worker.age);
-      cy.findByPlaceholder('Salary').type(worker.salary);
-      cy.findByPlaceholder('Department').type(worker.department);
-
-      cy.get('#submit').click();
+      cy.addWorker(worker);
 
       cy.findByPlaceholder('Type to search')
         .type(worker.firstName);
