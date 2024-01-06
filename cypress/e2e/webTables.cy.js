@@ -12,11 +12,40 @@ describe('Web Tables page', () => {
   });
    
   it('The page should contain the pagination', () => {
-
     cy.get('.-pageInfo').should('contain.text', 'Page  of 1');
     cy.contains('[disabled]', 'Previous').should('contain', 'Previous');
     cy.contains('[disabled]', 'Next').should('contain', 'Next');
-  });
+    cy.get('[disabled]').should('contain.text', 'Next');
+    cy.get('[disabled]').should('contain.text', 'Previous');
+
+    cy.get('select').select('5 rows').should('have.value', '5');
+    cy.contains('#addNewRecordButton', 'Add').click();
+    cy.findByPlaceholder('First Name').type(worker.firstName);
+    cy.findByPlaceholder('Last Name').type(worker.lastName);
+    cy.findByPlaceholder('name@example.com').type(worker.email);
+    cy.findByPlaceholder('Age').type(worker.age);
+    cy.findByPlaceholder('Salary').type(worker.salary);
+    cy.findByPlaceholder('Department').type(worker.department);
+    cy.contains('#submit', 'Submit').click();
+    cy.contains('#addNewRecordButton', 'Add').click();
+    cy.findByPlaceholder('First Name').type(worker.firstName);
+    cy.findByPlaceholder('Last Name').type(worker.lastName);
+    cy.findByPlaceholder('name@example.com').type(worker.email);
+    cy.findByPlaceholder('Age').type(worker.age);
+    cy.findByPlaceholder('Salary').type(worker.salary);
+    cy.findByPlaceholder('Department').type(worker.department);
+    cy.contains('#submit', 'Submit').click();
+    cy.contains('#addNewRecordButton', 'Add').click();
+    cy.findByPlaceholder('First Name').type(worker.firstName);
+    cy.findByPlaceholder('Last Name').type(worker.lastName);
+    cy.findByPlaceholder('name@example.com').type(worker.email);
+    cy.findByPlaceholder('Age').type(worker.age);
+    cy.findByPlaceholder('Salary').type(worker.salary);
+    cy.findByPlaceholder('Department').type(worker.department);
+    cy.contains('#submit', 'Submit').click();
+
+    cy.get('.-next > .-btn').should('contain.text', 'Next').click();
+    cy.get('.-previous > .-btn').should('contain.text', 'Previous').click();
 
   it('Should provide an ability to select rows count', () => {
     cy.get('select').select('5 rows').should('have.value', '5');
@@ -58,9 +87,10 @@ describe('Web Tables page', () => {
     cy.contains('#submit', 'Submit').click();
 
     cy.get('#delete-record-4').click();
-    cy.contains('.rt-tr', worker.department).should('not.be.an', worker.department);
-    cy.contains('.rt-tr', worker.firstName).should('not.exist');
-    cy.contains('.rt-tr', worker.lastName).should('not.exist');
+   
+    cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').should('not.contain', worker.firstName);
+    cy.get(':nth-child(4) > .rt-tr > :nth-child(2)').should('not.contain', worker.lastName);
+
 
   })
 
