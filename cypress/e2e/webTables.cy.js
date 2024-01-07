@@ -45,7 +45,9 @@ describe('Web Tables page', () => {
     cy.contains('#submit', 'Submit').click();
 
     cy.get('.-next > .-btn').should('contain.text', 'Next').click();
+    cy.get('[aria-label="jump to page"]').should('contain.value', 2);
     cy.get('.-previous > .-btn').should('contain.text', 'Previous').click();
+    cy.get('[aria-label="jump to page"]').should('contain.value', 1);
 
   it('Should provide an ability to select rows count', () => {
     cy.get('select').select('5 rows').should('have.value', '5');
