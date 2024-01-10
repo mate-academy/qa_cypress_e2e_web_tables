@@ -1,0 +1,22 @@
+const faker = require('faker');
+
+function generateWorker() {
+  const random = Math.random().toString().slice(2, 4);
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
+  const email = `${firstName}${lastName}@hotmail.com`;
+  const age = random;
+  const salary = random * 1000;
+  const department = faker.random.word();
+
+  return {
+    firstName,
+    lastName,
+    email,
+    age,
+    salary,
+    department
+  };
+}
+
+module.exports = { generateWorker };
