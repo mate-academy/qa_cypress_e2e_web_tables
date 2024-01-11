@@ -42,8 +42,10 @@ describe('Web Tables page', () => {
   });
 
   it('Should have an ability delete user.', () => {
+    cy.get('#searchBox').type('Cierra');
     cy.get('#delete-record-1').click();
-    cy.get(':nth-child(3) > .rt-tr > :nth-child(1)').should('have.value', '');
+    cy.get(':nth-child(3) > .rt-tr > :nth-child(1)')
+      .should('not.contain', 'Cierra');
   });
 
   it('Should have an ability delete all users.', () => {
