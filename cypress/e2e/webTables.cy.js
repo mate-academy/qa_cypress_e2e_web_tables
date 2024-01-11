@@ -41,7 +41,7 @@ describe('Web Tables page', () => {
       .should('contain', user.lastName);
   });
 
-  it('Delete user.', () => {
+  it('Should have an ability delete user.', () => {
     cy.get('#delete-record-1').click();
     cy.get(':nth-child(3) > .rt-tr > :nth-child(1)').should('have.value', '');
   });
