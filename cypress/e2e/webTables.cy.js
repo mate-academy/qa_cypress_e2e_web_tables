@@ -18,57 +18,27 @@ describe('Web Tables page', () => {
   });
 
   it('Should check pagination and selector of rows.', () => {
-    cy.get('.-previous > .-btn').should('contain', 'Previous');
-    cy.get('.-next > .-btn').should('contain', 'Next');
     cy.get('.-previous > .-btn').should('exist');
     cy.get('.-next > .-btn').should('exist');
     cy.get('select').select('5 rows');
     cy.get('select').should('contain', '5 rows');
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(user.firstName);
-    cy.get('#lastName').type(user.lastName);
-    cy.get('#userEmail').type(user.email);
-    cy.get('#age').type(user.age);
-    cy.get('#salary').type(user.salary);
-    cy.get('#department').type(user.department);
-    cy.get('#submit').click();
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(user.firstName);
-    cy.get('#lastName').type(user.lastName);
-    cy.get('#userEmail').type(user.email);
-    cy.get('#age').type(user.age);
-    cy.get('#salary').type(user.salary);
-    cy.get('#department').type(user.department);
-    cy.get('#submit').click();
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(user.firstName);
-    cy.get('#lastName').type(user.lastName);
-    cy.get('#userEmail').type(user.email);
-    cy.get('#age').type(user.age);
-    cy.get('#salary').type(user.salary);
-    cy.get('#department').type(user.department);
-    cy.get('#submit').click();
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(user.firstName);
-    cy.get('#lastName').type(user.lastName);
-    cy.get('#userEmail').type(user.email);
-    cy.get('#age').type(user.age);
-    cy.get('#salary').type(user.salary);
-    cy.get('#department').type(user.department);
-    cy.get('#submit').click();
+    cy.addNewUser(user);
+    cy.addNewUser(user);
+    cy.addNewUser(user);
+    cy.addNewUser(user);
+    cy.addNewUser(user);
     cy.contains('Next').click();
+    cy.get('.-previous > .-btn').should('contain', 'Previous');
+    cy.get('.-pageJump > input').should('have.value', '2');
+    cy.contains('Previous').click();
+    cy.get('.-next > .-btn').should('contain', 'Next');
+    cy.get('.-pageJump > input').should('have.value', '1');
   });
 
   it('Create a new user.', () => {
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(user.firstName);
-    cy.get('#lastName').type(user.lastName);
-    cy.get('#userEmail').type(user.email);
-    cy.get('#age').type(user.age);
-    cy.get('#salary').type(user.salary);
-    cy.get('#department').type(user.department);
-    cy.get('#submit').click();
-    cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').should('exist');
+    cy.addNewUser(user);
+    cy.get(':nth-child(4) > .rt-tr > :nth-child(2)')
+      .should('contain', user.lastName);
   });
 
   it('Delete user.', () => {
@@ -76,10 +46,13 @@ describe('Web Tables page', () => {
     cy.get(':nth-child(3) > .rt-tr > :nth-child(1)').should('have.value', '');
   });
 
-  it('Delete all users.', () => {
+  it('Should have an ability delete all users.', () => {
     cy.get('#delete-record-1').click();
     cy.get('#delete-record-2').click();
     cy.get('#delete-record-3').click();
+    cy.on('window:alert', (alert) => {
+      expect(alert).to.equal(`No rows found`);
+    });
     cy.get(':nth-child(1) > .rt-tr > :nth-child(1)').should('have.value', '');
   });
 
