@@ -8,12 +8,12 @@ module.exports = defineConfig({
     baseUrl: 'https://demoqa.com/webtables',
     viewportHeight: 800,
     viewportWidth: 1320,
+    Timeout: 8000,
     setupNodeEvents(on, config) {
       on("task", {
         generateUser() {
           randomIndex = Math.floor(Math.random() * 5);
           randomIndex2 = Math.floor(Math.random() * 9);
-          // firstNames = ['Nika', 'Tim', 'Kate', 'Misha', 'Eva', 'Kirill'];
           lastNames = ['Unu', 'Timu', 'Kanu', 'Mishu', 'Evan', 'Kirin'];
           salaries = ['1000', '1500', '2000', '2300', '3000', '4000'];
           departments = ['HR', 'Developer', 'QA', 'Design', 'Account', 'Sales'];
