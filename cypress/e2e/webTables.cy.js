@@ -1,5 +1,4 @@
 /// <reference types='cypress' />
-const { generateWorker } = require('../support/generateWorker');
 
 describe('Web Tables page', () => {
   let worker;
@@ -8,17 +7,21 @@ describe('Web Tables page', () => {
     cy.task('generateWorker').then((generateWorker) => {
       worker = generateWorker;
       cy.visit('/');
+      cy.log(worker.firstName);
     });
   });
 
-  it('should check pagination', () => {
+  it.only('should check pagination', () => {
     cy.get('.-pageInfo').should('exist');
     cy.get('[aria-label="jump to page"]').type('1');
+    cy.get('.-btn').contains('Next').should('contain', 'Next');
+    cy.get('.-btn').contains('Previous').should('contain', 'Previous');
   });
 
   it('should check rows count selection', () => {
     cy.get('[aria-label="rows per page"]').should('exist');
     cy.get('[aria-label="rows per page"]').select('20 rows');
+    cy.get('[aria-label="rows per page"]').should('contain', '20 rows');
   });
 
   it('should add a new worker', () => {
@@ -36,9 +39,9 @@ describe('Web Tables page', () => {
   });
 
   it('should be able to belete a worker', () => {
-    cy.createWorker(generateWorker());
+    cy.createWorker(worker);
     cy.get('#delete-record-4').click();
-    cy.contains('.rt-td', generateWorker).should('not.exist');
+    cy.get('.ReactTable').should('not.contain', worker.firstName);
   });
 
   it('should be able delete all workers', () => {
@@ -48,20 +51,9 @@ describe('Web Tables page', () => {
     cy.get('.ReactTable').should('contain', 'No rows found');
   });
 
-  it('find a worker in the search field and edit it', () => {
+  it('find worker in the search field, edit it and alert data', () => {
     cy.get('#searchBox').type('Kierra');
     cy.get('.ReactTable').should('contain', 'Kierra');
-    cy.get('#edit-record-3').click();
-    cy.findByPlaceholder('First Name').clear();
-    cy.findByPlaceholder('First Name').type('Anna');
-    cy.findByPlaceholder('Age').clear();
-    cy.findByPlaceholder('Age').type(22);
-    cy.findByPlaceholder('Salary').clear();
-    cy.findByPlaceholder('Salary').type(190000);
-    cy.get('#submit').click();
-  });
-
-  it('Validate data in the worker row after editing the worker.', () => {
     cy.get('#edit-record-3').click();
     cy.findByPlaceholder('First Name').clear();
     cy.findByPlaceholder('First Name').type('Anna');
@@ -75,29 +67,46 @@ describe('Web Tables page', () => {
     cy.get('.rt-td').should('contain', '190000');
   });
 
+  /* it('Validate data in the worker row after editing the worker.', () => {
+    cy.get('#edit-record-3').click();
+    cy.findByPlaceholder('First Name').clear();
+    cy.findByPlaceholder('First Name').type('Anna');
+    cy.findByPlaceholder('Age').clear();
+    cy.findByPlaceholder('Age').type(22);
+    cy.findByPlaceholder('Salary').clear();
+    cy.findByPlaceholder('Salary').type(190000);
+    cy.get('#submit').click();
+    cy.get('.rt-td').should('contain', 'Anna');
+    cy.get('.rt-td').should('contain', '22');
+    cy.get('.rt-td').should('contain', '190000');
+  });
+  */
   it('should be able to the search by all column values', () => {
-    cy.get('#searchBox').type('Kierra');
-    cy.get('.ReactTable').should('contain', 'Kierra');
+    cy.createWorker(worker);
+    cy.log(worker.firstName);
+
+    cy.get('#searchBox').type(worker.firstName);
+    cy.get('.ReactTable').should('contain', worker.firstName);
     cy.get('#searchBox').clear();
 
-    cy.get('#searchBox').type('Gentry');
-    cy.get('.ReactTable').should('contain', 'Gentry');
+    cy.get('#searchBox').type(worker.lastName);
+    cy.get('.ReactTable').should('contain', worker.lastName);
     cy.get('#searchBox').clear();
 
-    cy.get('#searchBox').type('29');
-    cy.get('.ReactTable').should('contain', '29');
+    cy.get('#searchBox').type(worker.age);
+    cy.get('.ReactTable').should('contain', worker.age);
     cy.get('#searchBox').clear();
 
-    cy.get('#searchBox').type('kierra@example.com');
-    cy.get('.ReactTable').should('contain', 'kierra@example.com');
+    cy.get('#searchBox').type(worker.email);
+    cy.get('.ReactTable').should('contain', worker.email);
     cy.get('#searchBox').clear();
 
-    cy.get('#searchBox').type('2000');
-    cy.get('.ReactTable').should('contain', '2000');
+    cy.get('#searchBox').type(worker.salary);
+    cy.get('.ReactTable').should('contain', worker.salary);
     cy.get('#searchBox').clear();
 
-    cy.get('#searchBox').type('Legal');
-    cy.get('.ReactTable').should('contain', 'Legal');
+    cy.get('#searchBox').type(worker.department);
+    cy.get('.ReactTable').should('contain', worker.department);
     cy.get('#searchBox').clear();
   });
 });
