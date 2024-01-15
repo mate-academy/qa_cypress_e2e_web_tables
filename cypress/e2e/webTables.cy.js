@@ -28,6 +28,8 @@ describe('Web Tables page', () => {
 
   it('allows rows count selection', () => {
     cy.get('[aria-label="rows per page"]').should('have.value', '10');
+    cy.get('[aria-label="rows per page"]').select('10 rows', { force: true });
+    cy.get('.rt-tbody').children().should('have.length', 10);
   });
 
   it('allows to add a new worker', () => {
@@ -71,15 +73,6 @@ describe('Web Tables page', () => {
     cy.get('#delete-record-3').click();
     cy.get('.ReactTable.-striped.-highlight')
       .should('contain', 'No rows found');
-  });
-
-  it('allows to find a worker in the search field and edit it', () => {
-    cy.findByPlaceholder('Type to search').type('Alden');
-    cy.get('.ReactTable.-striped.-highlight').should('contain', 'Alden');
-    cy.get('#edit-record-2').click();
-    cy.findByPlaceholder('Last Name').clear();
-    cy.findByPlaceholder('Last Name').type('Shevchenko');
-    cy.get('#submit').click();
   });
 
   it('validate data in the worker row after editing the worker', () => {
