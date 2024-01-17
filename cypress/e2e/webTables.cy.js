@@ -1,4 +1,6 @@
 /// <reference types='cypress' />
+const { addNewWorker, getWorkers } =
+require('../support/generateWorker');
 
 describe('Web Tables page', () => {
   let worker;
@@ -6,16 +8,18 @@ describe('Web Tables page', () => {
   beforeEach(() => {
     cy.task('generateWorker').then((generateWorker) => {
       worker = generateWorker;
-      cy.visit('/');
-      cy.log(worker.firstName);
     });
+    cy.visit('/');
   });
 
-  it.only('should check pagination', () => {
+  it('should check pagination', () => {
+    const workers = getWorkers(5);
+    addNewWorker(workers.length - 1);
     cy.get('.-pageInfo').should('exist');
     cy.get('[aria-label="jump to page"]').type('1');
-    cy.get('.-btn').contains('Next').should('contain', 'Next');
-    cy.get('.-btn').contains('Previous').should('contain', 'Previous');
+    cy.get('[aria-label="rows per page"]').select('5 rows');
+    cy.contains('.-btn', 'Next').click();
+    cy.contains('.-btn', 'Previous').click();
   });
 
   it('should check rows count selection', () => {
@@ -67,20 +71,6 @@ describe('Web Tables page', () => {
     cy.get('.rt-td').should('contain', '190000');
   });
 
-  /* it('Validate data in the worker row after editing the worker.', () => {
-    cy.get('#edit-record-3').click();
-    cy.findByPlaceholder('First Name').clear();
-    cy.findByPlaceholder('First Name').type('Anna');
-    cy.findByPlaceholder('Age').clear();
-    cy.findByPlaceholder('Age').type(22);
-    cy.findByPlaceholder('Salary').clear();
-    cy.findByPlaceholder('Salary').type(190000);
-    cy.get('#submit').click();
-    cy.get('.rt-td').should('contain', 'Anna');
-    cy.get('.rt-td').should('contain', '22');
-    cy.get('.rt-td').should('contain', '190000');
-  });
-  */
   it('should be able to the search by all column values', () => {
     cy.createWorker(worker);
     cy.log(worker.firstName);
