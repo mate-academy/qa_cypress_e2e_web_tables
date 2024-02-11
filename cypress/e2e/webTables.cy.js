@@ -55,28 +55,39 @@ describe('Web Tables page', () => {
   });
 
   it('should provide the ability to delete all workers', () => {
-    cy.get('#delete-record-1').click();
-    cy.get('#delete-record-2').click();
-    cy.get('#delete-record-3').click();
+    cy.get('[title="Delete"]').then(($value) => {
+      const count = $value.length;
+
+      for (let i = 1; i <= count; i++) {
+        cy.get('#delete-record-' + i).click();
+      }
+    });
     cy.contains('No rows found').should('exist');
   });
 
   it('should provide the ability to find a worker' +
     'edit it and validate data', () => {
-    cy.get('#searchBox').type('Cierra');
-    cy.get('#edit-record-1').click();
-    cy.findByPlaceholder('First Name').clear();
+    cy.get('#addNewRecordButton').click();
     cy.findByPlaceholder('First Name').type(employee.firstName);
-    cy.findByPlaceholder('Last Name').clear();
     cy.findByPlaceholder('Last Name').type(employee.lastName);
+    cy.findByPlaceholder('name@example.com').type(employee.email);
+    cy.findByPlaceholder('Age').type(employee.age);
+    cy.findByPlaceholder('Salary').type(employee.salary);
+    cy.findByPlaceholder('Department').type(employee.department);
+    cy.get('#submit').click();
+    cy.findByPlaceholder('Type to search').type(employee.firstName);
+    cy.get('.ReactTable').should('contain', employee.firstName)
+      .and('contain', employee.lastName);
+    cy.get('#edit-record-4').click();
+    cy.findByPlaceholder('Salary').clear();
+    cy.findByPlaceholder('Salary').type(Number(employee.salary) + 1000);
     cy.get('#submit').click();
     cy.get('.ReactTable').should('contain', employee.firstName)
       .and('contain', employee.lastName)
-      .and('contain', 'cierra@example.com')
-      .and('contain', '39')
-      .and('contain', '10000')
-      .and('contain', 'Insurance')
-      .and('not.contain', 'Cierra');
+      .and('contain', employee.email)
+      .and('contain', employee.age)
+      .and('contain', Number(employee.salary) + 1000)
+      .and('contain', employee.department);
   });
 
   it('should provide to search by all column values', () => {
