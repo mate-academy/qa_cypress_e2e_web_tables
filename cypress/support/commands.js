@@ -76,27 +76,25 @@ Cypress.Commands.add('checkUserData', (user) => {
 });
 
 Cypress.Commands.add('checkDataDeleted', (user) => {
+  cy.get('#searchBox').type(`{selectall}${user.email}`);
+
   cy.get('.rt-tr-group')
     .should('not.contain.text', user.firstName);
+
   cy.get('.rt-tr-group')
     .should('not.contain.text', user.lastName);
+
   cy.get('.rt-tr-group')
     .should('not.contain.text', user.email);
+
   cy.get('.rt-tr-group')
     .should('not.contain.text', user.age);
+
   cy.get('.rt-tr-group')
     .should('not.contain.text', user.salary);
+
   cy.get('.rt-tr-group')
     .should('not.contain.text', user.department);
-});
-
-Cypress.Commands.add('deleteAllWorkers', () => {
-  cy.get('[title="Delete"]').its('length')
-    .then((amountOfButtons) => {
-      for (let i = amountOfButtons; i > 0; i--) {
-        cy.get('[title="Delete"]').first().click();
-      }
-    });
 });
 
 Cypress.Commands.add('deleteAllWorkers', () => {
@@ -121,7 +119,7 @@ Cypress.Commands.add('updateUserData', () => {
 
     cy.get('#submit').click();
 
-    cy.get('#searchBox').type(`{selectall}${user.firstName}`);
+    cy.get('#searchBox').type(`{selectall}${user.email}`);
     cy.checkUserData(user);
   });
 });

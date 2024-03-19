@@ -32,6 +32,8 @@ describe('Web Tables page', () => {
   it('should assert adding a new worker', () => {
     cy.addWorker(1, user);
 
+    cy.get('#searchBox').type(`{selectall}${user.email}`);
+
     cy.checkUserData(user);
   });
 
