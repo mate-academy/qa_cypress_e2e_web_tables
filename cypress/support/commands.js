@@ -91,9 +91,18 @@ Cypress.Commands.add('checkDataDeleted', (user) => {
 });
 
 Cypress.Commands.add('deleteAllWorkers', () => {
+  cy.get('[title="Delete"]').its('length')
+    .then((amountOfButtons) => {
+      for (let i = amountOfButtons; i > 0; i--) {
+        cy.get('[title="Delete"]').first().click();
+      }
+    });
+});
+
+Cypress.Commands.add('deleteAllWorkers', () => {
   cy.get('.rt-tbody').find('[title="Delete"]').then((arrayOfButtons) => {
-    const amountOfButtons = arrayOfButtons.length - 1;
-    for (let i = amountOfButtons; i >= 0; i--) {
+    const amountOfButtons = arrayOfButtons.length;
+    for (let i = amountOfButtons - 1; i >= 0; i--) {
       cy.get('[title="Delete"]').eq(i).click();
     }
   });
