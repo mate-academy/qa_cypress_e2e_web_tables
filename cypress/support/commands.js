@@ -91,12 +91,12 @@ Cypress.Commands.add('checkDataDeleted', (user) => {
 });
 
 Cypress.Commands.add('deleteAllWorkers', () => {
-  cy.get('[title="Delete"]').its('length')
-    .then((amountOfButtons) => {
-      for (let i = amountOfButtons; i > 0; i--) {
-        cy.get('[title="Delete"]').first().click();
-      }
-    });
+  cy.get('.rt-tbody').find('[title="Delete"]').then((arrayOfButtons) => {
+    const amountOfButtons = arrayOfButtons.length - 1;
+    for (let i = amountOfButtons; i >= 0; i--) {
+      cy.get('[title="Delete"]').eq(i).click();
+    }
+  });
 });
 
 Cypress.Commands.add('updateUserData', () => {
