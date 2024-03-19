@@ -23,3 +23,21 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('createWorkers', (min, max) => {
+  for (let step = min; step <= max; step++) {
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(`worker№${step}`);
+    cy.get('#lastName').type(`lastname№${step}`);
+    cy.get('#userEmail').type(`email${step}@mail.com`);
+    cy.get('#age').type(20 + step);
+    cy.get('#salary').type(`${step}100`);
+    cy.get('#department').type(`Department#${step}`);
+    cy.get('#submit').click();
+  };
+});
+
+Cypress.Commands.add('deleteAllWorkers', (max) => {
+  for (let step = max; step >= 1; step--) {
+    cy.get(`#delete-record-${step}`).click();
+  };
+});
