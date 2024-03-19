@@ -71,7 +71,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-td').should('contain', 'QA');
   });
 
-  it.only('should provide an opportunity to find a worker by every column', () => {
+  it('should provide an opportunity to find a worker by every column', () => {
     cy.get('#addNewRecordButton').click();
     cy.get('#firstName').type(user.firstName);
     cy.get('#lastName').type(user.lastName);
