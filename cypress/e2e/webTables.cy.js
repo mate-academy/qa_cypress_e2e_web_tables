@@ -44,11 +44,11 @@ describe('Web Tables page', () => {
   });
 
   it('should allow to delete all workers', () => {
-    let deleteAll;
+    let tableRowsLength;
     cy.get('.rt-tbody').find('.action-buttons').then((elements) => {
-      deleteAll = elements.length;
+      tableRowsLength = elements.length;
     }).then(() => {
-      for (let i = 1; i <= deleteAll; i++) {
+      for (let i = 1; i <= tableRowsLength; i++) {
         cy.getBySelector(`#delete-record-${i}`);
       };
 
