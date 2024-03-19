@@ -23,3 +23,116 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('addWorker', (amount, user) => {
+  if (user) {
+    cy.get('#addNewRecordButton').click();
+
+    cy.get('#firstName').type(user.firstName);
+    cy.get('#lastName').type(user.lastName);
+    cy.get('#userEmail').type(user.email);
+    cy.get('#age').type(user.age);
+    cy.get('#salary').type(user.salary);
+    cy.get('#department').type(user.department);
+
+    cy.get('#submit').click();
+  } else {
+    for (let i = 0; i < amount; i++) {
+      cy.task('generateUser').then((user) => {
+        cy.get('#addNewRecordButton').click();
+
+        cy.get('#firstName').type(user.firstName);
+        cy.get('#lastName').type(user.lastName);
+        cy.get('#userEmail').type(user.email);
+        cy.get('#age').type(user.age);
+        cy.get('#salary').type(user.salary);
+        cy.get('#department').type(user.department);
+
+        cy.get('#submit').click();
+      });
+    }
+  }
+});
+
+Cypress.Commands.add('checkRowsSelector', (value) => {
+  cy.get('[aria-label="rows per page"]').select(`${value}`);
+
+  cy.get('[role="rowgroup"]').its('length').should('eq', value);
+});
+
+Cypress.Commands.add('checkUserData', (user) => {
+  cy.get('.rt-tr-group')
+    .should('contain.text', user.firstName);
+  cy.get('.rt-tr-group')
+    .should('contain.text', user.lastName);
+  cy.get('.rt-tr-group')
+    .should('contain.text', user.email);
+  cy.get('.rt-tr-group')
+    .should('contain.text', user.age);
+  cy.get('.rt-tr-group')
+    .should('contain.text', user.salary);
+  cy.get('.rt-tr-group')
+    .should('contain.text', user.department);
+});
+
+Cypress.Commands.add('checkDataDeleted', (user) => {
+  cy.get('.rt-tr-group')
+    .should('not.contain.text', user.firstName);
+  cy.get('.rt-tr-group')
+    .should('not.contain.text', user.lastName);
+  cy.get('.rt-tr-group')
+    .should('not.contain.text', user.email);
+  cy.get('.rt-tr-group')
+    .should('not.contain.text', user.age);
+  cy.get('.rt-tr-group')
+    .should('not.contain.text', user.salary);
+  cy.get('.rt-tr-group')
+    .should('not.contain.text', user.department);
+});
+
+Cypress.Commands.add('deleteAllWorkers', () => {
+  cy.get('[title="Delete"]').its('length')
+    .then((amountOfButtons) => {
+      for (let i = amountOfButtons; i > 0; i--) {
+        cy.get('[title="Delete"]').first().click();
+      }
+    });
+});
+
+Cypress.Commands.add('updateUserData', () => {
+  cy.task('generateUser').then((user) => {
+    cy.get('[title="Edit"]').click();
+
+    cy.get('#firstName').type(`{selectall}${user.firstName}`);
+    cy.get('#lastName').type(`{selectall}${user.lastName}`);
+    cy.get('#userEmail').type(`{selectall}${user.email}`);
+    cy.get('#age').type(`{selectall}${user.age}`);
+    cy.get('#salary').type(`{selectall}${user.salary}`);
+    cy.get('#department').type(`{selectall}${user.department}`);
+
+    cy.get('#submit').click();
+
+    cy.get('#searchBox').type(`{selectall}${user.firstName}`);
+    cy.checkUserData(user);
+  });
+});
+
+Cypress.Commands.add('searchByAllValues', (user) => {
+  cy.get('#searchBox').type(`{selectall}${user.firstName}`);
+  cy.checkUserData(user);
+
+  cy.get('#searchBox').type(`{selectall}${user.lastName}`);
+  cy.checkUserData(user);
+
+  cy.get('#searchBox').type(`{selectall}${user.email}`);
+  cy.checkUserData(user);
+
+  cy.get('#searchBox').type(`{selectall}${user.age}`);
+  cy.checkUserData(user);
+
+  cy.get('#searchBox').type(`{selectall}${user.salary}`);
+  cy.checkUserData(user);
+
+  cy.get('#searchBox').type(`{selectall}${user.department}`);
+  cy.checkUserData(user);
+});
