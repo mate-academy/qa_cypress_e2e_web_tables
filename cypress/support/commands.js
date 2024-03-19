@@ -23,3 +23,18 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('findById', (id) => {
+    cy.get(`[id="${id}"]`);
+  });
+  
+Cypress.Commands.add('createWorker', (user) =>{
+    cy.contains('.btn-primary', 'Add').click();
+      cy.get('#firstName').type(user.firstName);
+      cy.get('#lastName').type(user.lastName);
+      cy.get('#userEmail').type(user.email);
+      cy.get('#age').type(user.age);
+      cy.get('#salary').type(user.salary);
+      cy.get('#department').type(user.department);
+      cy.get('#submit').click();
+});
