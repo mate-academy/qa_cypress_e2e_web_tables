@@ -45,13 +45,13 @@ Cypress.Commands.add('deleteWorkers', (n) => {
   };
 });
 
-Cypress.Commands.add('isWorkersExist', (...workerNames) => {
-  for (let i = 1; i <= workerNames.length; i++) {
+Cypress.Commands.add('assertWorkersAreNotExist', (...workerNames) => {
+  for (let i = 0; i < workerNames.length; i++) {
     cy.get('.ReactTable').should('not.contain.text', workerNames[i]);
   };
 });
 
-Cypress.Commands.add('searsh', (...searchedItem) => {
+Cypress.Commands.add('seachValuesAndAssertSearchResults', (searchedItem) => {
   for (let i = 1; i <= searchedItem.length; i++) {
     cy.get('#searchBox').type(`{selectAll}${searchedItem[i - 1]}`);
 

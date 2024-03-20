@@ -18,12 +18,18 @@ describe('Web Tables page', () => {
     cy.get('.-next').click();
 
     cy.get('[aria-label="jump to page"]').should('contain.value', 2);
+
+    cy.get('.-previous').click();
+
+    cy.get('[aria-label="jump to page"]').should('contain.value', 1);
   });
 
   it('should provide an ability to switch between Rows count', () => {
     cy.get('[aria-label="rows per page"]').select('20 rows');
 
     cy.get('[aria-label="rows per page"]').should('contain.text', '20 rows');
+
+    cy.get('.ReactTable').find('[role="rowgroup"]').should('have.length', 20);
   });
 
   it('should provide an ability to add a new worker', () => {
@@ -35,13 +41,13 @@ describe('Web Tables page', () => {
   it('should provide an ability to delete a worker', () => {
     cy.deleteWorkers(1);
 
-    cy.isWorkersExist('Cierra');
+    cy.assertWorkersAreNotExist('Cierra');
   });
 
   it('should provide an ability to delete all workers', () => {
     cy.deleteWorkers(3);
 
-    cy.isWorkersExist('Cierra', 'Alden', 'Kierra');
+    cy.assertWorkersAreNotExist('Cierra', 'Alden', 'Kierra');
   });
 
   it('shoud provide an ability to edit worker', () => {
@@ -60,6 +66,9 @@ describe('Web Tables page', () => {
   });
 
   it('shoud provide an ability to search by all column values', () => {
-    cy.searsh('Cierra', 'Vega', '39', 'cierra@exampl', '10000', 'Insurance');
+    const searcfedColumns = ['Cierra', 'Vega', '39',
+      'cierra@exampl', '10000', 'Insurance'];
+
+    cy.seachValuesAndAssertSearchResults(searcfedColumns);
   });
 });
