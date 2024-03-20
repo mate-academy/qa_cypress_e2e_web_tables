@@ -35,13 +35,14 @@ describe('Web Tables page', () => {
   });
 
   it('should delete a worker', () => {
+    cy.addNewWorker(user);
     cy.deleteWorker();
     cy.get('.rt-table').should('not.contain', user.lastName);
   });
 
   it('should delete all workers', () => {
     cy.deleteAllWorkers();
-    cy.get('.rt-table').should('not.contain', '[title="Delete"]');
+    cy.get('.rt-noData').should('contain', 'No rows found');
   });
   it('should find a worker in the search field and edit it', () => {
     cy.get('#searchBox').type(workerName);

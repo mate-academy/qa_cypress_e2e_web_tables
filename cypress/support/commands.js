@@ -36,7 +36,7 @@ Cypress.Commands.add('addNewWorker', (user) => {
 });
 
 Cypress.Commands.add('deleteWorker', () => {
-  cy.get('#delete-record-1').click();
+  cy.get('[title="Delete"]').last().click();
 });
 
 Cypress.Commands.add('deleteAllWorkers', () => {
