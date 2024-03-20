@@ -8,8 +8,8 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
-          randomIndex = Math.floor(Math.random()*100);
-          return{
+          randomIndex = Math.floor(Math.random() * 100);
+          return {
             firstName: faker.person.firstName() + randomIndex,
             lastName: faker.person.lastName() + randomIndex,
             email: randomIndex + faker.internet.email(),
@@ -22,4 +22,3 @@ module.exports = defineConfig({
     },
   },
 });
-
