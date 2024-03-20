@@ -23,3 +23,27 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('addNewWorker', (user) => {
+  cy.get('#addNewRecordButton').click();
+  cy.get('#firstName').type(user.firstName);
+  cy.get('#lastName').type(user.lastName);
+  cy.get('#userEmail').type(user.email);
+  cy.get('#age').type(user.age);
+  cy.get('#salary').type(user.salary);
+  cy.get('#department').type('Sales');
+  cy.get('#submit').click();
+});
+
+Cypress.Commands.add('deleteWorker', () => {
+  cy.get('[title="Delete"]').last().click();
+});
+
+Cypress.Commands.add('deleteAllWorkers', () => {
+  cy.get('[id^=delete-record]').its('length')
+    .then((deleteButtonsAmount) => {
+      for (let i = deleteButtonsAmount; i > 0; i--) {
+        cy.get('[title="Delete"]').first().click();
+      }
+    });
+});
