@@ -61,6 +61,7 @@ describe('Web Tables page', () => {
   it('should provide abbility to delete the worker', () => {
     cy.get('#delete-record-1')
       .click();
+    cy.get('.rt-tbody').should('not.contain', '#delete-record-1');
   });
   it('should delete all workers', () => {
     cy.get('#delete-record-3')
@@ -69,6 +70,9 @@ describe('Web Tables page', () => {
       .click();
     cy.get('#delete-record-1')
       .click();
+      cy.get('.rt-tbody').should('not.contain', '#delete-record-3');
+      cy.get('.rt-tbody').should('not.contain', '#delete-record-2');
+      cy.get('.rt-tbody').should('not.contain', '#delete-record-1');
   });
   it('should provide abbility to find the worker in search field and edit it', () => {
     cy.get('#searchBox')
@@ -92,6 +96,7 @@ describe('Web Tables page', () => {
       .type(user.department);
     cy.get('#submit')
       .click();
+    cy.get('.rt-tr').should('contain.text', 'levytska');
   });
   it('should search by all column values', () => {
     cy.createWorker(user);
