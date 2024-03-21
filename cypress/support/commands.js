@@ -28,7 +28,8 @@ Cypress.Commands.add('findById', (id) => {
     cy.get(`[id="${id}"]`);
   });
   
-Cypress.Commands.add('createWorker', (user) =>{
+Cypress.Commands.add('createWorkers', (user, n) => {
+  for (let i = 0; i < n; i++) {
     cy.contains('.btn-primary', 'Add').click();
       cy.get('#firstName').type(user.firstName);
       cy.get('#lastName').type(user.lastName);
@@ -37,4 +38,14 @@ Cypress.Commands.add('createWorker', (user) =>{
       cy.get('#salary').type(user.salary);
       cy.get('#department').type(user.department);
       cy.get('#submit').click();
+  };
+});
+
+Cypress.Commands.add('assertValueAndResult', (user) =>{
+  cy.get('.rt-tbody').should('contain', user.firstName);
+  cy.get('.rt-tbody').should('contain', user.lastName);
+  cy.get('.rt-tbody').should('contain', user.email);
+  cy.get('.rt-tbody').should('contain', user.age);
+  cy.get('.rt-tbody').should('contain', user.salary);
+  cy.get('.rt-tbody').should('contain', user.department);
 });
