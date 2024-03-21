@@ -23,3 +23,27 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('findByPlaceholder', (placeholder) => {
+  cy.get(`[placeholder="${placeholder}"]`);
+});
+
+Cypress.Commands.add('findById', (id) => {
+  cy.get(`[id="${id}"]`);
+});
+
+Cypress.Commands.add('addNewEmployee', (employee) => {
+  cy.get('#addNewRecordButton').click();
+  cy.get('#firstName').type(employee.firstName);
+  cy.get('#lastName').type(employee.lastName);
+  cy.get('#userEmail').type(employee.email);
+  cy.get('#age').type(employee.age);
+  cy.get('#salary').type(employee.salary);
+  cy.get('#department').type(employee.department);
+  cy.get('#submit').click();
+});
+
+Cypress.Commands.add('checkRowsSelector', (value) => {
+  cy.get('[aria-label="rows per page"]').select(`${value}`);
+
+  cy.get('[role="rowgroup"]').its('length').should('eq', value);
+});
