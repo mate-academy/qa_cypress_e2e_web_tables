@@ -12,17 +12,29 @@ beforeEach(() => {
   });
 
 describe('Web Tables page', () => {
-  it('', () => {
-
-
-  });
+  
   it('should have pagination', () => {
-    cy.get('.-pagination')
-      .should('contain', 'Previous')
-      .and('contain', 'Next');
-    cy.contains('.-pageInfo', 'Page')
-      .should('exist');
+    cy.get('select').select('5 rows');
+
+    cy.createWorker(user);
+    cy.createWorker(user);
+    cy.createWorker(user);
+
+    cy.get('.pagination-bottom').should('exist');
+
+    cy.get('.-pageJump > input').should('have.value', '1');
+
+    cy.get('.-totalPages').should('contain.text', '2');
+
+    cy.get('.-next > .-btn').click();
+
+    cy.get('.-pageJump > input').should('have.value', '2');
+
+    cy.get('.-previous > .-btn').click();
+
+    cy.get('.-pageJump > input').should('have.value', '1');
   });
+
   it('should have row count selection', () => {
     cy.get('select')
       .select('50 rows');
