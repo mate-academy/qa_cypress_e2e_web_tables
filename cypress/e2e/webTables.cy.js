@@ -28,16 +28,13 @@ describe('Web Tables page', () => {
   });
 
   
-   it('should be able to select the count of rows', () => {
-    cy.get('select[aria-label="rows per page"] option').each(($option) => {
-      const optionText = $option.text();
-      const optionValue = $option.val();
-      cy.get('select[aria-label="rows per page"]').select(optionText);
-      cy.get('select[aria-label="rows per page"]').should(
-        'have.value',
-        optionValue
-      );
-    });
+  it('should assert rows count selection', () => {
+    cy.checkRowsSelector(5);
+    cy.checkRowsSelector(10);
+    cy.checkRowsSelector(20);
+    cy.checkRowsSelector(25);
+    cy.checkRowsSelector(50);
+    cy.checkRowsSelector(100);
   });
 
   it('should be able to add a new worker', () => {

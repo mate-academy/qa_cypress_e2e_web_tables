@@ -41,3 +41,9 @@ Cypress.Commands.add('addNewEmployee', (employee) => {
   cy.get('#department').type(employee.department);
   cy.get('#submit').click();
 });
+
+Cypress.Commands.add('checkRowsSelector', (value) => {
+  cy.get('[aria-label="rows per page"]').select(`${value}`);
+
+  cy.get('[role="rowgroup"]').its('length').should('eq', value);
+});
