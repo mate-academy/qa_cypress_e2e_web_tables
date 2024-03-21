@@ -15,15 +15,19 @@ beforeEach(() => {
 });
 
 describe('Web Tables page', () => {
-  it('shold check pagination', () => {
+  it('should have pagination', () => {
     cy.get('select').select('5 rows');
 
     cy.createWorker(user, 3);
 
     cy.get('.-totalPages').should('contain', '2');
+    cy.get('.-next').click();
+    cy.get('[type="number"]').should('have.value', '2');
+    cy.get('.-previous').click();
+    cy.get('[type="number"]').should('have.value', '1');
   });
 
-  it('should count number of rows', () => {
+  it('should change amount of rows in the table', () => {
     cy.get('select').select('5 rows');
     cy.get('.rt-tr-group').its('length').should('eq', 5);
 
@@ -43,14 +47,14 @@ describe('Web Tables page', () => {
     cy.get('.rt-tr-group').its('length').should('eq', 100);
   });
 
-  it('should chek if new user is added', () => {
+  it('should have an ability to add new user', () => {
     cy.createWorker(user, 1);
 
     cy.get('#searchBox').type(user.email);
     cy.checkUserFields(user);
   });
 
-  it('should check if user was deleted', () => {
+  it('should have an ability to delete the user', () => {
     cy.get('.action-buttons').its('length').then((rowsLength) => {
       cy.get('#delete-record-' + rowsLength).click();
 
@@ -58,7 +62,7 @@ describe('Web Tables page', () => {
     });
   });
 
-  it('should check if all users were deleted', () => {
+  it('should have an ability to delete all users', () => {
     cy.get('.action-buttons').its('length').then((rowsLength) => {
       while (rowsLength > 0) {
         cy.get('#delete-record-' + rowsLength).click();
