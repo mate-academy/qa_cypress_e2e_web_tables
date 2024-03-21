@@ -19,8 +19,8 @@ describe('Web Tables page', () => {
   it('should check rows count selection', () => {
     cy.get('[aria-label="rows per page"]').select('5');
     cy.get('[aria-label="rows per page"]').should('contain', '5');
-    cy.get(':nth-child(5) > .rt-tr > :nth-child(1)').should('exist');
-    cy.get(':nth-child(6) > .rt-tr > :nth-child(1)').should('not.exist');
+    cy.get('[role="row"]').should('have.lengthOf', 6);
+    cy.get('[role="row"]').should('not.have.lengthOf', 7);
   });
 
   it('should check adding a new worker', () => {
@@ -69,7 +69,8 @@ describe('Web Tables page', () => {
     cy.get('#searchBox').type('Alden{enter}');
     cy.get('.rt-tbody').should('contain', 'Alden');
     cy.get('#edit-record-2').click();
-    cy.get('#firstName').clear().type('Tester');
+    cy.get('#firstName').clear();
+    cy.get('#firstName').type('Tester');
     cy.get('#submit').click();
     cy.get('.rt-tbody').should('contain', 'Tester');
   });
