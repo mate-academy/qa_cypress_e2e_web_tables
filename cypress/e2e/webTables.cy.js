@@ -69,12 +69,16 @@ describe('Web Tables page', () => {
   it('should have the ability search by all column values', () => {
     cy.createWorkers(user, 1);
     cy.findById('searchBox').type(user.firstName);
+    cy.get('.rt-tbody').should('contain', user.firstName);
     cy.findById('searchBox').clear().type(user.lastName);
+    cy.get('.rt-tbody').should('contain', user.lastName);
     cy.findById('searchBox').clear().type(user.email);
+    cy.get('.rt-tbody').should('contain', user.email);
     cy.findById('searchBox').clear().type(user.age);
+    cy.get('.rt-tbody').should('contain', user.age);
     cy.findById('searchBox').clear().type(user.salary);
+    cy.get('.rt-tbody').should('contain', user.salary);
     cy.findById('searchBox').clear().type(user.department);
-
-    cy.assertValueAndResult(user);
+    cy.get('.rt-tbody').should('contain', user.department);
   });
 });
