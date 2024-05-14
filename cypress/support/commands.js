@@ -89,15 +89,32 @@ Cypress.Commands.add('changeWorkerCheck', (changedUser) => {
 
 Cypress.Commands.add('findByOptions', (user) => {
   cy.byPlaceholder('Type to search')
-    .type(user.firstName);
+    .type('{selectAll}' + user.firstName);
+  cy.get('.rt-tr')
+    .should('contain', user.firstName);
+
   cy.byPlaceholder('Type to search')
     .type('{selectAll}' + user.lastName);
+  cy.get('.rt-tr')
+    .should('contain', user.lastName);
+
   cy.byPlaceholder('Type to search')
     .type('{selectAll}' + user.email);
+  cy.get('.rt-tr')
+    .should('contain', user.email);
+
   cy.byPlaceholder('Type to search')
     .type('{selectAll}' + user.age);
+  cy.get('.rt-tr')
+    .should('contain', user.age);
+
   cy.byPlaceholder('Type to search')
     .type('{selectAll}' + user.salary);
+  cy.get('.rt-tr')
+    .should('contain', user.salary);
+
   cy.byPlaceholder('Type to search')
     .type('{selectAll}' + user.department);
+  cy.get('.rt-tr')
+    .should('contain', user.department);
 });
