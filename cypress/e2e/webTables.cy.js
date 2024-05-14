@@ -15,7 +15,34 @@ describe('Web Tables page', () => {
     });
   });
 
-  it.skip('web-tables should have pagination and selection', () => {
+  it('web-tables should have pagination and selection', () => {
+    cy.get('select')
+      .select('5 rows');
+
+    cy.get('.rt-tr-group')
+      .should('have.length', '5');
+
+    cy.addWorker(user, 3);
+
+    cy.get('.-totalPages')
+      .should('contain', '2');
+
+    cy.get('.-next')
+      .click();
+
+    cy.get('[type="number"]')
+      .should('have.value', '2');
+
+    cy.get('.-previous')
+      .click();
+
+    cy.get('[type="number"]')
+      .should('have.value', '1');
+
+    cy.get('.-totalPages')
+      .should('be.visible')
+      .should('exist');
+
     cy.get('.-pageInfo')
       .should('contain', 'Page');
 
@@ -25,10 +52,6 @@ describe('Web Tables page', () => {
     cy.get('.-previous')
       .should('contain', 'Previous');
 
-    cy.get('.-totalPages')
-      .should('be.visible')
-      .should('exist');
-
     cy.get('select')
       .should('be.visible')
       .should('contain', '5 rows')
@@ -37,7 +60,7 @@ describe('Web Tables page', () => {
       .should('contain', '25 rows')
       .should('contain', '50 rows')
       .should('contain', '100 rows')
-      .select('10 rows');
+      .select('20 rows');
 
     cy.get('.-previous')
       .should('not.have.class', 'disabled');
@@ -45,33 +68,27 @@ describe('Web Tables page', () => {
     cy.get('.-previous')
       .should('not.have.class', 'disabled');
 
-    cy.get('.rt-tr')
-      .should('have.length', '11');
+    cy.get('.rt-tr-group')
+      .should('have.length', '20');
   });
 
-  it.skip('it should provide user to add workers in table', () => {
+  it('it should provide user to add workers in table', () => {
     cy.addWorker(user, 1);
 
     cy.checkWorker(user);
   });
 
   it('it should provide user to delete worker in table', () => {
-    cy.addWorker(user, 2);
-    cy.checkWorker(user);
-
     cy.get('.action-buttons').its('length').then((lengthOfTable) => {
       cy.get('#delete-record-' + lengthOfTable)
         .click();
       cy.get('.action-buttons')
         .its('length')
-        .should('equal', lengthOfTable);
+        .should('equal', lengthOfTable - 1);
     });
   });
 
-  it.skip('it should provide user to delete all workers from table', () => {
-    cy.addWorker(user, 3);
-    cy.checkWorker(user);
-
+  it('it should provide user to delete all workers from table', () => {
     cy.get('.action-buttons').its('length').then((lengthOfTable) => {
       while (lengthOfTable >= 1) {
         cy.get('#delete-record-' + lengthOfTable)
@@ -83,7 +100,7 @@ describe('Web Tables page', () => {
       .should('contain', 'No rows found');
   });
 
-  it.skip('it should provide user to edit already added worker in table find and asserts that the user is exist in table',
+  it('it should provide user to edit already added worker in table find and asserts that the user is exist in table',
     () => {
       cy.addWorker(user, 1);
       cy.checkWorker(user);
@@ -95,5 +112,16 @@ describe('Web Tables page', () => {
       });
 
       cy.changeWorkerCheck(changedUser);
+    });
+
+  it('it should provide user to find the user by all options using "Search"',
+    () => {
+      cy.addWorker(user, 1);
+
+      cy.checkWorker(user);
+
+      cy.findByOptions(user);
+
+      cy.checkWorker(user);
     });
 });
