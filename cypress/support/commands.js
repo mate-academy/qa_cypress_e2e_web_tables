@@ -107,6 +107,8 @@ Cypress.Commands.add('DeleteAllWorkers', (users, count) => {
 
     count--;
   }
+  cy.get(`#delete-record-${1}`).scrollIntoView();
+  cy.get(`#delete-record-${1}`).should('exist').click();
   for (let i = 1; i <= sum; i++) {
     cy.get(`#delete-record-${i}`).scrollIntoView();
     cy.get(`#delete-record-${i}`).should('exist').click();
