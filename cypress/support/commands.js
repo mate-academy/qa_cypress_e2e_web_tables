@@ -50,15 +50,6 @@ Cypress.Commands.add('deleteWorkers', (n) => {
   };
 });
 
-Cypress.Commands.add('searchColumns', (user) => {
-  cy.get('#searchBox').type(user.firstName);
-  cy.get('#searchBox').type(user.lastName);
-  cy.get('#searchBox').type(user.email);
-  cy.get('#searchBox').type(user.age);
-  cy.get('#searchBox').type(user.salary);
-  cy.get('#searchBox').type(user.department);
-});
-
 Cypress.Commands.add('searchValueAndAssertResult', (user) => {
   cy.get('#searchBox').type(user.firstName);
   cy.get('.rt-tbody').should('contain', user.firstName);
