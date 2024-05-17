@@ -21,13 +21,15 @@ describe('Web Tables page', () => {
     cy.visit('/');
   });
 
-  it('pagination testing', () => {
+  it.only('quantity of rows should be increased', () => {
     cy.get('.-pageInfo').should('contain', 'Page');
 
     cy.get('select').select(rowsChoose);
 
+    cy.get('select').should('contain', rowsChoose);
+
     for (let i = 0; i < parseInt(rowsChoose.split(' ')[0]); i++) {
-      cy.get(`:nth-child(${i + 1})`).should('exist');
+      cy.get(`:nth-child(${i + 1}) > .rt-tr > :nth-child(1)`).should('exist');
     }
   });
 
@@ -46,6 +48,28 @@ describe('Web Tables page', () => {
     cy.get('[id="delete-record-4"]').click();
 
     cy.get(':nth-child(4)').should('not.contain', user.firstName);
+  });
+
+  it('should be able to change pages', () => {
+    cy.get('select').select('5 rows');
+
+    for (let i = 1; i < 5; i++) {
+      cy.get('#addNewRecordButton').click();
+
+      cy.get('#firstName').type(`${i}`);
+      cy.get('#lastName').type(`${i}`);
+      cy.get('#userEmail').type(`${i}${user.email}`);
+      cy.get('#age').type(`${i}`);
+      cy.get('#salary').type(`${i}`);
+      cy.get('#department').type(user.department);
+
+      cy.get('#submit').click();
+    }
+
+    cy.get('.-next > .-btn').click();
+    cy.get('.-center').should('contain', '2');
+    cy.get('.-previous > .-btn').click();
+    cy.get('.-center').should('contain', '1');
   });
 
   it('should be able to delete all workers', () => {
