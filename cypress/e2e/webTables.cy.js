@@ -7,6 +7,15 @@ const rowsChoose = user.rows[Math.floor(Math.random() * user.rows.length)];
 
 const worker = 'Cierra';
 
+const defaultWorker = [
+  'Cierra',
+  'Vega',
+  '39',
+  'cierra@example.com',
+  '10000',
+  'Insurance'
+];
+
 describe('Web Tables page', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -46,10 +55,10 @@ describe('Web Tables page', () => {
 
     cy.get(':nth-child(4)').should('not.contain', user.firstName);
 
-    cy.get('div.noData').should('contain', 'No rows found');
+    cy.get('.col-md-6').should('contain', 'No rows found');
   });
 
-  it.only('should find a worker in the search field and edit it', () => {
+  it('should find a worker in the search field and edit it', () => {
     cy.get('#searchBox').type(worker);
 
     cy.get(`#edit-record-1`).click();
@@ -72,10 +81,16 @@ describe('Web Tables page', () => {
     cy.get('#searchBox').clear();
 
     for (let i = 0; i < user.checkRow.length; i++) {
-      cy.get('#searchBox').type(user.checkRow[i]);
+      cy.get(`.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(${i + 1})`).should('contain', user.checkRow[i]);
+    }
+  });
 
-      for (let i = 0; i < user.checkRow.length; i++) {
-        cy.get(`.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(${i + 1})`).should('contain', user.checkRow[i]);
+  it('Check the search by all column values.', () => {
+    for (let i = 0; i < defaultWorker.length; i++) {
+      cy.get('#searchBox').type(defaultWorker[i]);
+
+      for (let i = 0; i < defaultWorker.length; i++) {
+        cy.get(`.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(${i + 1})`).should('contain', defaultWorker[i]);
       }
 
       cy.get('#searchBox').clear();
