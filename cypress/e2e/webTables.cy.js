@@ -10,7 +10,7 @@ describe('Web Tables page', () => {
     });
   });
 
-  it.skip('should provide pagination', () => {
+  it('should provide pagination', () => {
     cy.createNewUser(user, 5);
 
     cy.get('select').select('5 rows');
@@ -32,7 +32,7 @@ describe('Web Tables page', () => {
     cy.selectRows(100);
   });
 
-  it.skip('should add a new worker', () => {
+  it('should add a new worker', () => {
     cy.createNewUser(user, 1);
 
     cy.get('.rt-tr')
@@ -44,14 +44,14 @@ describe('Web Tables page', () => {
       .should('contain', user.department);
   });
 
-  it.skip('should delete a worker', () => {
+  it('should delete a worker', () => {
     cy.deleteWorkers(1);
     cy.get('.rt-table').should('not.contain', 'Cierra');
   });
 
   it('should delete all workers', () => {
     cy.deleteWorkers(3);
-    cy.get('.rt-table').should('сontain', 'No rows found');
+    cy.get('.rt-noData').should('contain', 'No rows found');
   });
 
   it('should find a worker in the search field, edit it and validate after editing', () => {
