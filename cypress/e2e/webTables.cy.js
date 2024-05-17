@@ -6,7 +6,7 @@ describe('Web Tables page', () => {
     cy.visit('/webtables');
   });
 
-  it('should provide an ability to use pagination', () => {
+  it('should display pagination controls', () => {
     cy.get('.-pageInfo')
       .should('exist');
     cy.get('.-pageJump')
