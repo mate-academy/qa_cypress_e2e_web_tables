@@ -75,3 +75,9 @@ Cypress.Commands.add('searchValueAndAssertResult', (user) => {
   cy.get('.rt-tbody').should('contain', user.department);
   cy.get('#searchBox').clear();
 });
+
+Cypress.Commands.add('selectRows', (rowCount) => {
+  cy.get('select').select(`${rowCount} rows`);
+  cy.get('[aria-label="rows per page"]').should('have.value', `${rowCount}`);
+  cy.get('.rt-tr-group').should('have.length', rowCount);
+});

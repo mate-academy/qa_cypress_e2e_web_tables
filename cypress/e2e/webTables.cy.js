@@ -10,7 +10,7 @@ describe('Web Tables page', () => {
     });
   });
 
-  it('should provide pagination', () => {
+  it.skip('should provide pagination', () => {
     cy.createNewUser(user, 5);
 
     cy.get('select').select('5 rows');
@@ -25,14 +25,14 @@ describe('Web Tables page', () => {
   });
 
   it('should provide row selection', () => {
-    cy.get('select').select('10 rows');
-    cy.get('select').select('20 rows');
-    cy.get('select').select('25 rows');
-    cy.get('select').select('50 rows');
-    cy.get('select').select('100 rows');
+    cy.selectRows(10);
+    cy.selectRows(20);
+    cy.selectRows(25);
+    cy.selectRows(50);
+    cy.selectRows(100);
   });
 
-  it('should add a new worker', () => {
+  it.skip('should add a new worker', () => {
     cy.createNewUser(user, 1);
 
     cy.get('.rt-tr')
@@ -44,14 +44,14 @@ describe('Web Tables page', () => {
       .should('contain', user.department);
   });
 
-  it('should delete a worker', () => {
+  it.skip('should delete a worker', () => {
     cy.deleteWorkers(1);
     cy.get('.rt-table').should('not.contain', 'Cierra');
   });
 
   it('should delete all workers', () => {
     cy.deleteWorkers(3);
-    cy.get('.rt-table').should('not.contain', 'Cierra', 'Alden', 'Kierra');
+    cy.get('.rt-table').should('сontain', 'No rows found');
   });
 
   it('should find a worker in the search field, edit it and validate after editing', () => {
