@@ -2,6 +2,7 @@
 
 describe('Web Tables page', () => {
   let user;
+  const editUser = 'Cierra';
 
   beforeEach(() => {
     cy.task('generateUser').then((generateUser) => {
@@ -42,9 +43,8 @@ describe('Web Tables page', () => {
 
   it('Should allow to find a worker in the search field and edit it', () => {
     cy.visit('');
-    cy.addUser(user, 1);
-    cy.findByPlaceholder('Type to search').type(user.firstName);
-    cy.get('#edit-record-4').click();
+    cy.findByPlaceholder('Type to search').type(editUser);
+    cy.get('#edit-record-1').click();
     cy.findByPlaceholder('First Name').clear();
     cy.findByPlaceholder('First Name').type(user.firstName);
     cy.findByPlaceholder('Last Name').clear();
@@ -90,7 +90,7 @@ describe('Web Tables page', () => {
       .should('contain', user.department);
   });
 
-  it('should have the ability pagination', () => {
+  it('should have the ability to use pagination', () => {
     cy.visit('');
     cy.addUser(user, 3);
     cy.get('[aria-label="rows per page"]').select('5 rows');
@@ -100,7 +100,7 @@ describe('Web Tables page', () => {
     cy.get('[aria-label="jump to page"]').should('contain.value', '1');
   });
 
-  it('should have the ability rows count selection.', () => {
+  it('should have the ability to change rows amount', () => {
     cy.visit('');
     cy.rowSelection(5);
     cy.rowSelection(10);
