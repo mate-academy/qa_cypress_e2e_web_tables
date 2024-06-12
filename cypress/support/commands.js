@@ -23,3 +23,18 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('findByPlaceholder', (placeholder) => {
+  cy.get(`[placeholder="${placeholder}"]`);
+});
+
+Cypress.Commands.add('addNewWorker', (worker) => {
+  cy.get('#addNewRecordButton').click();
+  cy.get('#firstName').type(worker.firstName);
+  cy.get('#lastName').type(worker.lastName);
+  cy.get('#userEmail').type(worker.email);
+  cy.get('#age').type(worker.age);
+  cy.get('#salary').type(worker.salary);
+  cy.get('#department').type(worker.department);
+  cy.get('#submit').click();
+});
