@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+const faker = require('faker');
+
+Cypress.Commands.add('addUser', () => {
+  cy.get('#addNewRecordButton').click();
+  cy.get('#firstName').type(faker.name.firstname());
+  cy.get('#lastName').type(faker.name.lastname());
+  cy.get('#userEmail').type(faker.internet.email());
+  cy.get('#age').type(faker.datatype.number({ min: 18, max: 60 }));
+  cy.get('#salary').type(faker.datatype.number({ min: 10000, max: 100000 }));
+  cy.get('#department').type(faker.lorem.word());
+});
