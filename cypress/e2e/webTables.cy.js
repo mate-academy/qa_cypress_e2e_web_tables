@@ -10,7 +10,7 @@ const salary = '50000';
 const department = 'Engineering';
 
 describe('Web Tables Pagination', () => {
-  it('Should allow to confirm that pagination buttons are present', () => {
+  it('Should have pagination', () => {
     cy.visit('https://demoqa.com/webtables');
 
     // Assert that the Previous button is initially disabled
@@ -18,6 +18,18 @@ describe('Web Tables Pagination', () => {
     // Assert that the Previous and Next buttons are visible
     cy.get('.-previous button').should('be.visible');
     cy.get('.-next button').should('be.visible');
+
+    cy.get('[aria-label="rows per page"]').select('5 rows');
+
+    for (let index = 0; index < 3; index++) {
+      createUser(firstName, lastName, email, age, salary, department);
+    }
+
+    cy.get('.-totalPages').should('contain', '2');
+    cy.get('.-next button').click();
+    cy.get('[type="number"]').should('have.value', '2');
+    cy.get('.-previous button').click();
+    cy.get('[type="number"]').should('have.value', '1');
   });
 });
 
