@@ -20,7 +20,7 @@ const createUser = (firstName, lastName, email, age, salary, department) => {
 };
 
 describe('Web Tables Pagination', () => {
-  it('should confirm that pagination is present', () => {
+  it('Should allow to confirm that pagination buttons are present', () => {
     cy.visit('https://demoqa.com/webtables');
 
     // Assert that the Previous button is initially disabled
@@ -32,7 +32,7 @@ describe('Web Tables Pagination', () => {
 });
 
 describe('Web Tables Rows Count Selection', () => {
-  it('should select 20 rows per page', () => {
+  it('Should allow to select 20 rows per page', () => {
     cy.visit('https://demoqa.com/webtables');
     // Open the dropdown for rows per page and select 20 rows
     cy.get('[aria-label="rows per page"]').select('20 rows');
@@ -40,7 +40,7 @@ describe('Web Tables Rows Count Selection', () => {
     cy.get('[aria-label="rows per page"]').should('have.value', '20');
   });
 
-  it('should select 50 rows per page', () => {
+  it('Should allow to select 50 rows per page', () => {
     cy.visit('https://demoqa.com/webtables');
     // Open the dropdown for rows per page and select 50 rows
     cy.get('[aria-label="rows per page"]').select('50 rows');
@@ -50,7 +50,7 @@ describe('Web Tables Rows Count Selection', () => {
 });
 
 describe('Add a New Worker', () => {
-  it('should successfully add a new worker', () => {
+  it('Should allow to add a new worker', () => {
     // Increase the page load timeout
     cy.visit('https://demoqa.com/webtables', {
       timeout: 120000 // Increase timeout if needed
@@ -66,7 +66,7 @@ describe('Add a New Worker', () => {
 });
 
 describe('Delete a Worker', () => {
-  it('should successfully delete a worker', () => {
+  it('Should allow to delete a worker', () => {
     cy.visit('https://demoqa.com/webtables');
     cy.get('.action-buttons').its('length').then((rowsLength) => {
       cy.get('#delete-record-' + rowsLength).click();
@@ -77,7 +77,7 @@ describe('Delete a Worker', () => {
 });
 
 describe('Delete All Workers', () => {
-  it('should have an ability to delete all users', () => {
+  it('Should allow to delete all workers', () => {
     cy.visit('https://demoqa.com/webtables');
     cy.get('.action-buttons').its('length').then((rowsLength) => {
       while (rowsLength > 0) {
@@ -91,7 +91,7 @@ describe('Delete All Workers', () => {
 });
 
 describe('Edit Worker', () => {
-  it('should find and edit a worker', () => {
+  it('Should allow to find a worker in the search field and edit it', () => {
     cy.visit('https://demoqa.com/webtables');
 
     // Use the createUser function to add a new worker
@@ -106,18 +106,21 @@ describe('Edit Worker', () => {
 
     // Modify the worker's details in the form
     // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('#firstName').clear().type('Edited');
+    cy.get('#firstName').clear().type('John Edited');
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    cy.get('#lastName').clear().type('Doe Edited');
 
     // Click on the "Submit" button to save the edited record
     cy.get('#submit').click();
 
     // Assert that the worker's details are updated in the table
-    cy.contains('Edited').should('exist');
+    cy.contains('John Edited').should('exist');
+    cy.contains('Doe Edited').should('exist');
   });
 });
 
 describe('Search by All Column Values', () => {
-  it('should search by all column values', () => {
+  it('Should check the search by all column values', () => {
     cy.visit('https://demoqa.com/webtables');
     // Use the createUser function to add a new worker
     // eslint-disable-next-line max-len
