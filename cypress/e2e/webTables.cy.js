@@ -1,6 +1,14 @@
 /// <reference types='cypress' />
 import { createUser } from './support.js';
 
+// Define variables for repeated values
+const firstName = 'John';
+const lastName = 'Doe';
+const email = 'john.doe@example.com';
+const age = '30';
+const salary = '50000';
+const department = 'Engineering';
+
 describe('Web Tables Pagination', () => {
   it('Should allow to confirm that pagination buttons are present', () => {
     cy.visit('https://demoqa.com/webtables');
@@ -40,7 +48,7 @@ describe('Add a New Worker', () => {
 
     // Use the createUser function to add a new worker
     // eslint-disable-next-line max-len
-    createUser('John', 'Doe', 'john.doe@example.com', '30', '50000', 'Engineering');
+    createUser(firstName, lastName, email, age, salary, department);
 
     // Verify the new worker is added to the table
     cy.contains('John').should('exist');
@@ -78,7 +86,7 @@ describe('Edit Worker', () => {
 
     // Use the createUser function to add a new worker
     // eslint-disable-next-line max-len
-    const user = createUser('John', 'Doe', 'john.doe@example.com', '30', '50000', 'Engineering');
+    const user = createUser(firstName, lastName, email, age, salary, department);
 
     // Search for a worker (assuming a search functionality exists)
     cy.get('#searchBox').type(user.firstName);
@@ -106,7 +114,7 @@ describe('Search by All Column Values', () => {
     cy.visit('https://demoqa.com/webtables');
     // Use the createUser function to add a new worker
     // eslint-disable-next-line max-len
-    const user = createUser('John', 'Doe', 'john.doe@example.com', '30', '50000', 'Engineering');
+    const user = createUser(firstName, lastName, email, age, salary, department);
     // Perform search by typing in the search box
 
     // Array of properties to search by
