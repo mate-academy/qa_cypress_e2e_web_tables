@@ -22,4 +22,20 @@
 //
 //
 // -- This will overwrite an existing command --
+
+const { faker } = require("@faker-js/faker");
+
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+const generateWorkers = () => {
+  const randomNumber = Math.floor(Math.random() * 30);
+  return {
+    firstName: faker.lorem.word(),
+    lastName: faker.lorem.word(),
+    email: faker.lorem.word() + "@gmail.com",
+    age: randomNumber,
+    salary: randomNumber + 300,
+    department: faker.lorem.word(),
+  };
+};
+
+module.exports = { generateWorkers };
