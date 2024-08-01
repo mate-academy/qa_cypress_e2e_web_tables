@@ -7,14 +7,42 @@ describe('Web Tables page', () => {
   let user;
   beforeEach(() => {
     cy.visit('/');
-    cy.task('generateUser').then(generateUser => {
+    cy.task('generateUser').then((generateUser) => {
       user = generateUser;
     });
   });
-  it('should contain pagination', () => {
-    cy.visit('https://demoqa.com/webtables');
 
-    cy.get('.-previous').should('contain', 'Previous');
+  it('should contain pagination', () => {
+    cy.get('select[aria-label="rows per page"]').select('5');
+
+    cy.get('#addNewRecordButton').click();
+    cy.get('[placeholder="First Name"]').type(user.firstName);
+    cy.get('[placeholder="Last Name"]').type(user.lastName);
+    cy.get('[placeholder="name@example.com"]').type(user.email);
+    cy.get('[placeholder="Age"]').type(user.age);
+    cy.get('[placeholder="Salary"]').type(user.salary);
+    cy.get('[placeholder="Department"]').type(user.department);
+    cy.get('#submit').click();
+
+    cy.get('#addNewRecordButton').click();
+    cy.get('[placeholder="First Name"]').type(user.firstName);
+    cy.get('[placeholder="Last Name"]').type(user.lastName);
+    cy.get('[placeholder="name@example.com"]').type(user.email);
+    cy.get('[placeholder="Age"]').type(user.age);
+    cy.get('[placeholder="Salary"]').type(user.salary);
+    cy.get('[placeholder="Department"]').type(user.department);
+    cy.get('#submit').click();
+
+    cy.get('#addNewRecordButton').click();
+    cy.get('[placeholder="First Name"]').type(user.firstName);
+    cy.get('[placeholder="Last Name"]').type(user.lastName);
+    cy.get('[placeholder="name@example.com"]').type(user.email);
+    cy.get('[placeholder="Age"]').type(user.age);
+    cy.get('[placeholder="Salary"]').type(user.salary);
+    cy.get('[placeholder="Department"]').type(user.department);
+    cy.get('#submit').click();
+    cy.get('[aria-label="jump to page"]').should('contain.value', '1');
+    cy.get('.-totalPages').should('contain.text', '2');
   });
 
   it('should contain rows count selection', () => {
@@ -53,7 +81,7 @@ describe('Web Tables page', () => {
     cy.get('.ReactTable').should('contain', 'Alex');
   });
 
-  it.only('should check the search by all column values', () => {
+  it('should check the search by all column values', () => {
     cy.get('[placeholder="Type to search"]').type('Kierra');
     cy.get('.rt-td').should('contain', 'Kierra');
     cy.get('[placeholder="Type to search"]').clear();
