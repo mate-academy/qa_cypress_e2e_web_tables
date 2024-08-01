@@ -23,3 +23,37 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+const { faker } = require('@faker-js/faker');
+
+const generateWorkers = () => {
+  const randomNumber = Math.floor(Math.random() * 30);
+  return {
+    firstName: faker.lorem.word(),
+    lastName: faker.lorem.word(),
+    email: faker.lorem.word() + '@gmail.com',
+    age: randomNumber,
+    salary: randomNumber + 300,
+    department: faker.lorem.word()
+  };
+};
+
+function addWorker(worker) {
+  cy.get('#addNewRecordButton').click();
+  cy.get('[placeholder="First Name"]').type(worker.firstName);
+  cy.get('[placeholder="Last Name"]').type(worker.lastName);
+  cy.get('[placeholder="name@example.com"]').type(worker.email);
+  cy.get('[placeholder="Age"]').type(worker.age);
+  cy.get('[placeholder="Salary"]').type(worker.salary);
+  cy.get('[placeholder="Department"]').type(worker.department);
+  cy.get('#submit').click();
+}
+
+function addTenWorkers() {
+  for (let i = 0; i < 10; i++) {
+    const worker = generateWorkers();
+    addWorker(worker);
+  }
+}
+
+module.exports = { generateWorkers, addWorker, addTenWorkers };
