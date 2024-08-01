@@ -46,7 +46,7 @@ describe('Web Tables page', () => {
     cy.get('.rt-td').should('contain', 'Ivanov');
   });
 
-  it.only('Search by all column values', () => {
+  it('Search by all column values', () => {
     cy.findByPlaceholder('Type to search').type('Kierra');
     cy.get('.rt-td').should('contain', 'Kierra');
     cy.get('.rt-td').should('not.contain', 'Alden');
