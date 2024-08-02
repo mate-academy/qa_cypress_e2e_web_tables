@@ -1,12 +1,16 @@
 /// <reference types='cypress' />
 
-describe('Web Tables page', () => {
-  let user;
+const { addWorkers } = require("cypress");
 
+
+describe('Web Tables page', () => {
+  let user = generateUser;
+ 
   beforeEach(() =>{
     cy.visit('/');
     cy.task('generateUser').then(generateUser => {
       user = generateUser;
+    })
     });
   });
 
@@ -15,6 +19,15 @@ describe('Web Tables page', () => {
     cy.get('[aria-label="rows per page"]').should('exist');
     cy.get('[aria-label="rows per page"]').select('25 rows');
     cy.get('.rt-tr-group').should('have.length', 25);
+  });
+
+  it.only('The pagination should divide content into pages', () => {
+    addWorkers(user);
+    cy.get('.action-buttons').should('have.length', 10);
+    cy.contains('.-btn', 'Next').click();
+    cy.get('.action-buttons').should('have.length', 3);
+    cy.contains('.-btn', 'Previous').click();
+    cy.get('.action-buttons').should('have.length', 10);
   });
 
   it('Added a new worker and delete him', () => {
@@ -77,4 +90,3 @@ describe('Web Tables page', () => {
     cy.get('.rt-td').should('not.contain', 'Legal');
     cy.findByPlaceholder('Type to search').clear();
   });
-});
