@@ -10,8 +10,10 @@ describe('Web Tables page', () => {
     });
   });
 
-  it('Assert the pagination and number of lines', () => {
+  it('Assert the pagination and rows count selection', () => {
     cy.get('.pagination-bottom').should('exist');
+    cy.get('.-next').click();
+    cy.get('.-previous').click();
     cy.get('[aria-label="rows per page"]').should('exist');
     cy.get('[aria-label="rows per page"]').select('5 rows');
   });
