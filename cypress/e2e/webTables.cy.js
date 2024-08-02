@@ -32,8 +32,8 @@ describe('Web Tables page', () => {
   it('Check rows count selection', () => {
     cy.get('select').should('exist');
     cy.get('select').select('5');
-    cy.get(':nth-child(5) > .rt-tr > :nth-child(1)').should('be.visible');
-    cy.get(':nth-child(6) > .rt-tr > :nth-child(1)').should('not.exist');
+    cy.get('.rt-tbody .rt-tr-group').should('have.length', 5);
+    cy.get('.rt-tbody .rt-tr-group').eq(5).should('not.exist');
   });
 
   it('Add a new worker', () => {
