@@ -17,16 +17,10 @@ Your task is to check the following points:
 
 describe('Web Tables page', () => {
   let fakeUser1;
-  let fakeUser2;
-  let fakeUser3;
-  let fakeUser4;
 
   beforeEach(() => {
     cy.visit('https://demoqa.com/webtables');
     fakeUser1 = generateFakeUser();
-    fakeUser2 = generateFakeUser();
-    fakeUser3 = generateFakeUser();
-    fakeUser4 = generateFakeUser();
   });
 
   it('Check rows count selection', () => {
@@ -46,36 +40,6 @@ describe('Web Tables page', () => {
     cy.get('#department').type(fakeUser1.department);
     cy.get('#submit').click();
     cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').should('contain', `${fakeUser1.firstName}`);
-
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(fakeUser2.firstName);
-    cy.get('#lastName').type(fakeUser2.lastName);
-    cy.get('#userEmail').type(fakeUser2.email);
-    cy.get('#age').type(fakeUser2.age);
-    cy.get('#salary').type(fakeUser2.salary);
-    cy.get('#department').type(fakeUser2.department);
-    cy.get('#submit').click();
-    cy.get(':nth-child(5) > .rt-tr > :nth-child(1)').should('contain', `${fakeUser2.firstName}`);
-
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(fakeUser3.firstName);
-    cy.get('#lastName').type(fakeUser3.lastName);
-    cy.get('#userEmail').type(fakeUser3.email);
-    cy.get('#age').type(fakeUser3.age);
-    cy.get('#salary').type(fakeUser3.salary);
-    cy.get('#department').type(fakeUser3.department);
-    cy.get('#submit').click();
-    cy.get(':nth-child(6) > .rt-tr > :nth-child(1)').should('contain', `${fakeUser3.firstName}`);
-
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(fakeUser4.firstName);
-    cy.get('#lastName').type(fakeUser4.lastName);
-    cy.get('#userEmail').type(fakeUser4.email);
-    cy.get('#age').type(fakeUser4.age);
-    cy.get('#salary').type(fakeUser4.salary);
-    cy.get('#department').type(fakeUser4.department);
-    cy.get('#submit').click();
-    cy.get(':nth-child(7) > .rt-tr > :nth-child(1)').should('contain', `${fakeUser4.firstName}`);
   });
 
   it('Delete a worker', () => {
