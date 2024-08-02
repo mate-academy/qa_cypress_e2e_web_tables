@@ -18,6 +18,33 @@ Your task is to check the following points:
 describe('Web Tables page', () => {
   let fakeUser1;
 
+  const workers = [
+    {
+      firstName: 'Cierra',
+      lastName: 'Vega',
+      age: 39,
+      email: 'cierra@example.com',
+      salary: 10000,
+      department: 'Insurance'
+    },
+    {
+      firstName: 'Alden',
+      lastName: 'Cantrell',
+      age: 45,
+      email: 'alden@example.com',
+      salary: 12000,
+      department: 'Compliance'
+    },
+    {
+      firstName: 'Kierra',
+      lastName: 'Gentry',
+      age: 29,
+      email: 'kierra@example.com',
+      salary: 2000,
+      department: 'Legal'
+    }
+  ];
+
   beforeEach(() => {
     cy.visit('https://demoqa.com/webtables');
     fakeUser1 = generateFakeUser();
@@ -45,15 +72,15 @@ describe('Web Tables page', () => {
   it('Delete a worker', () => {
     cy.get('#delete-record-1 > svg').click();
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)')
-      .should('not.contain', 'Cierra');
+      .should('not.contain', workers[0].firstName);
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(2)')
-      .should('not.contain', 'Vega');
+      .should('not.contain', workers[0].lastName);
   });
 
   it('Finds and edits a worker, check the data after editing', () => {
-    cy.get('#searchBox').type('Cierra');
+    cy.get('#searchBox').type(workers[0].firstName);
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)')
-      .should('contain', 'Cierra');
+      .should('contain', workers[0].firstName);
     cy.get('#edit-record-1').click();
     cy.get('#firstName').clear().type('Anastasiia');
     cy.get('#lastName').clear().type('Holland');
@@ -69,24 +96,24 @@ describe('Web Tables page', () => {
   });
 
   it('Checks search by all column values', () => {
-    cy.get('#searchBox').type('Alden');
+    cy.get('#searchBox').type(workers[1].firstName);
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)')
-      .should('contain', 'Alden');
-    cy.get('#searchBox').clear().type('Gentry');
+      .should('contain', workers[1].firstName);
+    cy.get('#searchBox').clear().type(workers[2].lastName);
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(2)')
-      .should('contain', 'Gentry');
-    cy.get('#searchBox').clear().type('39');
+      .should('contain', workers[2].lastName);
+    cy.get('#searchBox').clear().type(workers[0].age);
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(3)')
-      .should('contain', '39');
-    cy.get('#searchBox').clear().type('cierra@example.com');
+      .should('contain', workers[0].age);
+    cy.get('#searchBox').clear().type(workers[0].email);
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(4)')
-      .should('contain', 'cierra@example.com');
-    cy.get('#searchBox').clear().type('2000');
+      .should('contain', workers[0].email);
+    cy.get('#searchBox').clear().type(workers[2].salary);
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(5)')
-      .should('contain', '2000');
-    cy.get('#searchBox').clear().type('Compliance');
+      .should('contain', workers[2].salary);
+    cy.get('#searchBox').clear().type(workers[1].department);
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(6)')
-      .should('contain', 'Compliance');
+      .should('contain', workers[1].department);
   });
 
   it('Checking pagination', () => {
@@ -95,17 +122,53 @@ describe('Web Tables page', () => {
     cy.get('.-previous > .-btn').should('exist');
     cy.get('.-next > .-btn').should('exist');
     cy.get('.-pageJump').should('exist');
+
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(fakeUser1.firstName);
+    cy.get('#lastName').type(fakeUser1.lastName);
+    cy.get('#userEmail').type(fakeUser1.email);
+    cy.get('#age').type(fakeUser1.age);
+    cy.get('#salary').type(fakeUser1.salary);
+    cy.get('#department').type(fakeUser1.department);
+    cy.get('#submit').click();
+
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(fakeUser1.firstName);
+    cy.get('#lastName').type(fakeUser1.lastName);
+    cy.get('#userEmail').type(fakeUser1.email);
+    cy.get('#age').type(fakeUser1.age);
+    cy.get('#salary').type(fakeUser1.salary);
+    cy.get('#department').type(fakeUser1.department);
+    cy.get('#submit').click();
+
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(fakeUser1.firstName);
+    cy.get('#lastName').type(fakeUser1.lastName);
+    cy.get('#userEmail').type(fakeUser1.email);
+    cy.get('#age').type(fakeUser1.age);
+    cy.get('#salary').type(fakeUser1.salary);
+    cy.get('#department').type(fakeUser1.department);
+    cy.get('#submit').click();
+
+    cy.get('select').should('exist');
+    cy.get('select').select('5');
+    cy.get('.rt-tbody .rt-tr-group').should('have.length', 5);
+
+    cy.get('.-next > .-btn').click();
+    cy.get('.-pageJump > input').should('have.value', '2');
+    cy.get('.-previous > .-btn').click();
+    cy.get('.-pageJump > input').should('have.value', '1');
   });
 
   it('Deletes all workers', () => {
     cy.get('#delete-record-1 > svg').click();
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)')
-      .should('not.contain.text', 'Cierra');
+      .should('not.contain.text', workers[0].firstName);
     cy.get('#delete-record-2 > svg').click();
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)')
-      .should('not.contain.text', 'Alden');
+      .should('not.contain.text', workers[1].firstName);
     cy.get('#delete-record-3 > svg').click();
     cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(1)')
-      .should('not.contain.text', 'Kierra');
+      .should('not.contain.text', workers[2].firstName);
   });
 });
