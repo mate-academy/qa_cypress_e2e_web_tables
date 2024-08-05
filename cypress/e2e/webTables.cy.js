@@ -16,7 +16,7 @@ Your task is to check the following points:
 */
 
 describe('Web Tables page', () => {
-  let fakeUser1;
+  let fakeUser;
 
   const workers = [
     {
@@ -45,9 +45,20 @@ describe('Web Tables page', () => {
     }
   ];
 
+  function addNewUser(user) {
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(user.firstName);
+    cy.get('#lastName').type(user.lastName);
+    cy.get('#userEmail').type(user.email);
+    cy.get('#age').type(user.age);
+    cy.get('#salary').type(user.salary);
+    cy.get('#department').type(user.department);
+    cy.get('#submit').click();
+  }
+
   beforeEach(() => {
     cy.visit('https://demoqa.com/webtables');
-    fakeUser1 = generateFakeUser();
+    fakeUser = generateFakeUser();
   });
 
   it('Check rows count selection', () => {
@@ -59,14 +70,14 @@ describe('Web Tables page', () => {
 
   it('Add a new worker', () => {
     cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(fakeUser1.firstName);
-    cy.get('#lastName').type(fakeUser1.lastName);
-    cy.get('#userEmail').type(fakeUser1.email);
-    cy.get('#age').type(fakeUser1.age);
-    cy.get('#salary').type(fakeUser1.salary);
-    cy.get('#department').type(fakeUser1.department);
+    cy.get('#firstName').type(fakeUser.firstName);
+    cy.get('#lastName').type(fakeUser.lastName);
+    cy.get('#userEmail').type(fakeUser.email);
+    cy.get('#age').type(fakeUser.age);
+    cy.get('#salary').type(fakeUser.salary);
+    cy.get('#department').type(fakeUser.department);
     cy.get('#submit').click();
-    cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').should('contain', `${fakeUser1.firstName}`);
+    cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').should('contain', `${fakeUser.firstName}`);
   });
 
   it('Delete a worker', () => {
@@ -123,32 +134,9 @@ describe('Web Tables page', () => {
     cy.get('.-next > .-btn').should('exist');
     cy.get('.-pageJump').should('exist');
 
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(fakeUser1.firstName);
-    cy.get('#lastName').type(fakeUser1.lastName);
-    cy.get('#userEmail').type(fakeUser1.email);
-    cy.get('#age').type(fakeUser1.age);
-    cy.get('#salary').type(fakeUser1.salary);
-    cy.get('#department').type(fakeUser1.department);
-    cy.get('#submit').click();
-
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(fakeUser1.firstName);
-    cy.get('#lastName').type(fakeUser1.lastName);
-    cy.get('#userEmail').type(fakeUser1.email);
-    cy.get('#age').type(fakeUser1.age);
-    cy.get('#salary').type(fakeUser1.salary);
-    cy.get('#department').type(fakeUser1.department);
-    cy.get('#submit').click();
-
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(fakeUser1.firstName);
-    cy.get('#lastName').type(fakeUser1.lastName);
-    cy.get('#userEmail').type(fakeUser1.email);
-    cy.get('#age').type(fakeUser1.age);
-    cy.get('#salary').type(fakeUser1.salary);
-    cy.get('#department').type(fakeUser1.department);
-    cy.get('#submit').click();
+    addNewUser(fakeUser);
+    addNewUser(fakeUser);
+    addNewUser(fakeUser);
 
     cy.get('select').should('exist');
     cy.get('select').select('5');
