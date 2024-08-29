@@ -16,7 +16,7 @@ function generateWorker() {
     age,
     salary,
     department
-  }
+  };
 }
 
 module.exports = { generateWorker };

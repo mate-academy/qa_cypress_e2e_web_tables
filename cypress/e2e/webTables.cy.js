@@ -1,5 +1,7 @@
 /// <reference types='cypress' />
 
+import { generateWorker } from '../support/generateData';
+
 describe('Web Tables page', () => {
   beforeEach(() => {
     cy.wrap(generateWorker()).as('worker');
