@@ -1,9 +1,10 @@
-const { defineConfig } = require('cypress');
-
-module.exports = defineConfig({
+module.exports = {
   e2e: {
+
+    viewportWidth: 600,
+    viewportHeight: 800,
     setupNodeEvents(on, config) {
       // implement node event listeners here
-    }
-  }
-});
+    },
+  },
+};
