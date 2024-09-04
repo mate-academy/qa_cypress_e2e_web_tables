@@ -1,71 +1,117 @@
+/// <reference types='cypress' />
+const { generateUser } = require('../support/generate');
+
 describe('Web Tables page', () => {
-  const user = {
-    firstName: 'Kate',
-    lastName: 'Hubko',
-    email: 'katehubko@gmail.com',
-    age: '35',
-    salary: '555',
-    department: 'welding engineer'
-  }
-
   beforeEach(() => {
-  cy.visit('https://demoqa.com/webtables')
+    cy.visit('https://demoqa.com/webtables');
   });
 
-  it('should have pagination', () => {
-    cy.get('.-pagination')
-      .should('contain', 'Previous')
-      .and('contain', 'Next');
-    cy.contains('.-pageInfo', 'Page').should('exist');
+  it('testing the options on a page', () => {
+    cy.get('.-pagination').should('contain', 'Previous');
+    cy.get('.-pagination').should('contain', 'Next');
+    cy.get('select').should('contain', '5 rows');
+    cy.get('select').should('contain', '10 rows');
+    cy.get('select').should('contain', '20 rows');
+    cy.get('select').should('contain', '25 rows');
+    cy.get('select').should('contain', '50 rows');
+    cy.get('select').should('contain', '100 rows');
   });
 
-  it('should have row count selection', () => {
-    cy.get('select').select('5 rows');
-  });
-
-  it('should add a new worker', () => {
+  it('should register a new worker', () => {
+    const { username, lastname, email, age, salary, department } = generateUser();
     cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type(user.firstName);
-    cy.get('#lastName').type(user.lastName);
-    cy.get('#userEmail').type(user.email);
-    cy.get('#age').type(user.age);
-    cy.get('#salary').type(user.salary);
-    cy.get('#department').type(user.department);
+    cy.get('#firstName').type(username);
+    cy.get('#lastName').type(lastname);
+    cy.get('#userEmail').type(email);
+    cy.get('#age').type(age);
+    cy.get('#salary').type(salary);
+    cy.get('#department').type(department);
     cy.get('#submit').click();
-    cy.get('.rt-tbody')
-      .should('contain', user.firstName)
-      .and('contain', user.lastName)
-      .and('contain', user.email);
-    cy.get('.rt-tbody')
-      .should('contain', user.age);
-    cy.get('.rt-tbody').should('contain', user.salary);
-    cy.get('.rt-tbody').should('contain', user.department);
-    cy.get('#searchBox').clear().type(user.firstName);
-    cy.get('#searchBox').clear().type(user.lastName);
-    cy.get('#searchBox').clear().type(user.email);
-    cy.get('#searchBox').clear().type(user.age);
-    cy.get('#searchBox').clear().type(user.salary);
-    cy.get('#searchBox').clear().type(user.department);
+    cy.get('.ReactTable').should('contain', username);
   });
 
-  it('should delete worker', () => {
-    cy.get('#delete-record-2').click();
+  it('should search and edit a worker', () => {
+    const { username, lastname, email, age, salary, department } = generateUser();
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(username);
+    cy.get('#lastName').type(lastname);
+    cy.get('#userEmail').type(email);
+    cy.get('#age').type(age);
+    cy.get('#salary').type(salary);
+    cy.get('#department').type(department);
+    cy.get('#submit').click();
+    cy.get('.ReactTable').should('contain', username);
+
+    cy.get('#searchBox').type(username);
+    cy.get('#basic-addon2').click();
+    cy.get('#edit-record-4 > svg').click();
+    cy.get('#firstName').clear();
+    cy.get('#firstName').type(lastname, { force: true }).should('have.value', lastname);
+    cy.get('#submit').click();
+    cy.get('.ReactTable').should('contain', lastname);
+  });
+
+  it('should search worker by all registered information', () => {
+    const { username, lastname, email, age, salary, department } = generateUser();
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(username);
+    cy.get('#lastName').type(lastname);
+    cy.get('#userEmail').type(email);
+    cy.get('#age').type(age);
+    cy.get('#salary').type(salary);
+    cy.get('#department').type(department);
+    cy.get('#submit').click();
+    cy.get('.ReactTable').should('contain', username);
+
+    cy.get('#searchBox').type(username);
+    cy.get('#basic-addon2').click();
+    cy.get('.ReactTable').should('contain', username);
+    cy.get('#searchBox').clear();
+
+    cy.get('#searchBox').type(email);
+    cy.get('#basic-addon2').click();
+    cy.get('.ReactTable').should('contain', email);
+    cy.get('#searchBox').clear();
+
+    cy.get('#searchBox').type(age);
+    cy.get('#basic-addon2').click();
+    cy.get('.ReactTable').should('contain', age);
+    cy.get('#searchBox').clear();
+
+    cy.get('#searchBox').type(salary);
+    cy.get('#basic-addon2').click();
+    cy.get('.ReactTable').should('contain', salary);
+    cy.get('#searchBox').clear();
+
+    cy.get('#searchBox').type(department);
+    cy.get('#basic-addon2').click();
+    cy.get('.ReactTable').should('contain', department);
+    cy.get('#searchBox').clear();
   });
 
   it('should delete all workers', () => {
-    cy.get('#delete-record-3').click();
-    cy.get('#delete-record-2').click();
-    cy.get('#delete-record-1').click();
-  });
-
-  it('should find worker in search field and edit it', () => {
-    cy.get('#searchBox').type('Alden');
-    cy.get('#edit-record-2').click();
-    cy.get('#lastName').clear().type(user.lastName);
-    cy.get('#userEmail').clear().type(user.email);
-    cy.get('#age').clear().type(user.age);
-    cy.get('#salary').clear().type('3000');
-    cy.get('#department').clear().type(user.department);
+    const { username, lastname, email, age, salary, department } = generateUser();
+    cy.get('#addNewRecordButton').click();
+    cy.get('#firstName').type(username);
+    cy.get('#lastName').type(lastname);
+    cy.get('#userEmail').type(email);
+    cy.get('#age').type(age);
+    cy.get('#salary').type(salary);
+    cy.get('#department').type(department);
     cy.get('#submit').click();
+    cy.get('.ReactTable').should('contain', username);
+
+    cy.get('#delete-record-4 > svg').click();
+    cy.get('.ReactTable').should('not.contain', username);
+
+    cy.get('[id*="delete-record"] > svg').then(($elements) => {
+      const numberOfElements = $elements.length;
+
+      for (let i = 0; i < numberOfElements; i++) {
+        cy.get('[id*="delete-record"] > svg').first().click({ force: true });
+      }
+    });
+
+    cy.get('.ReactTable').should('contain', 'No rows found');
   });
 });
