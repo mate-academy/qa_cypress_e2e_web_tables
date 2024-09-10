@@ -23,3 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
+  const clearedText = `{selectall}{backspace}${text}`;
+
+  return originalFn(element, clearedText, options);
+});
