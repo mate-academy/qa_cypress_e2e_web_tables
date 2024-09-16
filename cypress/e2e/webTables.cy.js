@@ -1,5 +1,33 @@
 /// <reference types='cypress' />
 
+import { faker } from '@faker-js/faker';
+
+const user = {
+  fName: faker.person.firstName(),
+  lName: faker.person.lastName(),
+  email: faker.internet.email(),
+  age: '30',
+  salary: '7000',
+  department: 'Engineering'
+};
+
+function addNewWorker() {
+  cy.get('#addNewRecordButton').click();
+  cy.get('#firstName')
+    .type(user.fName);
+  cy.get('#lastName')
+    .type(user.lName);
+  cy.get('#userEmail')
+    .type(user.email);
+  cy.get('#age')
+    .type(user.age);
+  cy.get('#salary')
+    .type(user.salary);
+  cy.get('#department')
+    .type(user.department);
+  cy.get('#submit').click();
+}
+
 describe('Web Tables page', () => {
   beforeEach(() => {
     cy.visit('https://demoqa.com/webtables');
@@ -28,54 +56,45 @@ describe('Web Tables page', () => {
   });
 
   it('should add a new worker', () => {
-    cy.get('#addNewRecordButton').click();
-    cy.get('#firstName').type('John');
-    cy.get('#lastName').type('Doe');
-    cy.get('#userEmail').type('john.doe@mail.com');
-    cy.get('#age').type('30');
-    cy.get('#salary').type('50000');
-    cy.get('#department').type('Engineering');
-    cy.get('#submit').click();
-
-    cy.contains('John');
+    addNewWorker();
+    cy.contains(user.fName);
   });
 
   it('should delete a worker', () => {
-    cy.contains('Kierra').parent()
+    addNewWorker();
+
+    cy.contains(user.fName).parent()
       .find('[title="Delete"]').click();
 
-    cy.contains('Kierra').should('not.exist');
-  });
+    cy.get('#searchBox').type(user.fName);
 
-  it('should delete all workers', () => {
-    cy.get('[title="Delete"]').eq(0)
-      .click();
-
-    cy.get('[title="Delete"]').eq(0)
-      .click();
-
-    cy.get('[title="Delete"]').eq(0)
-      .click();
-
-    cy.get('.rt-tbody').should('not.contain', 'Cierra');
-    cy.get('.rt-tbody').should('not.contain', 'Alden');
-    cy.get('.rt-tbody').should('not.contain', 'Gentry');
+    cy.contains(user.fName).should('not.exist');
+    cy.get('.rt-noData')
+      .should('have.text', 'No rows found');
   });
 
   it('should find a worker and edit it', () => {
-    cy.get('#searchBox').type('Alden');
-    cy.contains('Alden').parent().as('parentElement');
+    addNewWorker();
+
+    cy.get('#searchBox').type(user.fName);
+    cy.contains(user.fName).parent().as('parentElement');
     cy.get('@parentElement').find('[title="Edit"]').click();
 
     cy.get('#age').clear();
     cy.get('#age').type('55');
     cy.get('#submit').click();
 
-    cy.contains('Alden').parent().should('contain', '55');
+    cy.contains(user.fName).parent().should('contain', '55');
   });
 
   it('should check the search by all column values', () => {
-    const searchValues = ['Cierra', '45', 'Insurance'];
+    addNewWorker();
+
+    const searchValues = [
+      user.fName, user.lName, user.email,
+      user.age, user.salary, user.department
+    ];
+
     searchValues.forEach((value) => {
       cy.get('#searchBox').clear();
       cy.get('#searchBox').type(value);
