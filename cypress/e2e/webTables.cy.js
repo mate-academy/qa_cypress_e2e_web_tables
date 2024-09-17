@@ -73,6 +73,25 @@ describe('Web Tables page', () => {
       .should('have.text', 'No rows found');
   });
 
+  it('should delete all workers', () => {
+    function deleteAllWorkers() {
+      cy.get('[title="Delete"]').then(($els) => {
+        if ($els.length) {
+          cy.wrap($els[0]).click();
+
+          if ($els.length !== 1) {
+            deleteAllWorkers();
+          }
+        }
+      });
+    }
+
+    deleteAllWorkers();
+
+    cy.get('.rt-noData')
+      .should('have.text', 'No rows found');
+  });
+
   it('should find a worker and edit it', () => {
     addNewWorker();
 
