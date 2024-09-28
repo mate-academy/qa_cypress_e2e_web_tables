@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "Test1",
+    "lastName": "Customer1",
+    "email": "test1@mail.com",
+    "age": 35,
+    "salary": 2500,
+    "department": "Sales"
+  },
+  {
+    "firstName": "Test2",
+    "lastName": "Customer2",
+    "email": "test2@mail.com",
+    "age": 39,
+    "salary": 3500,
+    "department": "Finance"
+  },
+  {
+    "firstName": "Test3",
+    "lastName": "Customer3",
+    "email": "test3@mail.com",
+    "age": 40,
+    "salary": 5500,
+    "department": "Marketing"
+  }
+]
