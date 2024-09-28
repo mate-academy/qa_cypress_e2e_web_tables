@@ -4,7 +4,7 @@ import WebTables from '../support/pageObjects/pages/webTables';
 import RegistrationForm from
   '../support/pageObjects/components/registrationForm';
 import Pagination from '../support/pageObjects/components/pagination';
-import { generateWorker } from '../support/generateData';
+import generateWorker from '../support/generateData';
 import workersData from '../support/fixtures/workersData.json';
 import titles from '../support/fixtures/titles.json';
 
