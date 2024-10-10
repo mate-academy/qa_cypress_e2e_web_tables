@@ -84,7 +84,7 @@ describe('Web Tables - Search and Edit Worker', () => {
   });
 });
 
-describe('Web Tables - Search by All Columns', () => {
+describe('Web Tables  - Search by All Columns', () => {
   it('should search by different column values', () => {
     cy.visit('https://demoqa.com/webtables');
 
