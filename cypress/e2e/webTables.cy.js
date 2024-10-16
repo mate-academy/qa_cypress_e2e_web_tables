@@ -22,29 +22,31 @@ describe('Web Tables page', () => {
     cy.get('#salary').type(salary.toString());
     cy.get('#department').type(department);
     cy.get('#submit').click();
-    cy.get('.rt-table').should('contain', firstName);
+    cy.get('.rt-table').should('contain', firstName, lastName, email, age,
+      salary, department);
   });
 
-  it('should delete user', () => {
+  it('should verify that the user deleted correctly', () => {
     cy.get('#delete-record-2').click();
     cy.get('.rt-table').should('not.contain', '#delete-record-2');
   });
 
-  it.only('should delete all users', () => {
+  it.only('should verify that all the users deleted correctly', () => {
     cy.get('[title="Delete"').click({ multiple: true });
     cy.get('.rt-table').should('not.contain', '#delete-record-2');
   });
 
-  it('should edit user', () => {
+  it('should verify that all the user details are updated correctly', () => {
     cy.get('#searchBox').type('Cierra');
     cy.get('[title="Edit"').click();
     cy.get('#firstName').clear();
     cy.get('#firstName').type('Natalie');
     cy.get('#submit').click();
-    cy.get('.rt-table').should('contain', 'Natalie');
+    cy.get('.rt-table').should('contain', 'Natalie', 'Vega', '39', '10000',
+      'Insurance');
   });
 
-  it('should check the search by all column values', () => {
+  it('should display correct user is displayed in the table', () => {
     const searchTerms = ['Cierra', 'Vega', '39', '10000', 'Insurance'];
     searchTerms.forEach((term) => {
       cy.get('#searchBox').clear();
