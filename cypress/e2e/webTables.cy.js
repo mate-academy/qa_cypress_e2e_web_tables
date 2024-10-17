@@ -27,7 +27,7 @@ describe('Web Tables page', () => {
     addWorker();
 
     cy.get('#searchBox').type(worker.firstName);
-    cy.get('#edit-record-4').click();
+    cy.get('[title="Edit"]').click();
     cy.get('#userEmail').clear();
     cy.get('#userEmail').type(`new${worker.email}`);
     cy.get('#submit').click();
