@@ -9,7 +9,7 @@ describe('Web Tables page', () => {
     cy.visit('https://demoqa.com/webtables');
   });
 
-  it(' should be elements of pagination is present', () => {
+  it('should be elements of pagination is present', () => {
     cy.get('.-pageInfo').should('exist');
     cy.get('.-previous > .-btn').should('exist');
     cy.get('.-pageJump > input').should('exist');
@@ -17,7 +17,7 @@ describe('Web Tables page', () => {
     cy.get('.-next > .-btn').should('exist');
   });
 
-  it(' should add new user', () => {
+  it('should add new user', () => {
     cy.get('#addNewRecordButton').click();
 
     cy.get('#firstName').type(user.firstName);
@@ -33,12 +33,12 @@ describe('Web Tables page', () => {
       user.email, user.age, user.salary, user.department);
   });
 
-  it(' should verify that the user is deleted', () => {
+  it('should verify that all the users are deleted', () => {
     cy.get('#delete-record-2').click();
     cy.get('.rt-table').should('not.contain', '#delete-record-2');
   });
 
-  it(' should verify that the user information is edited', () => {
+  it('should verify that the user information is edited', () => {
     cy.get('#searchBox').type('Kierra');
     cy.get('[title="Edit"]').click();
     cy.get('#firstName').clear();
@@ -61,7 +61,7 @@ describe('Web Tables page', () => {
     cy.get('#delete-record-3').should('not.exist');
   });
 
-  it('should provide an ability to search by all column values', () => {
+  it('should allow searching by any column value', () => {
     const searchValues = [
       user.firstName,
       user.lastName,
