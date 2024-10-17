@@ -6,7 +6,7 @@ const user = generateUser();
 
 describe('Web Tables page', () => {
   beforeEach(() => {
-    cy.visit('');
+    cy.visit('https://demoqa.com/webtables');
   });
 
   it(' should be elements of pagination is present', () => {
@@ -40,7 +40,7 @@ describe('Web Tables page', () => {
 
   it(' should verify that the user information is edited', () => {
     cy.get('#searchBox').type('Kierra');
-    cy.get('[title="Edit"').click();
+    cy.get('[title="Edit"]').click();
     cy.get('#firstName').clear();
     cy.get('#firstName').type(user.firstName);
     cy.get('#salary').clear();
@@ -58,7 +58,7 @@ describe('Web Tables page', () => {
     cy.get('#delete-record-2').should('not.exist');
 
     cy.get('#delete-record-3').click();
-    cy.get('#delete-record-3').should('not.exist'); ;
+    cy.get('#delete-record-3').should('not.exist');
   });
 
   it('should provide an ability to search by all column values', () => {
@@ -74,7 +74,6 @@ describe('Web Tables page', () => {
     searchValues.forEach((value) => {
       cy.get('#searchBox').click();
       cy.get('#searchBox').type(value);
-      cy.get('#searchBox').should('exist');
       cy.get('#basic-addon2').click();
     });
   });
