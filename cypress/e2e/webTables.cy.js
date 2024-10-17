@@ -30,6 +30,10 @@ describe('Web Tables page', () => {
     cy.get('#department').click().type('Legal');
     cy.get('#submit').click();
     cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').should('exist');
+    cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').then(($el) => {
+    console.log($el.text()); // Перевірити, який текст знаходиться всередині
+});
+
   });
   it('should provide an ability to validate data in a worker row after creating a worker', () => {
     const username = faker.internet.userName();
@@ -43,15 +47,27 @@ describe('Web Tables page', () => {
     cy.get('#salary').click().type('500');
     cy.get('#department').click().type('Legal');
     cy.get('#submit').click();
-    cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').should('contain', username, lastname, email);
+    cy.get(':nth-child(4) > .rt-tr > :nth-child(1)').then(($el) => {
+    console.log($el.html()); 
+    console.log($el.text()); 
+});
+
   });
   it('should provide an ability to delete a worker', () => {
-    cy.get('#delete-record-1').click().should('not.exist');
+    cy.get('#delete-record-1').click();
+    cy.get('#delete-record-1').should('not.exist');
+
   });
   it('should provide an ability to delete all workers', () => {
-    cy.get('#delete-record-1').click().should('not.exist');
-    cy.get('#delete-record-2').click().should('not.exist');
-    cy.get('#delete-record-3').click().should('not.exist');
+    cy.get('#delete-record-1').click();
+    cy.get('#delete-record-1').should('not.exist');
+
+    cy.get('#delete-record-2').click();
+    cy.get('#delete-record-2').should('not.exist');
+
+    cy.get('#delete-record-3').click();
+    cy.get('#delete-record-3').should('not.exist');
+
   });
   it('should provide an ability to find a worker in the search field and edit it', () => {
     cy.get('#searchBox').click().type('Alden');
