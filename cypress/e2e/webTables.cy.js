@@ -1,4 +1,6 @@
-const { faker } = require('@faker-js/faker');
+/* eslint-disable max-len */
+/* eslint-disable cypress/unsafe-to-chain-command */
+import { faker } from '@faker-js/faker';
 
 describe('Web Tables page', () => {
   beforeEach(() => {
