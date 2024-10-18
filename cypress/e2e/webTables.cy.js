@@ -23,7 +23,7 @@ function addWorker() {
 
 describe('Web Tables page', () => {
   beforeEach(() => {
-    cy.visit('');
+    cy.visit('/');
   });
 
   it('should add a new worker', () => {

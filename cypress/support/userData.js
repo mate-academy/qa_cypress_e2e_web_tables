@@ -5,7 +5,7 @@ export const workerData = () => {
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     email: faker.internet.email(),
-    salary: faker.number.int({ min: 30000, max: 100000 }),
+    salary: faker.datatype.number({ min: 30000, max: 100000 }),
     department: faker.commerce.department()
   };
 };
