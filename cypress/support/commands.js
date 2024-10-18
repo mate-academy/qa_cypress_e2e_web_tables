@@ -23,3 +23,29 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+const { generateWorker } = require('../support/generate.user.js');
+
+Cypress.Commands.add('selectCountRows', (value) => {
+  cy.get('[aria-label="rows per page"]').select(`${value}`);
+});
+
+Cypress.Commands.add('addNewWorker', () => {
+  const {
+    firstName,
+    lastName,
+    userEmail,
+    age,
+    salary,
+    department
+  } = generateWorker();
+
+  cy.get('#addNewRecordButton').click();
+  cy.get('#firstName').type(firstName);
+  cy.get('#lastName').type(lastName);
+  cy.get('#userEmail').type(userEmail);
+  cy.get('#age').type(age);
+  cy.get('#salary').type(salary);
+  cy.get('#department').type(department);
+  cy.get('#submit').click();
+});
