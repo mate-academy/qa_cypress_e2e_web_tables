@@ -81,9 +81,9 @@ describe('Web Tables page', () => {
   it('should edit a worker', () => {
     cy.get('#edit-record-1').click();
     cy.findById('age').clear();
-    const age = 23;
+    const age = 80;
     cy.findById('age').type(age);
     cy.findById('submit').click();
-    cy.contains('div', user.age).should('be.visible');
+    cy.contains('div', age).should('be.visible');
   });
 });
